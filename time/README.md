@@ -9,9 +9,9 @@
 
 The Time Entry sample canvas app provides access for project team members to create and manage their time entries. For more examples and contribution notes please read the [repository README](..\README.md).
 
-![Period view](..\images\time-period.png) ![Time line view](..\images\time-timeline.png)
+![Period view](https://github.com/microsoft/Dynamics365-Project-Operations-PowerApps/blob/main/images/time-period.png?raw=true) ![Time line view](https://github.com/microsoft/Dynamics365-Project-Operations-PowerApps/blob/main/images/time-timeline.png?raw=true)
 
-**[Download Current Package Here](time\package\TimeEntry_20220126221310.zip)**
+**[Download Current Package Here](https://github.com/microsoft/Dynamics365-Project-Operations-PowerApps/raw/main/time/package/TimeEntry_20220126221310.zip)**
 
 **Features include:**
 - Weekly timeline view

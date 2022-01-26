@@ -8,7 +8,7 @@ For details on each PowerApps please review the `README.md` in the relevant fold
 
 | File or Folder | Details  | Package  | Screenshot | Description |
 |----------------|----------|----------|------------|-------------|
-| [TIME](time)   | [README](time\README.md)  | [Download](time\package\TimeEntry_20220126221310.zip) | ![Time line view](.\images\time-timeline.png) | A mobile canvas PowerApp which allows users to create, edit, submit and recall their time entries |
+| [TIME](time)   | [README](time\README.md)  | [Download](https://github.com/microsoft/Dynamics365-Project-Operations-PowerApps/raw/main/time/package/TimeEntry_20220126221310.zip) | ![Time line view](https://github.com/microsoft/Dynamics365-Project-Operations-PowerApps/blob/main/images/time-timeline.png?raw=true) | A mobile canvas PowerApp which allows users to create, edit, submit and recall their time entries |
 | `README.md`  | | | | This README file. | 
 | `LICENSE.md` | | | | Details about the MIT License for anyone looking to reuse code in this repository in their own applications |
 
