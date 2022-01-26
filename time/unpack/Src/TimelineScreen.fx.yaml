@@ -1,0 +1,1644 @@
+"TimelineScreen As screen.'phoneBrowseLayout_ver3.0'":
+    ImagePosition: =ImagePosition.Center
+    LoadingSpinner: =LoadingSpinner.Data
+    OnVisible: |
+        =UpdateContext({state_AddMenuPopup: false});
+        UpdateContext({state_SelectEntryMode: false});
+        Select(tl_RefreshIcon);
+
+    tl_Background As groupContainer:
+        Height: |
+            =Parent.Height-tl_SummaryBar.Y-tl_SummaryBar.Height
+        PaddingBottom: =250
+        Visible: =If(CountRows(tl_HeaderGallery.AllItems) = 0, true, false)
+        Width: =Parent.Width
+        Y: =tl_SummaryBar.Y+tl_SummaryBar.Height
+        ZIndex: =1
+
+        tl_AddTimeLabel As label:
+            Align: =Align.Center
+            Height: =78
+            Size: =21
+            Text: ="Tap add below to create a new entry"
+            Visible: =Parent.Visible
+            Width: =275
+            X: =Parent.Width/2-Self.Width/2
+            Y: =tl_WorkingHardImage.Y+tl_WorkingHardImage.Height
+            ZIndex: =1
+
+        tl_WorkingHardImage As image:
+            Height: =Parent.Height-Parent.PaddingBottom
+            Image: =workinghard
+            Visible: =Parent.Visible
+            Width: =Parent.Width
+            ZIndex: =2
+
+    tl_SummaryBar As groupContainer:
+        Fill: =RGBA(250, 249, 248, 1)
+        Height: =61
+        Width: =Parent.Width
+        Y: =tl_MainBar.Y+tl_MainBar.Height
+        ZIndex: =2
+
+        tl_GroupByPicker As dropdown:
+            BorderStyle: =BorderStyle.None
+            BorderThickness: =0
+            ChevronBackground: =RGBA(0, 0, 0, 0)
+            ChevronFill: =RGBA(230, 230, 230, 1)
+            Default: =0
+            Fill: =RGBA(250, 249, 248, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =Parent.Height
+            Items: |
+                =Table({GroupName:"Date", Value:0}, {GroupName:"Project", Value:1}, {GroupName:"Status", Value:2})
+            PaddingLeft: |
+                =20
+            SelectionFill: =RGBA(50, 86, 160, 1)
+            Size: =18
+            Width: =178
+            X: =If(state_SelectEntryMode, 70, 14)
+            Y: =Parent.Height/2-Self.Height/2
+            ZIndex: =8
+
+        tl_SelectAllCheck As checkbox:
+            BorderStyle: =BorderStyle.None
+            CheckboxSize: =60
+            Default: |-
+                =If(
+                    ((CountRows(TimeInCurrentPeriod) <> 0) && CountIf(
+                        TimeInCurrentPeriod,
+                        (ItemSelected = true)
+                    ) = CountRows(TimeInCurrentPeriod)),
+                    true,
+                    false
+                )
+            Fill: =RGBA(255, 0, 0, 0)
+            Height: =Parent.Height
+            OnCheck: |
+                =UpdateIf(TimeInCurrentPeriod, ItemSelected=false, {ItemSelected:true});
+            OnSelect: =
+            OnUncheck: |+
+                =UpdateIf(TimeInCurrentPeriod, ItemSelected=true, {ItemSelected:false});
+                
+            Size: =20
+            Text: =""
+            VerticalAlign: =VerticalAlign.Top
+            Visible: =If(IsBlank(state_SelectEntryMode), false, state_SelectEntryMode)
+            Width: =Parent.Height
+            ZIndex: =9
+
+        tl_HoursBtn As button:
+            Align: =Align.Right
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(0, 0, 0, 1)
+            DisplayMode: |-
+                =//If(
+                //    Feature_EnableGraph,
+                //    DisplayMode.Edit,
+                //    DisplayMode.View
+                //)
+                DisplayMode.Edit
+            Fill: =Parent.Fill
+            Height: =Parent.Height
+            OnSelect: |
+                =UpdateContext({state_ShowWeek: !state_ShowWeek})
+            PaddingRight: |
+                =20
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Size: =18
+            Text: |-
+                =// Highlight if there are time entries that are not submitted
+                If((CountIf(TimeInCurrentPeriod, msdyn_entrystatus = 'Time Entry Status'.Draft) + CountIf(TimeInCurrentPeriod, msdyn_entrystatus = 'Time Entry Status'.Returned)) > 0, "* ", "") &
+                // Calcualte the total number of hours in the period and adjust unit to pural
+                Text(
+                    Sum(TimeInCurrentPeriod,Duration)/60,
+                     "0.00")
+                     &
+                     If(
+                         Or(
+                             Sum(TimeInCurrentPeriod,Duration) / 60 > 1,
+                             Sum(TimeInCurrentPeriod,Duration) = 0),
+                        " hrs",
+                        " hr"
+                        )
+            Width: =170
+            X: =Parent.Width-Self.Width-15
+            ZIndex: =10
+
+    tl_MainBar As groupContainer:
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =86*2
+        Width: =Parent.Width
+        ZIndex: =3
+
+        tl_SearchBar As groupContainer:
+            Height: =86
+            Width: =Parent.Width
+            Y: =88
+            ZIndex: =6
+
+            tl_SearchSpacerBottom As rectangle:
+                BorderColor: =RGBA(0, 0, 0, 0)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =13
+                Width: =Parent.Width
+                Y: =tl_SearchText.Y + tl_SearchText.Height
+                ZIndex: =1
+
+            tl_SearchText As text:
+                Align: =Left
+                BorderColor: =RGBA(219, 219, 219, 1)
+                BorderThickness: =1
+                Clear: =true
+                Default: =""
+                DelayOutput: =true
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =54
+                HintText: ="Search"
+                HoverBorderColor: =RGBA(230, 230, 230, 1)
+                HoverFill: =RGBA(230, 230, 230, 1)
+                OnChange: =Select(tl_RefreshIcon)
+                OnSelect: =
+                PaddingLeft: =70
+                RadiusBottomLeft: =7
+                RadiusBottomRight: =7
+                RadiusTopLeft: =7
+                RadiusTopRight: =7
+                Reset: =
+                Size: =21
+                Width: =Parent.Width-Self.X*2
+                X: =40
+                Y: =tl_SearchSpacerTop.Y+tl_SearchSpacerTop.Height
+                ZIndex: =2
+
+            tl_SearchIcon As icon.Search:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =Self.Width
+                Icon: =Icon.Search
+                PaddingBottom: =14
+                PaddingLeft: =14
+                PaddingRight: =14
+                PaddingTop: =14
+                Tooltip: ="Search"
+                Width: =tl_SearchText.Height
+                X: =tl_SearchText.X
+                Y: =tl_SearchText.Y
+                ZIndex: =3
+
+            tl_SearchSpacerTop As rectangle:
+                BorderColor: =RGBA(0, 0, 0, 0)
+                BorderStyle: =BorderStyle.None
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =16
+                Width: =Parent.Width
+                ZIndex: =4
+
+        tl_MainMenu As groupContainer:
+            Fill: =Parent.Fill
+            Height: =Parent.Height/2
+            Width: =Parent.Width
+            X: |
+                =0
+            ZIndex: =7
+
+            tl_UserBubble As groupContainer:
+                Height: =50
+                Width: =50
+                X: =25
+                Y: =(Parent.Y+Parent.Height/2)-Self.Height/2
+                ZIndex: =1
+
+                tl_AccountBubble As circle:
+                    BorderStyle: =BorderStyle.None
+                    DisplayMode: =DisplayMode.View
+                    Fill: =RGBA(107, 183, 0, 1)
+                    Height: =Parent.Height
+                    Width: =Parent.Width
+                    ZIndex: =1
+
+                tl_UserInitialsLabel As label:
+                    Align: =Align.Center
+                    BorderStyle: =BorderStyle.None
+                    Color: =RGBA(255, 255, 255, 1)
+                    Height: =Parent.Height
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =16
+                    Text: |-
+                        =Left(User().FullName, 1) &
+                        Mid(
+                            User().FullName,
+                            Find(" ", User().FullName) + 1,
+                            1)
+                    Width: |
+                        =Parent.Width
+                    X: =
+                    ZIndex: =2
+
+                tl_UserPhoto As image:
+                    Height: =Parent.Height
+                    Image: =Office365Users.UserPhotoV2(Office365Users.MyProfileV2().userPrincipalName)
+                    ImagePosition: =ImagePosition.Fill
+                    OnSelect: =
+                    RadiusBottomLeft: =Self.Height/2
+                    RadiusBottomRight: =Self.Height/2
+                    RadiusTopLeft: =Self.Height/2
+                    RadiusTopRight: =Self.Height/2
+                    Width: =Parent.Width
+                    ZIndex: =3
+
+            tl_RefreshIcon As icon.Reload:
+                AccessibleLabel: =Self.Tooltip
+                Color: =RGBA(0,0, 0, 1)
+                Height: =60
+                Icon: =Icon.Sync
+                OnSelect: |-
+                    =If(
+                        tl_SearchText.Text = "",
+                        ClearCollect(
+                            TimeInCurrentPeriod,
+                            AddColumns(
+                                SortByColumns(
+                                    Filter(
+                                        'Time Entries',
+                                        ('Time Source'.Name = ProjectServiceTime.Name) && (Start >= PeriodStart) && (End < PeriodEnd) && ('Bookable Resource'.Name = ThisUserBookableResource.Name)
+                                    ),
+                                    "msdyn_start",
+                                    Ascending
+                                ),
+                                "AdjustedStart",
+                                DateAdd(
+                                    Start,
+                                    -TimeZoneAdjustment,
+                                    Minutes
+                                ),
+                                "AdjustedEnd",
+                                DateAdd(
+                                    End,
+                                    -TimeZoneAdjustment,
+                                    Minutes
+                                ),
+                                "ItemSelected",
+                                false
+                            )
+                        ),
+                        ClearCollect(
+                            TimeInCurrentPeriod,
+                            AddColumns(
+                                SortByColumns(
+                                    Filter(
+                                        'Time Entries',
+                                        ('Time Source'.Name = ProjectServiceTime.Name) && (Start >= PeriodStart) && (End < PeriodEnd) && ('Bookable Resource'.Name = ThisUserBookableResource.Name) && ((tl_SearchText.Text in Project.Name) || (tl_SearchText.Text in 'Project Task'.'Project Task Name') || (tl_SearchText.Text in Text(
+                                            Duration / 60,
+                                            "0.00"
+                                        )))
+                                    ),
+                                    "msdyn_start",
+                                    Ascending
+                                ),
+                                "AdjustedStart",
+                                DateAdd(
+                                    Start,
+                                    -TimeZoneAdjustment,
+                                    Minutes
+                                ),
+                                "AdjustedEnd",
+                                DateAdd(
+                                    End,
+                                    -TimeZoneAdjustment,
+                                    Minutes
+                                ),
+                                "ItemSelected",
+                                false
+                            )
+                        )
+                    );
+                    ClearCollect(
+                        TimeGrouped,
+                        AddColumns(
+                            GroupBy(
+                                AddColumns(
+                                    TimeInCurrentPeriod,
+                                    "DisplayGroupDate",
+                                    DateTimeValue(
+                                        Month(AdjustedStart) & "/" & Day(AdjustedStart) & "/" & Year(AdjustedStart),
+                                        "en-US"
+                                    )
+                                ),
+                                "DisplayGroupDate",
+                                "DataGroup"
+                            ),
+                            "RecCount",
+                            CountRows(DataGroup),
+                            "HoursTotal",
+                            Sum(
+                                DataGroup,
+                                Duration
+                            ),
+                            "DisplayGroup",
+                            "",
+                            "GroupedBy",
+                            0
+                        )
+                    );
+                    Collect(
+                        TimeGrouped,
+                        AddColumns(
+                            GroupBy(
+                                AddColumns(
+                                    TimeInCurrentPeriod,
+                                    "DisplayGroup",
+                                    Project.Name
+                                ),
+                                "DisplayGroup",
+                                "DataGroup"
+                            ),
+                            "RecCount",
+                            CountRows(DataGroup),
+                            "HoursTotal",
+                            Sum(
+                                DataGroup,
+                                Duration
+                            ),
+                            "DisplayGroupDate",
+                            Now(),
+                            "GroupedBy",
+                            1
+                        )
+                    );
+                    Collect(
+                        TimeGrouped,
+                        AddColumns(
+                            GroupBy(
+                                AddColumns(
+                                    TimeInCurrentPeriod,
+                                    "DisplayGroup",
+                                    Upper(Text('Entry Status'))
+                                ),
+                                "DisplayGroup",
+                                "DataGroup"
+                            ),
+                            "RecCount",
+                            CountRows(DataGroup),
+                            "HoursTotal",
+                            Sum(
+                                DataGroup,
+                                Duration
+                            ),
+                            "DisplayGroupDate",
+                            Now(),
+                            "GroupedBy",
+                            2
+                        )
+                    );
+                    // Default to add mode when there's no records
+                    If(
+                        CountRows(TimeInCurrentPeriod) = 0,
+                        UpdateContext({state_SelectEntryMode: false});
+                        UpdateContext({state_ShowGraph: false}),
+                        false
+                    )
+                PaddingBottom: =Self.Height/4
+                PaddingTop: =Self.Height/4
+                TabIndex: =0
+                Tooltip: ="Refresh list"
+                Width: =60
+                X: =Parent.Width-(Self.Width*2)-(15*2)
+                Y: |
+                    =Parent.Height/2-Self.Height/2
+                ZIndex: =2
+
+            tl_WeekPicker As groupContainer:
+                Fill: =Parent.Fill
+                Height: |
+                    =60
+                Width: =400
+                X: =tl_UserBubble.X+tl_UserBubble.Width+10
+                Y: =Parent.Height/2-Self.Height/2
+                ZIndex: =3
+
+                tl_WeekRangeLabel As label:
+                    Align: =Align.Center
+                    BorderStyle: =BorderStyle.None
+                    Color: =Parent.BorderColor
+                    Fill: =Parent.Fill
+                    FontWeight: =FontWeight.Bold
+                    Height: =Parent.Height
+                    OnSelect: =Select(tl_PeriodDatePicker)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =23
+                    Text: |-
+                        =Text((
+                            tl_PeriodDatePicker.SelectedDate - Weekday(tl_PeriodDatePicker.SelectedDate, PeriodStartOfWeek)+1),
+                            "mmm d"
+                        ) & " - " & Text(
+                            
+                            tl_PeriodDatePicker.SelectedDate - Weekday(tl_PeriodDatePicker.SelectedDate, PeriodStartOfWeek) + 7,
+                            "mmm d"
+                        )
+                    Width: =Parent.Width-(45+tl_DateWeekBeforeIcon.Width+tl_DateWeekAfterIcon.Width)
+                    X: =tl_DateWeekBeforeIcon.X+tl_DateWeekBeforeIcon.Width
+                    ZIndex: =2
+
+                tl_DateWeekBeforeIcon As icon.Reload:
+                    AccessibleLabel: =Self.Tooltip
+                    Color: =Parent.BorderColor
+                    Height: |
+                        =Parent.Height
+                    Icon: =Icon.ChevronLeft
+                    OnSelect: |
+                        =Set(
+                            defaultDate,
+                            DateAdd(
+                                defaultDate,
+                                -7,
+                                Days
+                            )
+                        );
+                        // Setup working period from the picked date
+                        Set(
+                            PeriodStart,
+                            DateAdd(
+                                defaultDate - Weekday(
+                                    defaultDate,
+                                    PeriodStartOfWeek
+                                ) + 1,
+                                TimeZoneAdjustment,
+                                Minutes
+                            )
+                        );
+                        Set(
+                            PeriodEnd,
+                            DateAdd(
+                                PeriodStart,
+                                7,
+                                Days
+                            )
+                        );
+                        Select(tl_RefreshIcon);
+                    PaddingBottom: =Parent.Height/4
+                    PaddingTop: =Parent.Height/4
+                    TabIndex: =0
+                    Tooltip: ="Refresh list"
+                    Width: =55
+                    ZIndex: =3
+
+                tl_DateWeekAfterIcon As icon.Reload:
+                    AccessibleLabel: =Self.Tooltip
+                    Color: =Parent.BorderColor
+                    Fill: =Parent.Fill
+                    Height: |
+                        =Parent.Height
+                    Icon: =Icon.ChevronRight
+                    OnSelect: |
+                        =Set(
+                            defaultDate,
+                            DateAdd(
+                                defaultDate,
+                                7,
+                                Days
+                            )
+                        );
+                        // Setup working period from the picked date
+                        Set(
+                            PeriodStart,
+                            DateAdd(
+                                defaultDate - Weekday(
+                                    defaultDate,
+                                    PeriodStartOfWeek
+                                ) + 1,
+                                TimeZoneAdjustment,
+                                Minutes
+                            )
+                        );
+                        Set(
+                            PeriodEnd,
+                            DateAdd(
+                                PeriodStart,
+                                7,
+                                Days
+                            )
+                        );
+                        Select(tl_RefreshIcon);
+                    PaddingBottom: =Parent.Height/4
+                    PaddingTop: =Parent.Height/4
+                    TabIndex: =0
+                    Tooltip: ="Refresh list"
+                    Width: =55
+                    X: =Parent.Width-Self.Width
+                    ZIndex: =4
+
+                tl_PeriodDatePicker As datepicker:
+                    BorderColor: =RGBA(202, 202, 202, 1)
+                    BorderStyle: =BorderStyle.None
+                    Color: =RGBA(255,255,255,0)
+                    DefaultDate: =defaultDate
+                    DisabledColor: =RGBA(255,255,255,0)
+                    Fill: =RGBA(255,255,255,0)
+                    Height: =Parent.Height
+                    IconBackground: =Parent.Fill
+                    IconFill: |
+                        =Parent.BorderColor
+                    OnChange: |-
+                        =Set(defaultDate, Self.SelectedDate);
+                        Select(tl_RefreshIcon);
+                    OnSelect: |-
+                        =// Setup working period from the picked date
+                        Set(
+                            PeriodStart,
+                            DateAdd(
+                           		tl_PeriodDatePicker.SelectedDate-Weekday(tl_PeriodDatePicker.SelectedDate,PeriodStartOfWeek)+1, TimeZoneAdjustment,
+                                Minutes)
+                        );
+                        Set(
+                            PeriodEnd,
+                            DateAdd(PeriodStart, 7, Days)
+                        );
+                    Size: =24
+                    StartOfWeek: =PeriodStartOfWeek
+                    Width: =Parent.Width-tl_DateWeekBeforeIcon.Width-tl_DateWeekAfterIcon.Width
+                    X: =tl_DateWeekBeforeIcon.X+tl_DateWeekBeforeIcon.Width
+                    Y: =tl_WeekRangeLabel.Y+(tl_WeekRangeLabel.Height/2)-Self.Height/2
+                    ZIndex: =5
+
+            tl_SelectionImage As image:
+                Height: =60
+                Image: ='multiselectcheckbox.20'
+                OnSelect: |-
+                    =UpdateContext({state_SelectEntryMode: !state_SelectEntryMode})
+                PaddingBottom: =Self.Height/6
+                PaddingLeft: =Self.Height/6
+                PaddingRight: =Self.Height/6
+                PaddingTop: =Self.Height/6
+                PressedFill: =RGBA(255, 255, 255, 0.3)
+                Tooltip: ="Selection mode"
+                Width: =60
+                X: =Parent.Width-Self.Width-15
+                Y: =Parent.Height/2-Self.Height/2
+                ZIndex: =4
+
+            tl_SelectionIcon As icon.Reload:
+                AccessibleLabel: =Self.Tooltip
+                Color: =RGBA(0,0, 0, 1)
+                Height: =60
+                Icon: =""
+                OnSelect: |-
+                    =UpdateContext({state_SelectEntryMode: !state_SelectEntryMode})
+                PaddingBottom: =Self.Height/6
+                PaddingLeft: =Self.Height/6
+                PaddingRight: =Self.Height/6
+                PaddingTop: =Self.Height/6
+                TabIndex: =0
+                Tooltip: ="Selection mode"
+                Width: =60
+                X: =Parent.Width-Self.Width-15
+                Y: =Parent.Height/2-Self.Height/2
+                ZIndex: =5
+
+    tl_HeaderGallery As gallery.variableTemplateHeightGallery:
+        Height: |-
+            =If(
+                tl_WeekContainer.Visible,
+                Parent.Height - (tl_SummaryBar.Y + tl_SummaryBar.Height+tl_WeekContainer.Height),
+                Parent.Height - (tl_SummaryBar.Y+tl_SummaryBar.Height)
+            )
+        Items: =Filter(TimeGrouped,GroupedBy=tl_GroupByPicker.Selected.Value)
+        Layout: =Layout.Vertical
+        OnSelect: =
+        TemplatePadding: =0
+        TemplateSize: |
+            =tl_GroupLabel.Height+tl_DetailGallery.Height+tl_GroupSpltter.Height
+        Width: =Parent.Width
+        Y: =If(state_ShowWeek, tl_WeekContainer.Y+tl_WeekContainer.Height, tl_SummaryBar.Y+tl_SummaryBar.Height)
+        ZIndex: =4
+
+        tl_GroupSpltter As rectangle:
+            BorderStyle: =BorderStyle.None
+            Fill: =RGBA(237, 237, 237, 1)
+            Height: =2
+            OnSelect: =Select(Parent)
+            Width: =Parent.Width-Self.X*2
+            X: =18
+            Y: =tl_DetailGallery.Height+tl_DetailGallery.Y
+            ZIndex: =1
+
+        tl_DetailGallery As gallery.variableTemplateHeightGallery:
+            Height: =ThisItem.RecCount * 100
+            Items: |-
+                =Switch(
+                    ThisItem.GroupedBy,
+                    0,
+                    Filter(
+                        TimeInCurrentPeriod,
+                        ThisItem.DisplayGroupDate = DateTimeValue(
+                                    Month(AdjustedStart) & "/" & Day(AdjustedStart) & "/" & Year(AdjustedStart),
+                                    "en-US"
+                                )
+                    ),
+                    1,
+                    Filter(
+                        TimeInCurrentPeriod,
+                        ThisItem.DisplayGroup = Project.Name
+                    ),
+                    2,
+                    Filter(
+                        TimeInCurrentPeriod,
+                        ThisItem.DisplayGroup = Upper(Text('Entry Status'))
+                        )
+                )
+            Layout: =Layout.Vertical
+            OnSelect: |-
+                =Navigate(ViewTimeEntryScreen, ScreenTransition.UnCover,{selectedId: ThisItem})
+            TemplatePadding: =10
+            TemplateSize: =90
+            Width: =Parent.Width
+            Y: =tl_GroupLabel.Height
+            ZIndex: =2
+
+            tl_StatusLabel As label:
+                Align: =Align.Right
+                Height: =tl_SubTitleLabel.Height
+                OnSelect: =Select(Parent)
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =20
+                PaddingTop: =0
+                Size: =16
+                Text: |-
+                    =If(
+                        tl_GroupByPicker.Selected.Value = 2,
+                        Text(
+                            ThisItem.AdjustedStart,
+                            ShortDate
+                        ),
+                        Upper(Text(ThisItem.'Entry Status'))
+                    )
+                VerticalAlign: =VerticalAlign.Top
+                Width: =Parent.Width/3
+                Wrap: =false
+                X: =Parent.TemplateWidth-Self.Width
+                Y: =tl_Quantity.Y+tl_Quantity.Height
+                ZIndex: =2
+
+            tl_Quantity As label:
+                Align: =Align.Right
+                FontWeight: =FontWeight.Semibold
+                Height: =tl_TitleLabel.Height
+                OnSelect: =Select(Parent)
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =20
+                PaddingTop: =0
+                Size: =18
+                Text: =Text(ThisItem.Duration/60, "0.00")&If(Or((ThisItem.Duration/60 > 1), (ThisItem.Duration = 0))," hrs"," hr")
+                VerticalAlign: =VerticalAlign.Top
+                Width: =140
+                Wrap: =false
+                X: =Parent.TemplateWidth-Self.Width
+                ZIndex: =3
+
+            tl_SubTitleLabel As label:
+                Height: =50
+                OnSelect: =Select(Parent)
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =16
+                Text: |-
+                    =If(
+                        tl_GroupByPicker.Selected.Value = 1,
+                        Text(
+                            ThisItem.Start,
+                            Lower(ThisUserSettings.DateFormatString) & " " & Lower(ThisUserSettings.TimeFormatString)
+                        ) & " - " & Text(
+                            ThisItem.End,
+                            Lower(ThisUserSettings.TimeFormatString)
+                        ),
+                        If(
+                            Text(ThisItem.Type) = "Vacation",
+                            Text(ThisItem.Description),
+                            ThisItem.'Project Task'.'Project Task Name'
+                        )
+                    )
+                VerticalAlign: =VerticalAlign.Top
+                Width: =tl_StatusLabel.X-Self.X
+                Wrap: =false
+                X: =tl_RecordTypeIcon.X+tl_RecordTypeIcon.Width+15
+                Y: =tl_TitleLabel.Y+tl_TitleLabel.Height
+                ZIndex: =4
+
+            tl_TitleLabel As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =35
+                OnSelect: =Select(Parent)
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =18
+                Text: |-
+                    =If (
+                        Text(ThisItem.Type) = "Vacation",
+                        Text(ThisItem.Type),
+                        If(
+                            tl_GroupByPicker.Selected.Value = 1,
+                            ThisItem.'Project Task'.'Project Task Name',
+                            If(
+                                IsBlank(ThisItem.Project.Name),
+                                "---",
+                                ThisItem.Project.Name
+                            )
+                        )
+                    )
+                VerticalAlign: =VerticalAlign.Top
+                Width: =tl_Quantity.X-Self.X
+                Wrap: =false
+                X: =tl_RecordTypeIcon.X+tl_RecordTypeIcon.Width+15
+                ZIndex: =5
+
+            tl_RecordTypeIcon As image:
+                Height: =40
+                Image: |+
+                    =Switch(Text(ThisItem.Type), 
+                        "Work", timeenrtyicon,
+                        "Vacation", vacationicon)
+                    
+                OnSelect: =Select(Parent)
+                Width: =40
+                X: =If(state_SelectEntryMode, 70, 18)
+                ZIndex: =6
+
+            tl_SelectRecordCheck As checkbox:
+                BorderStyle: =BorderStyle.None
+                CheckboxSize: =60
+                Default: =ThisItem.ItemSelected
+                Fill: =RGBA(255, 0, 0, 0)
+                Height: =Parent.TemplateHeight
+                OnCheck: |-
+                    =Patch(
+                        TimeInCurrentPeriod,
+                        ThisItem,
+                        {ItemSelected: true}
+                    );
+                OnSelect: =
+                OnUncheck: |
+                    =Patch(
+                        TimeInCurrentPeriod,
+                        ThisItem,
+                        {ItemSelected: false}
+                    );
+                PaddingTop: =1
+                Size: =20
+                Text: =""
+                VerticalAlign: =VerticalAlign.Top
+                Visible: =If(IsBlank(state_SelectEntryMode), false, state_SelectEntryMode)
+                Width: =Parent.TemplateWidth
+                ZIndex: =7
+
+        tl_GroupLabel As label:
+            FontWeight: =FontWeight.Lighter
+            Height: =60
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =20
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =16
+            Text: |-
+                =If(
+                    ThisItem.GroupedBy = 0,
+                    Text(
+                        ThisItem.DisplayGroupDate,
+                        "dddd, dd mmmm"
+                    ),
+                    If(IsBlank(ThisItem.DisplayGroup), "---",
+                    ThisItem.DisplayGroup)
+                )
+            Width: =Parent.Width
+            ZIndex: =3
+
+    tl_SubmitBtnContainer As groupContainer.manualLayoutContainer:
+        Height: =90
+        Visible: =state_SelectEntryMode
+        Width: =90
+        X: =(Parent.Width/2-Self.Width/2)+Self.Width+30
+        Y: =Parent.Height-150
+        ZIndex: =5
+
+        tl_SubmitItemBubble As circle:
+            BorderStyle: =BorderStyle.None
+            DisabledFill: =RGBA(64, 64, 64, 1)
+            DisplayMode: |-
+                =If(
+                    CountIf(
+                        TimeInCurrentPeriod,
+                        (ItemSelected = true && 'Entry Status' = [@'Time Entry Status'].Draft)
+                    ) > 0,
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled
+                )
+            Height: =Parent.Height
+            OnSelect: |
+                =// Create the list of entries to be submitted and run submit
+                UpdateContext({state_ScreenBusy: true});
+                Set(
+                    FlowResult,
+                    SubmitTime.Run(
+                        Left(
+                            Concat(
+                                Filter(
+                                    TimeInCurrentPeriod,
+                                    ItemSelected = true && (('Entry Status' = [@'Time Entry Status'].Draft))
+                                ),
+                                'Time Entry' & ","
+                            ),
+                            Len(
+                                Concat(
+                                    Filter(
+                                        TimeInCurrentPeriod,
+                                        ItemSelected = true && (('Entry Status' = [@'Time Entry Status'].Draft))
+                                    ),
+                                    'Time Entry' & ","
+                                )
+                            ) - 1
+                        )
+                    )
+                );
+                If(
+                    IsBlank(FlowResult) || FlowResult.error = "  ",
+                    Select(tl_RefreshIcon),
+                    Notify(FlowResult.error)
+                );
+                UpdateContext({state_ScreenBusy: false});
+            Visible: =Parent.Visible
+            Width: =Parent.Width
+            ZIndex: =1
+
+        tl_SubmitItemIcon As icon.Add:
+            AccessibleLabel: =Self.Tooltip
+            Height: =Parent.Height
+            Icon: =Icon.Send
+            OnSelect: =Select(tl_SubmitItemBubble)
+            PaddingBottom: =15
+            PaddingLeft: =15
+            PaddingRight: =15
+            PaddingTop: =15
+            TabIndex: =0
+            Tooltip: ="Submit the seleted list of items"
+            Visible: =Parent.Visible
+            Width: =Parent.Width
+            X: =(tl_SubmitItemBubble.X+(tl_SubmitItemBubble.Width/2))-(Self.Width/2)
+            Y: =(tl_SubmitItemBubble.Y+(tl_SubmitItemBubble.Height/2))-(Self.Height/2)
+            ZIndex: =2
+
+    tl_RecallBtnContainer As groupContainer.manualLayoutContainer:
+        Height: =90
+        Visible: =state_SelectEntryMode
+        Width: =90
+        X: =Parent.Width/2-Self.Width/2
+        Y: =Parent.Height-150
+        ZIndex: =6
+
+        tl_RecallAllBubble As circle:
+            BorderStyle: =BorderStyle.None
+            DisabledFill: =RGBA(64, 64, 64, 1)
+            DisplayMode: |-
+                =If(
+                    CountIf(
+                        TimeInCurrentPeriod,
+                        (ItemSelected = true && (('Entry Status' = [@'Time Entry Status'].Submitted) || ('Entry Status' = [@'Time Entry Status'].Approved)))
+                    ) > 0,
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled
+                )
+            Height: =Parent.Height
+            OnSelect: |-
+                =// Recall the selected time entries
+                UpdateContext({state_ScreenBusy: true});
+                Set(FlowResult, RecallTime.Run(
+                    Left(
+                        Concat(
+                            Filter(
+                                TimeInCurrentPeriod,
+                                ItemSelected = true && (('Entry Status' = [@'Time Entry Status'].Submitted) || ('Entry Status' = [@'Time Entry Status'].Approved))
+                            ),
+                            'Time Entry' & ","
+                        ),
+                        Len(
+                            Concat(
+                                Filter(
+                                    TimeInCurrentPeriod,
+                                    ItemSelected = true && (('Entry Status' = [@'Time Entry Status'].Submitted) || ('Entry Status' = [@'Time Entry Status'].Approved))
+                                ),
+                                'Time Entry' & ","
+                            )
+                        ) - 1
+                    )
+                )
+                );
+                If(
+                    IsBlank(FlowResult) || FlowResult.error = "  ",
+                    Select(tl_RefreshIcon),
+                    Notify(FlowResult.error)
+                );
+                UpdateContext({state_ScreenBusy: false});
+            Visible: =Parent.Visible
+            Width: =Parent.Width
+            ZIndex: =1
+
+        tl_RecallAllIcon As icon.Add:
+            AccessibleLabel: =Self.Tooltip
+            Height: =Parent.Height
+            Icon: =Icon.Undo
+            OnSelect: =Select(tl_RecallAllBubble)
+            PaddingBottom: =15
+            PaddingLeft: =15
+            PaddingRight: =15
+            PaddingTop: =15
+            TabIndex: =0
+            Tooltip: ="Recall selected entries"
+            Visible: =Parent.Visible
+            Width: =Parent.Width
+            X: =(tl_RecallAllBubble.X+(tl_RecallAllBubble.Width/2))-(Self.Width/2)
+            Y: =(tl_RecallAllBubble.Y+(tl_RecallAllBubble.Height/2))-(Self.Height/2)
+            ZIndex: =2
+
+    tl_DeleteBtnContainer As groupContainer.manualLayoutContainer:
+        Height: =90
+        Visible: =state_SelectEntryMode
+        Width: =90
+        X: =(Parent.Width/2-Self.Width/2)-Self.Width-30
+        Y: =Parent.Height-150
+        ZIndex: =7
+
+        tl_DeleteBtnBubble As circle:
+            BorderStyle: =BorderStyle.None
+            DisabledFill: =RGBA(64, 64, 64, 1)
+            DisplayMode: |-
+                =If(
+                    CountIf(
+                        TimeInCurrentPeriod,
+                        (ItemSelected = true && ('Entry Status' = [@'Time Entry Status'].Draft || ('Entry Status' = [@'Time Entry Status'].Returned)))
+                    ) > 0,
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled
+                )
+            Height: =Parent.Height
+            OnSelect: |
+                =// Delete the selected time entries from Dataverse
+                UpdateContext({state_ScreenBusy: true});
+                UpdateContext({state_ShowDeleteConfirm: true});
+            Visible: =Parent.Visible
+            Width: =Parent.Width
+            ZIndex: =1
+
+        tl_DeleteBtnIcon As icon.Add:
+            AccessibleLabel: =Self.Tooltip
+            Height: =Parent.Height
+            Icon: =Icon.Trash
+            OnSelect: =Select(tl_DeleteBtnBubble)
+            PaddingBottom: =15
+            PaddingLeft: =15
+            PaddingRight: =15
+            PaddingTop: =15
+            TabIndex: =0
+            Tooltip: ="Delete selrcted entries"
+            Visible: =Parent.Visible
+            Width: =Parent.Width
+            X: =(tl_DeleteBtnBubble.X+(tl_DeleteBtnBubble.Width/2))-(Self.Width/2)
+            Y: =(tl_DeleteBtnBubble.Y+(tl_DeleteBtnBubble.Height/2))-(Self.Height/2)
+            ZIndex: =2
+
+    tl_AddBtnContainer As groupContainer.manualLayoutContainer:
+        Height: =90
+        Visible: =(!state_SelectEntryMode && !state_AddMenuPopup)
+        Width: =90
+        X: =Parent.Width/2-Self.Width/2
+        Y: =Parent.Height-150
+        ZIndex: =8
+
+        tl_NewItemBubble As circle:
+            BorderStyle: =BorderStyle.None
+            DisplayMode: =If(DataSourceInfo([@'Time Entries'], DataSourceInfo.CreatePermission), DisplayMode.Edit, DisplayMode.Disabled)
+            Height: =Parent.Height
+            OnSelect: |-
+                =If(
+                    Feature_EnableExpense,
+                    UpdateContext({state_AddMenuPopup: !state_AddMenuPopup}),
+                    Navigate(
+                        NewTimeEntryScreen,
+                        ScreenTransition.None
+                    )
+                )
+            Visible: =Parent.Visible
+            Width: =Parent.Width
+            ZIndex: =1
+
+        tl_NewItemIcon As icon.Add:
+            AccessibleLabel: =Self.Tooltip
+            Height: =Parent.Height
+            Icon: =Icon.Add
+            OnSelect: =Select(tl_NewItemBubble)
+            PaddingBottom: =15
+            PaddingLeft: =15
+            PaddingRight: =15
+            PaddingTop: =15
+            TabIndex: =0
+            Tooltip: ="Create new item"
+            Visible: =Parent.Visible
+            Width: =Parent.Width
+            X: =(tl_NewItemBubble.X+(tl_NewItemBubble.Width/2))-(Self.Width/2)
+            Y: =(tl_NewItemBubble.Y+(tl_NewItemBubble.Height/2))-(Self.Height/2)
+            ZIndex: =2
+
+    tl_WeekContainer As groupContainer:
+        Fill: =RGBA(250, 249, 248, 1)
+        Height: =170
+        PaddingBottom: =15
+        PaddingLeft: =15
+        PaddingRight: =15
+        PaddingTop: =15
+        Visible: =state_ShowWeek
+        Width: =Parent.Width
+        Y: |
+            =tl_SummaryBar.Y+tl_SummaryBar.Height
+        ZIndex: =9
+
+        GraphBackground As button:
+            DisplayMode: |
+                =DisplayMode.View
+            Fill: =RGBA(240, 240, 240, 1)
+            Height: =Parent.Height-Parent.PaddingTop-Parent.PaddingBottom
+            PaddingBottom: =Parent.PaddingBottom
+            PaddingLeft: |
+                =Parent.PaddingLeft
+            PaddingRight: =Parent.PaddingRight
+            PaddingTop: =Parent.PaddingTop
+            RadiusBottomLeft: =Self.RadiusTopLeft
+            RadiusBottomRight: =Self.RadiusTopLeft
+            RadiusTopRight: =Self.RadiusTopLeft
+            Size: =24
+            Text: =""
+            Visible: =Parent.Visible
+            Width: =Parent.Width-Parent.PaddingLeft-Parent.PaddingRight
+            X: =Parent.PaddingTop
+            Y: =Parent.PaddingRight
+            ZIndex: =1
+
+        Day7 As button:
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(0, 0, 0, 1)
+            DisplayMode: |
+                =DisplayMode.Edit
+            Fill: =Parent.Fill
+            FontWeight: =FontWeight.Normal
+            Height: =GraphBackground.Height-Self.Y
+            OnSelect: |-
+                =Set(
+                    defaultDate,
+                    DateAdd(
+                        DateAdd(
+                            PeriodStart,
+                            (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                            Minutes
+                        ),
+                        6,
+                        Days
+                    )
+                );
+                Navigate(NewTimeEntryScreen,ScreenTransition.None)
+            Size: =18
+            Text: |-
+                =// Calcualte the total number of hours in the period and adjust unit to pural
+                Text(
+                    DateAdd(
+                        DateAdd(PeriodStart, (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes),
+                        6,
+                        Days
+                    ),
+                    "ddd "
+                ) & Text(
+                    Sum(
+                        Filter(
+                            TimeInCurrentPeriod,
+                            (Start >= DateAdd(
+                                PeriodStart,
+                                6,
+                                Days
+                            )) && (End <= DateAdd(
+                                PeriodStart,
+                                7,
+                                Days
+                            ))
+                        ),
+                        Duration
+                    ) / 60,
+                    "0.00"
+                ) 
+            Visible: =Parent.Visible
+            Width: =((GraphBackground.Width - GraphBackground.PaddingLeft - GraphBackground.PaddingRight) / 8) 
+            X: =(GraphBackground.X + GraphBackground.PaddingLeft) + (Self.Width/16) + (6 * (Self.Width+(Self.Width/7)))
+            Y: =(GraphBackground.Y + GraphBackground.PaddingTop)
+            ZIndex: =2
+
+        Day6 As button:
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(0, 0, 0, 1)
+            DisplayMode: |
+                =DisplayMode.Edit
+            Fill: =Parent.Fill
+            FontWeight: =FontWeight.Normal
+            Height: =GraphBackground.Height-Self.Y
+            OnSelect: |-
+                =Set(
+                    defaultDate,
+                    DateAdd(
+                        DateAdd(
+                            PeriodStart,
+                            (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                            Minutes
+                        ),
+                        5,
+                        Days
+                    )
+                );
+                Navigate(NewTimeEntryScreen,ScreenTransition.None)
+            Size: =18
+            Text: |-
+                =// Calcualte the total number of hours in the period and adjust unit to pural
+                Text(
+                    DateAdd(
+                        DateAdd(
+                            PeriodStart,
+                            (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                            Minutes
+                        ),
+                        5,
+                        Days
+                    ),
+                    "ddd "
+                ) & Text(
+                    Sum(
+                        Filter(
+                            TimeInCurrentPeriod,
+                            (Start >= DateAdd(
+                                PeriodStart,
+                                5,
+                                Days
+                            )) && (End <= DateAdd(
+                                PeriodStart,
+                                6,
+                                Days
+                            ))
+                        ),
+                        Duration
+                    ) / 60,
+                    "0.00"
+                )
+            Visible: =Parent.Visible
+            Width: =((GraphBackground.Width - GraphBackground.PaddingLeft - GraphBackground.PaddingRight) / 8) 
+            X: =(GraphBackground.X + GraphBackground.PaddingLeft) + (Self.Width/16) + (5 * (Self.Width+(Self.Width/7)))
+            Y: =(GraphBackground.Y + GraphBackground.PaddingTop)
+            ZIndex: =3
+
+        Day5 As button:
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(0, 0, 0, 1)
+            Fill: =Parent.Fill
+            FontWeight: =FontWeight.Normal
+            Height: =GraphBackground.Height-Self.Y
+            OnSelect: |-
+                =Set(
+                    defaultDate,
+                    DateAdd(
+                        DateAdd(
+                            PeriodStart,
+                            (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                            Minutes
+                        ),
+                        4,
+                        Days
+                    )
+                );
+                Navigate(
+                    NewTimeEntryScreen,
+                    ScreenTransition.None
+                )
+            Size: =18
+            Text: |-
+                =// Calcualte the total number of hours in the period and adjust unit to pural
+                Text(
+                    DateAdd(
+                        DateAdd(PeriodStart, (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes),
+                        4,
+                        Days
+                    ),
+                    "ddd "
+                ) & Text(
+                    Sum(
+                        Filter(
+                            TimeInCurrentPeriod,
+                            (Start >= DateAdd(
+                                PeriodStart,
+                                4,
+                                Days
+                            )) && (End <= DateAdd(
+                                PeriodStart,
+                                5,
+                                Days
+                            ))
+                        ),
+                        Duration
+                    ) / 60,
+                    "0.00"
+                ) 
+            Visible: =Parent.Visible
+            Width: =((GraphBackground.Width - GraphBackground.PaddingLeft - GraphBackground.PaddingRight) / 8) 
+            X: =(GraphBackground.X + GraphBackground.PaddingLeft) + (Self.Width/16) + (4 * (Self.Width+(Self.Width/7)))
+            Y: =(GraphBackground.Y + GraphBackground.PaddingTop)
+            ZIndex: =4
+
+        Day4 As button:
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(0, 0, 0, 1)
+            DisplayMode: |
+                =DisplayMode.Edit
+            Fill: =Parent.Fill
+            FontWeight: =FontWeight.Normal
+            Height: =GraphBackground.Height-Self.Y
+            OnSelect: |-
+                =Set(
+                    defaultDate,
+                    DateAdd(
+                        DateAdd(
+                            PeriodStart,
+                            (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                            Minutes
+                        ),
+                        3,
+                        Days
+                    )
+                );
+                Navigate(
+                    NewTimeEntryScreen,
+                    ScreenTransition.None
+                )
+            Size: =18
+            Text: |-
+                =// Calcualte the total number of hours in the period and adjust unit to pural
+                Text(
+                    DateAdd(
+                        DateAdd(PeriodStart, (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes),
+                        3,
+                        Days
+                    ),
+                    "ddd "
+                ) & Text(
+                    Sum(
+                        Filter(
+                            TimeInCurrentPeriod,
+                            (Start >= DateAdd(
+                                PeriodStart,
+                                3,
+                                Days
+                            )) && (End <= DateAdd(
+                                PeriodStart,
+                                4,
+                                Days
+                            ))
+                        ),
+                        Duration
+                    ) / 60,
+                    "0.00"
+                ) 
+            Visible: =Parent.Visible
+            Width: =(GraphBackground.Width - GraphBackground.PaddingLeft - GraphBackground.PaddingRight) / 8
+            X: =(GraphBackground.X + GraphBackground.PaddingLeft) + (Self.Width/16) + (3 * (Self.Width+(Self.Width/7)))
+            Y: =(GraphBackground.Y + GraphBackground.PaddingTop)
+            ZIndex: =5
+
+        Day3 As button:
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(0, 0, 0, 1)
+            DisplayMode: |
+                =DisplayMode.Edit
+            Fill: =Parent.Fill
+            FontWeight: =FontWeight.Normal
+            Height: =GraphBackground.Height-Self.Y
+            OnSelect: |-
+                =Set(
+                    defaultDate,
+                    DateAdd(
+                        DateAdd(
+                            PeriodStart,
+                            (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                            Minutes
+                        ),
+                        2,
+                        Days
+                    )
+                );
+                Navigate(
+                    NewTimeEntryScreen,
+                    ScreenTransition.None
+                )
+            Size: =18
+            Text: |-
+                =// Calcualte the total number of hours in the period and adjust unit to pural
+                Text(
+                    DateAdd(
+                        DateAdd(
+                            PeriodStart,
+                            (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                            Minutes
+                        ),
+                        2,
+                        Days
+                    ),
+                    "ddd "
+                ) & Text(
+                    Sum(
+                        Filter(
+                            TimeInCurrentPeriod,
+                            (Start >= DateAdd(
+                                PeriodStart,
+                                2,
+                                Days
+                            )) && (End <= DateAdd(
+                                PeriodStart,
+                                3,
+                                Days
+                            ))
+                        ),
+                        Duration
+                    ) / 60,
+                    "0.00"
+                )
+            Visible: =Parent.Visible
+            Width: =(GraphBackground.Width - GraphBackground.PaddingLeft - GraphBackground.PaddingRight) / 8
+            X: =(GraphBackground.X + GraphBackground.PaddingLeft) + (Self.Width/16) + (2 * (Self.Width+(Self.Width/7)))
+            Y: =(GraphBackground.Y + GraphBackground.PaddingTop)
+            ZIndex: =6
+
+        Day2 As button:
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(0, 0, 0, 1)
+            DisplayMode: |
+                =DisplayMode.Edit
+            Fill: =Parent.Fill
+            FontWeight: =FontWeight.Normal
+            Height: =GraphBackground.Height-Self.Y
+            OnSelect: |-
+                =Set(
+                    defaultDate,
+                    DateAdd(
+                        DateAdd(
+                            PeriodStart,
+                            (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                            Minutes
+                        ),
+                        1,
+                        Days
+                    )
+                );
+                Navigate(
+                    NewTimeEntryScreen,
+                    ScreenTransition.None
+                )
+            Size: =18
+            Text: |-
+                =// Calcualte the total number of hours in the period and adjust unit to pural
+                Text(
+                    DateAdd(
+                        DateAdd(PeriodStart, (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes),
+                        1,
+                        Days
+                    ),
+                    "ddd "
+                ) & Text(
+                    Sum(
+                        Filter(
+                            TimeInCurrentPeriod,
+                            (Start >= DateAdd(
+                                PeriodStart,
+                                1,
+                                Days
+                            )) && (End <= DateAdd(
+                                PeriodStart,
+                                2,
+                                Days
+                            ))
+                        ),
+                        Duration
+                    ) / 60,
+                    "0.00"
+                )
+            Visible: =Parent.Visible
+            Width: =(GraphBackground.Width - GraphBackground.PaddingLeft - GraphBackground.PaddingRight) / 8
+            X: =(GraphBackground.X + GraphBackground.PaddingLeft) + (Self.Width/16) + (1 * (Self.Width+(Self.Width/7)))
+            Y: =(GraphBackground.Y + GraphBackground.PaddingTop)
+            ZIndex: =7
+
+        Day1 As button:
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(0, 0, 0, 1)
+            DisplayMode: |
+                =DisplayMode.Edit
+            Fill: =Parent.Fill
+            FontWeight: =FontWeight.Normal
+            Height: =GraphBackground.Height-Self.Y
+            OnSelect: |-
+                =Set(
+                    defaultDate,
+                    DateAdd(
+                        PeriodStart,
+                        (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                        Minutes
+                    )
+                );
+                Navigate(
+                    NewTimeEntryScreen,
+                    ScreenTransition.None
+                )
+            Size: =18
+            Text: |-
+                =// Calcualte the total number of hours in the period and adjust unit to pural
+                Text(DateAdd(PeriodStart, (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes), "ddd ")&
+                Text(
+                    Sum(
+                        Filter(
+                            TimeInCurrentPeriod,
+                            (Start >= PeriodStart) && (End <= DateAdd(
+                                PeriodStart,
+                                1,
+                                Days
+                            ))
+                        ),
+                        Duration
+                    ) / 60,
+                    "0.00"
+                ) 
+            Visible: =Parent.Visible
+            Width: =(GraphBackground.Width - GraphBackground.PaddingLeft - GraphBackground.PaddingRight) / 8
+            X: =(GraphBackground.X + GraphBackground.PaddingLeft) + (Self.Width/16) + (0 * (Self.Width+(Self.Width/16)))
+            Y: =(GraphBackground.Y + GraphBackground.PaddingTop)
+            ZIndex: =8
+
+    tl_DisableRegion2 As rectangle:
+        BorderColor: =RGBA(255, 255, 255, 0.79)
+        Fill: =RGBA(120, 120, 120, 0.50)
+        Height: =Parent.Height-tl_MainBar.Height
+        OnSelect: |-
+            =If(
+                state_AddMenuPopup = true,
+                UpdateContext({state_AddMenuPopup: !state_AddMenuPopup});
+                UpdateContext({state_ScreenBusy: false}),
+                false
+            )
+        Visible: =state_ScreenBusy
+        Width: =Parent.Width
+        Y: |
+            =tl_MainBar.Height
+        ZIndex: =10
+
+    tl_DisableRegion1 As rectangle:
+        BorderColor: =RGBA(255, 255, 255, 0.79)
+        Fill: =RGBA(120, 120, 120, 0.50)
+        Height: =tl_MainBar.Height
+        OnSelect: |-
+            =If(
+                state_AddMenuPopup = true,
+                UpdateContext({state_AddMenuPopup: !state_AddMenuPopup});
+                UpdateContext({state_ScreenBusy: false}),
+                false
+            )
+        Visible: =state_ScreenBusy
+        Width: =tl_MainBar.Width
+        X: =tl_MainBar.X
+        Y: =tl_MainBar.Y
+        ZIndex: =11
+
+    tl_AddMenuContainer As groupContainer:
+        Fill: =RGBA(255, 255, 255,1)
+        Height: =324
+        Visible: =state_AddMenuPopup&&!state_SelectEntryMode
+        Width: =Parent.Width
+        Y: =Parent.Height-Self.Height
+        ZIndex: =12
+
+        tl_AddTimeBtn As button:
+            Height: =109
+            OnSelect: =Navigate(NewTimeEntryScreen,ScreenTransition.None)
+            Size: =24
+            Text: ="Create time entry"
+            Width: =Parent.Width-80
+            X: =40
+            Y: =180
+            ZIndex: =1
+
+        tl_ImportFromBookingsBtn1 As button:
+            DisplayMode: =DisplayMode.Disabled
+            Height: =109
+            OnSelect: =Navigate(NewTimeEntryScreen,ScreenTransition.None)
+            Size: =24
+            Text: ="Import from bookings"
+            Width: =(Parent.Width-100)/2
+            X: =40
+            Y: =44
+            ZIndex: =2
+
+        tl_ImportFromAssignmentsBtn As button:
+            DisplayMode: =DisplayMode.Disabled
+            FontWeight: =FontWeight.Bold
+            Height: =109
+            OnSelect: =Navigate(NewTimeEntryScreen,ScreenTransition.None)
+            Size: =24
+            Text: ="Import from assignments"
+            Width: =(Parent.Width-100)/2
+            X: =((Parent.Width-100)/2)+60
+            Y: =44
+            ZIndex: =3
+
+    tl_DeleteDialog As groupContainer:
+        BorderStyle: =BorderStyle.None
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =230
+        Visible: =state_ShowDeleteConfirm
+        X: =Parent.Width/2-Self.Width/2
+        Y: =Parent.Height/2-Self.Height/2
+        ZIndex: =13
+
+        tl_CancelBtn As button:
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(56, 96, 178, 1)
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =70
+            OnSelect: |
+                =UpdateContext({state_ScreenBusy: false});
+                UpdateContext({state_ShowDeleteConfirm: false});
+            Size: =21
+            Text: ="CANCEL"
+            Visible: =Parent.Visible
+            Width: |
+                =150
+            X: =Parent.Width-tl_DeleteBtn.X-40
+            Y: =Parent.Height-Self.Height-20
+            ZIndex: =1
+
+        tl_DeleteBtn As button:
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(56, 96, 178, 1)
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =70
+            OnSelect: |+
+                =UpdateContext({state_ShowDeleteConfirm: false});
+                // Delete the selected time entries from Dataverse
+                UpdateContext({state_ScreenBusy: true});
+                Remove(
+                    'Time Entries',
+                    DropColumns(
+                        Filter(
+                            TimeInCurrentPeriod,
+                            ItemSelected = true
+                        ),
+                        "AdjustedStart",
+                        "AdjustedEnd",
+                        "ItemSelected"
+                    )
+                );
+                // Refresh the list of time entries after the delete
+                Select(tl_RefreshIcon);
+                UpdateContext({state_ScreenBusy: false});
+                
+            Size: =21
+            Text: ="DELETE"
+            Visible: =Parent.Visible
+            Width: =150
+            X: =Parent.Width-Self.Width-20
+            Y: =Parent.Height-Self.Height-20
+            ZIndex: =2
+
+        tl_DeleteDialogMsg As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =140
+            LineHeight: =1.4
+            PaddingBottom: =20
+            PaddingLeft: =20
+            PaddingRight: =20
+            PaddingTop: =20
+            Size: =21
+            Text: =If(CountRows(Filter(TimeInCurrentPeriod, ItemSelected=true))>1, "Are you sure you want to delete the selected time entries?", "Are you sure you want to delete the selected time entry?")
+            VerticalAlign: =VerticalAlign.Top
+            Visible: =Parent.Visible
+            Width: =Parent.Width
+            ZIndex: =3
+

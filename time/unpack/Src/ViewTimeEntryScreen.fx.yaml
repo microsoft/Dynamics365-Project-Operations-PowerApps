@@ -1,0 +1,921 @@
+"ViewTimeEntryScreen As screen.'phoneLayout_HeaderAndForm_ver3.0'":
+    OnVisible: |-
+        =If(
+            selectedId.Type = 'Time Entry Type'.Work || selectedId.Type = 'Time Entry Type'.Overtime,
+            UpdateContext({state_ProjectTimeEntry: true}),
+            UpdateContext({state_ProjectTimeEntry: false})
+        );
+        UpdateContext({vte_UpdatedRole: selectedId.Role});
+
+    vte_EditForm As form:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        BorderStyle: =BorderStyle.None
+        DataSource: ='Time Entries'
+        DefaultMode: =FormMode.View
+        Height: =Parent.Height - vte_EditForm.Y
+        Item: |
+            =LookUp('Time Entries', 'Time Entry'=selectedId.'Time Entry')
+        NumberOfColumns: =1
+        OnReset: |-
+            =UpdateContext({vte_UpdatedRole: selectedId.Role});
+        OnSuccess: =Navigate(TimelineScreen)
+        Width: =Parent.Width
+        Y: =vte_MainBar.Height
+        ZIndex: =5
+
+        vte_TimeSourceCard As typedDataCard.comboBoxEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_timeentrysettingId"
+            Default: =ProjectServiceTime
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Time Source"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =ProjectServiceTime
+            Visible: =false
+            Width: =640
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+        vte_DateCard As typedDataCard.dateTimeEditCard:
+            BorderColor: =RGBA(50, 86, 160, 1)
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_date"
+            Default: =DateAdd(ThisItem.Date, TimeZoneAdjustment, Minutes)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Date"
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =50
+            Required: =true
+            Update: =DateAdd((vte_DateValue.SelectedDate + Time(Value(vte_StartHourValue.Selected.Value),Value(vte_MinuteValue.Selected.Value),0)), -(ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes)
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =1
+            ZIndex: =1
+
+            vte_DateLabel As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Lighter
+                Height: =48
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            vte_DateValue As datepicker:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                DefaultDate: =Parent.Default
+                DisplayMode: =Parent.DisplayMode
+                EndYear: =Year(Today())+100
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =70
+                IconBackground: =RGBA(237, 237, 237, 1)
+                IconFill: =RGBA(64, 64, 64, 1)
+                InputTextPlaceholder: =If(IsBlank(Self.SelectedDate), Text(Today(), Self.Format, Self.Language))
+                IsEditable: =true
+                OnChange: |
+                    =vte_StartCard
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                Size: =24
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =(Parent.Width - 60) / 2
+                X: =30
+                Y: =vte_DateLabel.Y + vte_DateLabel.Height + 5
+                ZIndex: =2
+
+            vte_StartHourValue As dropdown:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                ChevronBackground: =RGBA(237, 237, 237, 1)
+                ChevronFill: =RGBA(64, 64, 64, 1)
+                Default: =Text(Hour(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =vte_DateValue.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Visible: =Feature_EnableHourAndTime
+                Width: =vte_DateValue.Width / 2 - 10
+                X: =vte_DateValue.X + vte_DateValue.Width + 10
+                Y: =vte_DateValue.Y
+                ZIndex: =3
+
+            vte_DateTimeSeperatorLabel As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Bold
+                Height: =vte_StartHourValue.Height
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =21
+                Text: |-
+                    =":"
+                Visible: =Feature_EnableHourAndTime
+                Width: =10
+                Wrap: =false
+                X: =vte_StartHourValue.X + vte_StartHourValue.Width
+                Y: =vte_StartHourValue.Y
+                ZIndex: =4
+
+            vte_MinuteValue As dropdown:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                ChevronBackground: =RGBA(237, 237, 237, 1)
+                ChevronFill: =RGBA(64, 64, 64, 1)
+                Default: =Text(Minute(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =vte_StartHourValue.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Visible: =Feature_EnableHourAndTime
+                Width: =vte_StartHourValue.Width
+                X: =vte_StartHourValue.X + vte_StartHourValue.Width + vte_DateTimeSeperatorLabel.Width
+                Y: =vte_StartHourValue.Y
+                ZIndex: =5
+
+            vte_DateErrorMsgLabel As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =vte_StartHourValue.Y + vte_StartHourValue.Height
+                ZIndex: =6
+
+            vte_DateRequiredLabel As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Lighter
+                Height: =vte_DateLabel.Height
+                Size: =16
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =vte_DateLabel.Y
+                ZIndex: =7
+
+        vte_StartCard As typedDataCard.dateTimeEditCard:
+            BorderStyle: =BorderStyle.None
+            DataField: ="msdyn_start"
+            Default: =ThisItem.Start
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Start"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =true
+            Update: =DateAdd((vte_DateValue.SelectedDate + Time(Value(vte_StartHourValue.Selected.Value),Value(vte_MinuteValue.Selected.Value),0)), -(ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes)
+            Visible: =false
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =2
+            ZIndex: =1
+
+        vte_ProjectCard As typedDataCard.comboBoxEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_project"
+            Default: =ThisItem.Project
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Project"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =vte_ProjectCombo.Selected
+            Visible: =state_ProjectTimeEntry
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =5
+            ZIndex: =1
+
+            vte_ProjectLabel As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Lighter
+                Height: =48
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            vte_ProjectCombo As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                ChevronBackground: =RGBA(237, 237, 237, 1)
+                ChevronFill: =RGBA(64, 64, 64, 1)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["msdyn_subject"]
+                DisplayMode: =Parent.DisplayMode
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =70
+                InputTextPlaceholder: ="---"
+                Items: =Filter(Projects, 'Projects (Views)'.'My Active Projects Membership Lookup')
+                NoSelectionText: ="---"
+                OnChange: |-
+                    =Reset(vte_ProjectTaskCombo);
+                    UpdateContext(
+                        {
+                            vte_UpdatedRole: LookUp(
+                                'Project Team Members',
+                                (msdyn_project.Project = Self.Selected.Project) && (msdyn_bookableresourceid.'Bookable Resource' = ThisUserBookableResource.'Bookable Resource')
+                            ).Role
+                        }
+                    )
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["msdyn_subject"]
+                SearchItems: =Search(Filter(Projects, 'Projects (Views)'.'My Active Projects Membership Lookup'),vte_ProjectCombo.SearchText,"msdyn_subject")
+                SelectMultiple: =false
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =vte_ProjectLabel.Y + vte_ProjectLabel.Height + 5
+                ZIndex: =2
+
+            vte_ProjectErrorMsgLabel As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =vte_ProjectCombo.Y + vte_ProjectCombo.Height
+                ZIndex: =3
+
+            vte_ProjectRequiredLabel As label:
+                Align: =Align.Center
+                Height: =vte_ProjectLabel.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =vte_ProjectLabel.Y
+                ZIndex: =4
+
+        vte_ProjectTaskCard As typedDataCard.comboBoxEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_projectTask"
+            Default: =ThisItem.'Project Task'
+            DisplayMode: =If(vte_TypeCard.Default = [@'Time Entry Type'].Work || vte_TypeCard.Default = [@'Time Entry Type'].Overtime, DisplayMode.Edit, DisplayMode.View)
+            DisplayName: ="Project Task"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =vte_ProjectTaskCombo.Selected
+            Visible: =state_ProjectTimeEntry
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =6
+            ZIndex: =1
+
+            vte_ProjectTaskLabel As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Lighter
+                Height: =48
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            vte_ProjectTaskCombo As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                ChevronBackground: =RGBA(237, 237, 237, 1)
+                ChevronFill: =RGBA(64, 64, 64, 1)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["msdyn_subject"]
+                DisplayMode: =Parent.DisplayMode
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =70
+                InputTextPlaceholder: ="---"
+                Items: =Choices([@'Time Entries'].'Project Task')
+                NoSelectionText: ="---"
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["msdyn_subject"]
+                SearchItems: =Search(Choices([@'Time Entries'].'Project Task'),vte_ProjectTaskCombo.SearchText,"msdyn_subject")
+                SelectMultiple: =false
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Visible: =Parent.Visible
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =vte_ProjectTaskLabel.Y + vte_ProjectTaskLabel.Height + 5
+                ZIndex: =2
+
+            vte_ProjectTaskErrorMsgLabel As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =vte_ProjectTaskCombo.Y + vte_ProjectTaskCombo.Height
+                ZIndex: =3
+
+            vte_ProjectTaskRequiredLabel As label:
+                Align: =Align.Center
+                Height: =vte_ProjectTaskLabel.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =vte_ProjectTaskLabel.Y
+                ZIndex: =4
+
+        vte_RoleCard As typedDataCard.comboBoxEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_resourceCategory"
+            Default: =vte_UpdatedRole
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Role"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =vte_RoleCombo.Selected
+            Visible: =state_ProjectTimeEntry
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =7
+            ZIndex: =1
+
+            vte_RoleLabel As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Lighter
+                Height: =48
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            vte_RoleCombo As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                ChevronBackground: =RGBA(237, 237, 237, 1)
+                ChevronFill: =RGBA(64, 64, 64, 1)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["name"]
+                DisplayMode: =Parent.DisplayMode
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =70
+                InputTextPlaceholder: ="---"
+                Items: ='Bookable Resource Categories'
+                NoSelectionText: ="---"
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["name"]
+                SearchItems: =Search('Bookable Resource Categories',vte_RoleCombo.SearchText,"name")
+                SelectMultiple: =false
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =vte_RoleLabel.Y + vte_RoleLabel.Height + 5
+                ZIndex: =2
+
+            vte_RoleErrorMsgLabel As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =vte_RoleCombo.Y + vte_RoleCombo.Height
+                ZIndex: =3
+
+            vte_RoleRequiredLabel As label:
+                Align: =Align.Center
+                Height: =vte_RoleLabel.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =vte_RoleLabel.Y
+                ZIndex: =4
+
+        vte_EndCard As typedDataCard.dateTimeEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_end"
+            Default: =ThisItem.End
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="End"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: |-
+                =DateAdd(
+                    DateAdd(
+                        (vte_DateValue.SelectedDate + Time(
+                            Value(vte_StartHourValue.Selected.Value),
+                            Value(vte_MinuteValue.Selected.Value),
+                            0
+                        )),
+                        -(ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                        Minutes
+                    ),
+                    (Value(vte_DurationHour.Selected.Value) * 60) + Value(vte_DurationMinuteValue.Selected.Value),
+                    Minutes
+                )
+            Visible: =false
+            Width: =640
+            X: =0
+            Y: =10
+            ZIndex: =1
+
+        vte_Duration As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.None
+            DataField: ="msdyn_duration"
+            Default: =ThisItem.Duration
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Duration"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =true
+            Update: =(Value(vte_DurationHour.Selected.Value)*60)+(vte_DurationMinuteValue.Selected.Value)
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =3
+            ZIndex: =6
+
+            vte_DurationLabel As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Lighter
+                Height: =48
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            vte_DurationErrorMsgLabel As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =vte_DurationHour.Y + vte_DurationHour.Height
+                ZIndex: =3
+
+            vte_DurationRequiredLabel As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Lighter
+                Height: =vte_DurationLabel.Height
+                Size: =16
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =vte_DurationLabel.Y
+                ZIndex: =4
+
+            vte_DurationHour As dropdown:
+                BorderStyle: =BorderStyle.None
+                ChevronBackground: =RGBA(237, 237, 237, 1)
+                ChevronFill: =RGBA(0, 0, 0, 1)
+                Default: =Text(ThisItem.Duration/60,"00")
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =70
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"]
+                Size: =21
+                Width: =vte_DateValue.Width / 2 - 10
+                X: =30
+                Y: =51
+                ZIndex: =5
+
+            vte_DurationMinuteValue As dropdown:
+                BorderStyle: =BorderStyle.None
+                ChevronBackground: =RGBA(237, 237, 237, 1)
+                ChevronFill: =RGBA(0, 0, 0, 1)
+                Default: =Text(Mod(ThisItem.Duration, 60), "00")
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =70
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+                Size: =21
+                Width: =vte_DateValue.Width / 2 - 10
+                X: =vte_DurationHour.X + vte_DurationHour.Width + vte_DateTimeSeperatorLabel.Width
+                Y: =vte_DurationHour.Y
+                ZIndex: =6
+
+            vte_DurationSeperatorLabel As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Bold
+                Height: =vte_StartHourValue.Height
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =21
+                Text: |-
+                    =":"
+                Width: =10
+                Wrap: =false
+                X: =vte_DurationHour.X + vte_DurationHour.Width
+                Y: =vte_DurationHour.Y
+                ZIndex: =7
+
+        vte_TypeCard As typedDataCard.comboBoxOptionSetSingleEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_type"
+            Default: =ThisItem.Type
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Type"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =true
+            Update: =vte_TypePicker.Selected.Value
+            Visible: =true
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =4
+            ZIndex: =6
+
+            vte_TypeLabel As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Lighter
+                Height: =48
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            vte_TypePicker As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                ChevronBackground: =RGBA(237, 237, 237, 1)
+                ChevronFill: =RGBA(64, 64, 64, 1)
+                DefaultSelectedItems: =[Parent.Default]
+                DisplayFields: =["Value"]
+                DisplayMode: =Parent.DisplayMode
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =70
+                IsSearchable: =false
+                Items: =Choices('Time Entry Type')
+                OnChange: |-
+                    =If(
+                        Self.Selected.Value = 'Time Entry Type'.Work || Self.Selected.Value = 'Time Entry Type'.Overtime,
+                        Reset(vte_ProjectTaskCombo);
+                        Reset(vte_ProjectCombo);
+                        UpdateContext({state_ProjectTimeEntry: true}),
+                        UpdateContext({state_ProjectTimeEntry: false})
+                    )
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchItems: =[]
+                SelectMultiple: =false
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =vte_TypeLabel.Y + vte_TypeLabel.Height + 5
+                ZIndex: =2
+
+            vte_TypeErrorMsgLabel As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =vte_TypePicker.Y + vte_TypePicker.Height
+                ZIndex: =3
+
+            vte_TypeRequiredLabel As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Lighter
+                Height: =vte_TypeLabel.Height
+                Size: =16
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =vte_TypeLabel.Y
+                ZIndex: =4
+
+        vte_DescriptionCard As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_description"
+            Default: =ThisItem.Description
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Description"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =180
+            MaxLength: =DataSourceInfo([@'Time Entries'], DataSourceInfo.MaxLength, "msdyn_description")
+            Required: =false
+            Update: =vte_DescriptionText.Text
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =8
+            ZIndex: =6
+
+            vte_DescriptionLabel As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Lighter
+                Height: =48
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            vte_DescriptionText As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =150
+                MaxLength: =Parent.MaxLength
+                Mode: =TextMode.MultiLine
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =vte_DescriptionLabel.Y + vte_DescriptionLabel.Height + 5
+                ZIndex: =2
+
+            vte_DescriptionErrorMsgLabel As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =vte_DescriptionText.Y + vte_DescriptionText.Height
+                ZIndex: =3
+
+            vte_DescriptionRequiredLabel As label:
+                Align: =Align.Center
+                Height: =vte_DescriptionLabel.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =vte_DescriptionLabel.Y
+                ZIndex: =4
+
+        vte_ExternalCommentsCard As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_externaldescription"
+            Default: =ThisItem.'External Comments'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="External Comments"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =211
+            MaxLength: =DataSourceInfo([@'Time Entries'], DataSourceInfo.MaxLength, "msdyn_externaldescription")
+            Required: =false
+            Update: =vte_ExternalCommentsText.Text
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =9
+            ZIndex: =6
+
+            vte_ExternalCommentsLabel As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Lighter
+                Height: =139
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            vte_ExternalCommentsText As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =167
+                MaxLength: =Parent.MaxLength
+                Mode: =TextMode.MultiLine
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =vte_ExternalCommentsLabel.Y + vte_ExternalCommentsLabel.Height + 5
+                ZIndex: =2
+
+            vte_ExternalCommentsErrorMsgLabel As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =vte_ExternalCommentsText.Y + vte_ExternalCommentsText.Height
+                ZIndex: =3
+
+            vte_ExternalCommentsRequiredLabel As label:
+                Align: =Align.Center
+                Height: =vte_ExternalCommentsLabel.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =vte_ExternalCommentsLabel.Y
+                ZIndex: =4
+
+    vte_MainBar As groupContainer:
+        BorderStyle: =BorderStyle.None
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =86
+        Width: |
+            =Parent.Width
+        ZIndex: =6
+
+        vte_SaveIcon As icon.Check:
+            AccessibleLabel: =Self.Tooltip
+            Color: =RGBA(0, 0, 0, 1)
+            DisplayMode: |-
+                =If(
+                    DataSourceInfo(
+                        [@'Time Entries'],
+                        DataSourceInfo.EditPermission
+                    ) && ((selectedId.'Entry Status' = 'Time Entry Status'.Draft) || (selectedId.'Entry Status' = 'Time Entry Status'.Returned)) && (vte_EditForm.Mode = FormMode.Edit) && (vte_EditForm.Unsaved),
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled
+                )
+            Height: =86
+            Icon: =Icon.Save
+            OnSelect: =SubmitForm(vte_EditForm); ResetForm(vte_EditForm)
+            PaddingBottom: =22
+            PaddingLeft: =22
+            PaddingRight: =22
+            PaddingTop: =22
+            TabIndex: =0
+            Tooltip: ="Submit item"
+            Visible: =If(vte_EditForm.Mode=FormMode.Edit, true, false)
+            Width: =88
+            X: =Parent.Width - Self.Width
+            ZIndex: =1
+
+        vte_CancelIcon As icon.Cancel:
+            AccessibleLabel: =Self.Tooltip
+            Color: =RGBA(0, 0, 0, 1)
+            Height: =86
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =ResetForm(vte_EditForm);
+                Navigate(TimelineScreen,ScreenTransition.None)
+            PaddingBottom: =22
+            PaddingLeft: =22
+            PaddingRight: =22
+            PaddingTop: =22
+            TabIndex: =0
+            Tooltip: ="Cancel item"
+            Width: =88
+            ZIndex: =2
+
+        vte_EditIcon As icon.Edit:
+            AccessibleLabel: =Self.Tooltip
+            Color: =RGBA(0, 0, 0, 1)
+            DisplayMode: |-
+                =If(
+                    DataSourceInfo(
+                        [@'Time Entries'],
+                        DataSourceInfo.EditPermission
+                    ) && ((selectedId.'Entry Status' = 'Time Entry Status'.Draft) || (selectedId.'Entry Status' = 'Time Entry Status'.Returned)) && vte_EditForm.Mode = FormMode.View,
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled
+                )
+            Height: =86
+            Icon: =Icon.Edit
+            OnSelect: =EditForm(vte_EditForm);
+            PaddingBottom: =24
+            PaddingLeft: =24
+            PaddingRight: =24
+            PaddingTop: =24
+            TabIndex: =0
+            Tooltip: ="Edit this item"
+            Visible: |-
+                =If(
+                    DataSourceInfo(
+                        [@'Time Entries'],
+                        DataSourceInfo.EditPermission
+                    ) && ((selectedId.'Entry Status' = 'Time Entry Status'.Draft) || (selectedId.'Entry Status' = 'Time Entry Status'.Returned)) && vte_EditForm.Mode = FormMode.View,
+                    true,
+                    false
+                )
+            Width: =88
+            X: =Parent.Width - Self.Width
+            ZIndex: =3
+
+        vte_ViewTimeEntryLabel As label:
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(0, 0, 0, 1)
+            FontWeight: =FontWeight.Bold
+            Height: =86
+            Size: =27
+            Text: ="Time Entry" & " (" & selectedId.'Entry Status'&")"
+            Width: =Parent.Width - vte_CancelIcon.Width - vte_SaveIcon.Width
+            Wrap: =false
+            X: =vte_CancelIcon.X + vte_CancelIcon.Width
+            ZIndex: =4
+

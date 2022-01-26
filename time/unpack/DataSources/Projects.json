@@ -1,0 +1,445 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "msdyn_projects",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "msdyn_project",
+    "MaxGetRowsCount": 500,
+    "Name": "Projects",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Owner",
+      "{Attachments}": "Attachments",
+      "bpf_msdyn_project_msdyn_bpf_665e73aa18c247d886bfc50499c73b82": "Project Stages",
+      "createdby": "Created By",
+      "createdon": "Created On",
+      "createdonbehalfby": "Created By (Delegate)",
+      "exchangerate": "Exchange Rate",
+      "importsequencenumber": "Import Sequence Number",
+      "modifiedby": "Modified By",
+      "modifiedon": "Modified On",
+      "modifiedonbehalfby": "Modified By (Delegate)",
+      "msdyn_actualend": "Actual Finish",
+      "msdyn_actualexpensecost": "Actual Expense Cost",
+      "msdyn_actualexpensecost_base": "Actual Expense Cost (Base)",
+      "msdyn_actualexpensesales": "Actual Expense Sales",
+      "msdyn_actualexpensesales_base": "Actual Expense Sales (Base)",
+      "msdyn_actualfeesales": "Actual Fee Sales",
+      "msdyn_actualfeesales_base": "Actual Fee Sales (Base)",
+      "msdyn_actuallaborcost": "Actual Labor Cost",
+      "msdyn_actuallaborcost_base": "Actual Labor Cost (Base)",
+      "msdyn_actualmaterialcost": "Actual Material Cost",
+      "msdyn_actualmaterialcost_base": "Actual Material Cost (Base)",
+      "msdyn_actualmaterialsales": "Actual Material Sales",
+      "msdyn_actualmaterialsales_base": "Actual Material Sales (Base)",
+      "msdyn_actualsales": "Actual Labor Sales",
+      "msdyn_actualsales_base": "Actual Labor Sales (Base)",
+      "msdyn_actualstart": "Actual Start",
+      "msdyn_bulkgenerationstatus": "Bulk Generation Status",
+      "msdyn_businesscase": "Business case",
+      "msdyn_calendarid": "Calendar Id",
+      "msdyn_comments": "Comments",
+      "msdyn_contractlineproject": "Contract Line",
+      "msdyn_ContractOrganizationalUnitId": "Contracting Unit",
+      "msdyn_copyprojectcorrelationid": "Copy Project Correlation Id",
+      "msdyn_copyprojectsessionid": "Copy Project Session Id",
+      "msdyn_costconsumption": "Cost Consumption %",
+      "msdyn_costestimateatcomplete": "Cost estimate at completion (EAC)",
+      "msdyn_costestimateatcomplete_base": "Cost estimate at completion (EAC)(Base)",
+      "msdyn_costperformence": "Cost Performance",
+      "msdyn_costvariance": "Cost Variance",
+      "msdyn_costvariance_base": "Cost Variance (Base)",
+      "msdyn_customer": "Customer",
+      "msdyn_description": "Description",
+      "msdyn_disablecreateofteammemberformanager": "Disable create of team member for project manager",
+      "msdyn_duration": "Duration (Days)",
+      "msdyn_effort": "Effort (Hours)",
+      "msdyn_effortcompleted": "Effort Completed (Hours)",
+      "msdyn_effortestimateatcompleteeac": "Effort estimate at complete (EAC)",
+      "msdyn_effortremaining": "Effort Remaining (Hours)",
+      "msdyn_exchangerate": "Exchange Rate (Deprecated in v4.9)",
+      "msdyn_finish": "Finish Date",
+      "msdyn_globalrevisiontoken": "Global Revision Token",
+      "msdyn_islinkedtomsprojectclient": "Is Linked To MS Project Client",
+      "msdyn_linkeddocumenturl": "Linked Document URL",
+      "msdyn_msdyn_project_bookableresourcebooking_projectid": "Bookable Resource Bookings",
+      "msdyn_msdyn_project_bookableresourcebookingheader_projectid": "Bookable Resource Booking Headers",
+      "msdyn_msdyn_project_invoicedetail_Project": "Invoice Lines",
+      "msdyn_msdyn_project_msdyn_actual_Project": "Actuals",
+      "msdyn_msdyn_project_msdyn_approvalset_Project": "Approval Sets",
+      "msdyn_msdyn_project_msdyn_contractlinescheduleofvalue_project": "Project Contract Line Milestones",
+      "msdyn_msdyn_project_msdyn_documentheader_project": "Document Headers",
+      "msdyn_msdyn_project_msdyn_estimate_Project": "Estimates",
+      "msdyn_msdyn_project_msdyn_estimateline_Project": "Estimate Lines",
+      "msdyn_msdyn_project_msdyn_expense_Project": "Expenses",
+      "msdyn_msdyn_project_msdyn_fact_Project": "Facts",
+      "msdyn_msdyn_project_msdyn_invoicelinetransaction_Project": "Invoice Line Details",
+      "msdyn_msdyn_project_msdyn_journal_DefaultProject": "Journals (msdyn_msdyn_project_msdyn_journal_DefaultProject)",
+      "msdyn_msdyn_project_msdyn_journal_Project": "Journals (msdyn_msdyn_project_msdyn_journal_Project)",
+      "msdyn_msdyn_project_msdyn_journalline_Project": "Journal Lines",
+      "msdyn_msdyn_project_msdyn_materialusagelog_Project": "Material Usage Logs",
+      "msdyn_msdyn_project_msdyn_operationset": "OperationSets",
+      "msdyn_msdyn_project_msdyn_orderlinetransaction_Project": "Project Contract Line Details",
+      "msdyn_msdyn_project_msdyn_projectapproval_Project": "Project Approval",
+      "msdyn_msdyn_project_msdyn_projectbucket_project": "Project Buckets",
+      "msdyn_msdyn_project_msdyn_projectchange_Project": "Change",
+      "msdyn_msdyn_project_msdyn_projectcontractlinetask_Project": "Project Contract Line Tasks",
+      "msdyn_msdyn_project_msdyn_projectissue_Project": "Issue",
+      "msdyn_msdyn_project_msdyn_projectlabel_Project": "Project Labels",
+      "msdyn_msdyn_project_msdyn_projectpricelist_Project": "Project Price Lists",
+      "msdyn_msdyn_project_msdyn_projectquotelinetask_Project": "Project Quote Line Tasks",
+      "msdyn_msdyn_project_msdyn_projectrequest_Project": "Project Request",
+      "msdyn_msdyn_project_msdyn_projectrisk_Project": "Risk",
+      "msdyn_msdyn_project_msdyn_projectstatusreport_Project": "Status Report",
+      "msdyn_msdyn_project_msdyn_projecttask_project": "Project Tasks",
+      "msdyn_msdyn_project_msdyn_projecttaskdependency_Project": "Project Task Dependencies",
+      "msdyn_msdyn_project_msdyn_projectteam_project": "Project Team Members",
+      "msdyn_msdyn_project_msdyn_projectteamschannelmapping_Project": "Project Teams Channel Mappings",
+      "msdyn_msdyn_project_msdyn_psserrorlog": "PSS Error Logs",
+      "msdyn_msdyn_project_msdyn_quotelinetransaction_Project": "Quote Line Detail",
+      "msdyn_msdyn_project_msdyn_replaylogsection_project": "Replay Log Sections",
+      "msdyn_msdyn_project_msdyn_resourceassignment_projectid": "Resource Assignments",
+      "msdyn_msdyn_project_msdyn_subcontractline": "Subcontract Lines",
+      "msdyn_msdyn_project_msdyn_timeentry_project": "Time Entries",
+      "msdyn_msdyn_project_opportunityproduct_Project": "Opportunity Lines",
+      "msdyn_msdyn_project_quotedetail_Project": "Quote Lines",
+      "msdyn_msdyn_project_salesorderdetail_Project": "Order Lines",
+      "msdyn_MSProjectDocument": "MS Project Document",
+      "msdyn_overallprojectstatus": "Overall Project Status",
+      "msdyn_plannedexpensecost": "Estimated Expense Cost",
+      "msdyn_plannedexpensecost_base": "Estimated Expense Cost (Base)",
+      "msdyn_plannedexpensesales": "Estimated Expense Sales",
+      "msdyn_plannedexpensesales_base": "Estimated Expense Sales (Base)",
+      "msdyn_plannedlaborcost": "Estimated Labor Cost",
+      "msdyn_plannedlaborcost_base": "Estimated Labor Cost (Base)",
+      "msdyn_plannedmaterialcost": "Estimated Material Cost",
+      "msdyn_plannedmaterialcost_base": "Estimated Material Cost (Base)",
+      "msdyn_plannedmaterialsales": "Estimated Material Sales",
+      "msdyn_plannedmaterialsales_base": "Estimated Material Sales (Base)",
+      "msdyn_plannedsales": "Estimated Labor Sales",
+      "msdyn_plannedsales_base": "Estimated Labor Sales (Base)",
+      "msdyn_plannerlastsavedrevisiontoken": "Planner last Saved Revisiontoken",
+      "msdyn_plannerreplicationstate": "Planner Replication State",
+      "msdyn_Program": "Program",
+      "msdyn_progress": "% Complete",
+      "msdyn_project_Annotations": "Notes",
+      "msdyn_project_AsyncOperations": "System Jobs",
+      "msdyn_project_BulkDeleteFailures": "Bulk Delete Failures",
+      "msdyn_project_connections1": "Connections (msdyn_project_connections1)",
+      "msdyn_project_connections2": "Connections (msdyn_project_connections2)",
+      "msdyn_project_DuplicateBaseRecord": "Duplicate Records (msdyn_project_DuplicateBaseRecord)",
+      "msdyn_project_DuplicateMatchingRecord": "Duplicate Records (msdyn_project_DuplicateMatchingRecord)",
+      "msdyn_project_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "msdyn_project_msdyn_projectcontractlinemilestone_project": "Project Contract Line Milestones Header",
+      "msdyn_project_msdyn_projectvendorinvoiceline_Project": "Project Vendor Invoice Lines",
+      "msdyn_project_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "msdyn_project_ProcessSession": "Process Sessions",
+      "msdyn_project_QueueItems": "Queue Items",
+      "msdyn_project_resourcerequirement": "Resource Requirements",
+      "msdyn_project_SharePointDocumentLocations": "Document Locations",
+      "msdyn_project_SyncErrors": "Sync Errors",
+      "msdyn_projectid": "Project",
+      "msdyn_projectimportstagingid_msdyn_projectimportstaging": "Import staging",
+      "msdyn_projectmanager": "Project manager",
+      "msdyn_projectresourcerequirementsvisibletore": "Project resource requirements visible to resources",
+      "msdyn_projectteamid": "Project Team",
+      "msdyn_quotelineproject": "Quote Line",
+      "msdyn_remainingcost": "Remaining Labor Cost",
+      "msdyn_remainingcost_base": "Remaining Labor Cost (Base)",
+      "msdyn_remainingsales": "Remaining Labor Sales",
+      "msdyn_remainingsales_base": "Remaining Labor Sales (Base)",
+      "msdyn_salesconsumption": "Sales Consumption %",
+      "msdyn_salesestimateatcompleteeac": "Sales Estimate At Complete (EAC)",
+      "msdyn_salesestimateatcompleteeac_base": "Sales Estimate At Complete (EAC) (Base)",
+      "msdyn_salesorderid": "Contract",
+      "msdyn_salesvariance": "Sales Variance",
+      "msdyn_salesvariance_base": "Sales Variance (Base)",
+      "msdyn_scheduledstart": "Start Date",
+      "msdyn_schedulemode": "Schedule mode",
+      "msdyn_scheduleperformance": "Schedule Performance",
+      "msdyn_schedulevariance": "Schedule Variance",
+      "msdyn_statusupdatedon": "Status Updated On",
+      "msdyn_subject": "Name",
+      "msdyn_taskearlieststart": "Earliest Start Date",
+      "msdyn_teamschannelmappingbackfilled": "Teams Channel Mapping BackFilled",
+      "msdyn_teamsize": "Team Size",
+      "msdyn_teamsize_date": "Team Size (Last Updated On)",
+      "msdyn_teamsize_state": "Team Size (State)",
+      "msdyn_totalactualcost": "Actual Total Cost",
+      "msdyn_totalactualcost_base": "Actual Total Cost (Base)",
+      "msdyn_totalactualsales": "Actual Total Sales",
+      "msdyn_totalactualsales_base": "Actual Total Sales (Base)",
+      "msdyn_totalplannedcost": "Estimated Total Cost",
+      "msdyn_totalplannedcost_base": "Estimated Total Cost (Base)",
+      "msdyn_totalplannedsales": "Estimated Total Sales",
+      "msdyn_totalplannedsales_base": "Estimated Total Sales (Base)",
+      "msdyn_valuestatement": "Value statement",
+      "msdyn_workhourtemplate": "Work hour template",
+      "overriddencreatedon": "Record Created On",
+      "owningbusinessunit": "Owning Business Unit",
+      "owningteam": "Owning Team",
+      "owninguser": "Owning User",
+      "processid": "Process Id",
+      "stageid": "Stage Id",
+      "statecode": "Project Status",
+      "statuscode": "Status Reason",
+      "timezoneruleversionnumber": "Time Zone Rule Version Number",
+      "transactioncurrencyid": "Currency",
+      "traversedpath": "Traversed Path",
+      "utcconversiontimezonecode": "UTC Conversion Time Zone Code",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "Projects",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "Projects (Views)",
+    "Name": "_msdyn_project_views",
+    "RelatedEntityName": "Projects",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "1f441532-1e52-ea11-a81e-000d3a015cf2": "Copy Project Columns",
+      "4f49784e-7370-4441-b54e-bf7be616f312": "All Projects",
+      "503325ff-e9f5-e411-80c5-00155d2390d0": "Current And Upcoming Projects",
+      "57939b7c-cdb3-e511-80e4-00155db8d81d": "My Team's Active Projects",
+      "5ffc1c17-efef-43f7-b9ef-c383fdc52470": "Project Associated View",
+      "96e491ff-da24-e911-817c-000d3afda7b9": "My Active Projects Membership Lookup",
+      "a18e3a4a-429d-4a98-9466-f7aa7068b5c3": "My Active Projects",
+      "bde03271-faca-41b1-a0e8-95d1102059f6": "Closed Projects",
+      "bfca68ee-cab3-e511-80e4-00155db8d81d": "All Active Projects",
+      "c6646673-0205-4f29-a267-fdbf47b078b4": "Project Lookup View",
+      "dc64c75c-618b-4065-ad3c-68f513c8cc64": "Project Advanced Find View"
+    }
+  },
+  {
+    "DisplayName": "Async Operation Status",
+    "Name": "msdyn_asyncoperationstatus",
+    "OptionSetInfoNameMapping": {
+      "192350000": "Processing",
+      "192350001": "Failed"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_bulkgenerationstatus",
+        "OptionSetReferenceEntityName": "Projects"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msdyn_bulkgenerationstatus",
+    "RelatedEntityName": "Projects",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Cost Performance (Projects)",
+    "Name": "msdyn_project_msdyn_costperformence",
+    "OptionSetInfoNameMapping": {
+      "192350000": "On Budget",
+      "192350001": "Over Budget",
+      "192350002": "Under Budget"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_costperformence",
+        "OptionSetReferenceEntityName": "Projects"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msdyn_costperformence",
+    "RelatedEntityName": "Projects",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Disable create of team member for project manager (Projects)",
+    "Name": "msdyn_project_msdyn_disablecreateofteammemberformanager",
+    "OptionSetInfoNameMapping": {
+      "0": "No",
+      "1": "Yes"
+    },
+    "OptionSetIsBooleanValued": true,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_disablecreateofteammemberformanager",
+        "OptionSetReferenceEntityName": "Projects"
+      }
+    },
+    "OptionSetTypeKey": "BooleanType",
+    "RelatedColumnInvariantName": "msdyn_disablecreateofteammemberformanager",
+    "RelatedEntityName": "Projects",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Is Linked To MS Project Client (Projects)",
+    "Name": "msdyn_project_msdyn_islinkedtomsprojectclient",
+    "OptionSetInfoNameMapping": {
+      "0": "No",
+      "1": "Yes"
+    },
+    "OptionSetIsBooleanValued": true,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_islinkedtomsprojectclient",
+        "OptionSetReferenceEntityName": "Projects"
+      }
+    },
+    "OptionSetTypeKey": "BooleanType",
+    "RelatedColumnInvariantName": "msdyn_islinkedtomsprojectclient",
+    "RelatedEntityName": "Projects",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Overall Project Status (Projects)",
+    "Name": "msdyn_project_msdyn_overallprojectstatus",
+    "OptionSetInfoNameMapping": {
+      "1": "Green",
+      "2": "Yellow",
+      "3": "Red"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_overallprojectstatus",
+        "OptionSetReferenceEntityName": "Projects"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msdyn_overallprojectstatus",
+    "RelatedEntityName": "Projects",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Project resource requirements visible to resources (Projects)",
+    "Name": "msdyn_project_msdyn_projectresourcerequirementsvisibletore",
+    "OptionSetInfoNameMapping": {
+      "0": "No",
+      "1": "Yes"
+    },
+    "OptionSetIsBooleanValued": true,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_projectresourcerequirementsvisibletore",
+        "OptionSetReferenceEntityName": "Projects"
+      }
+    },
+    "OptionSetTypeKey": "BooleanType",
+    "RelatedColumnInvariantName": "msdyn_projectresourcerequirementsvisibletore",
+    "RelatedEntityName": "Projects",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Schedule Performance (Projects)",
+    "Name": "msdyn_project_msdyn_scheduleperformance",
+    "OptionSetInfoNameMapping": {
+      "192350000": "On Time",
+      "192350001": "Ahead",
+      "192350002": "Behind"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_scheduleperformance",
+        "OptionSetReferenceEntityName": "Projects"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msdyn_scheduleperformance",
+    "RelatedEntityName": "Projects",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Teams Channel Mapping BackFilled (Projects)",
+    "Name": "msdyn_project_msdyn_teamschannelmappingbackfilled",
+    "OptionSetInfoNameMapping": {
+      "0": "No",
+      "1": "Yes"
+    },
+    "OptionSetIsBooleanValued": true,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_teamschannelmappingbackfilled",
+        "OptionSetReferenceEntityName": "Projects"
+      }
+    },
+    "OptionSetTypeKey": "BooleanType",
+    "RelatedColumnInvariantName": "msdyn_teamschannelmappingbackfilled",
+    "RelatedEntityName": "Projects",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Project Status (Projects)",
+    "Name": "msdyn_project_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Active",
+      "1": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "Projects"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "Projects",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status Reason (Projects)",
+    "Name": "msdyn_project_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Active",
+      "192350000": "Closed - Sets project to read only and cancels future bookings",
+      "192350001": "Project copying",
+      "192350002": "Project copy failed",
+      "192350011": "Project importing",
+      "192350012": "Project import failed",
+      "2": "Inactive - Sets project to read only"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "Projects"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "Projects",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Schedule Mode",
+    "Name": "msdyn_schedulemode",
+    "OptionSetInfoNameMapping": {
+      "192350000": "Fixed effort",
+      "192350001": "Fixed duration",
+      "192350002": "Fixed units"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_schedulemode",
+        "OptionSetReferenceEntityName": "Projects"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msdyn_schedulemode",
+    "RelatedEntityName": "Projects",
+    "Type": "OptionSetInfo"
+  }
+]

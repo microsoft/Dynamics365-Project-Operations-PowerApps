@@ -1,0 +1,239 @@
+App As appinfo:
+    BackEnabled: =false
+    OnStart: |-
+        =//Clear any stored data
+        Clear(TimeInCurrentPeriod);
+        Clear(TimeGrouped);
+        // Turn off development features
+        Set(
+            Feature_EnableExpense,
+            false
+        );
+        Set(
+            Feature_EnableHourAndTime,
+            false
+        );
+        //Store the default date
+        Set(
+            defaultDate,
+            Today()
+        );
+        tl_PeriodDatePicker.SelectedDate = Today();
+        // Setup start of week, change start of the week 0=Sat, 1=Sun, 2=Mon
+        Set(
+            PeriodStartOfWeek,
+            StartOfWeek.Sunday
+        );
+        // Setup current user details OID = AD user ID
+        Set(
+            OID,
+            GUID(Office365Users.UserProfile(User().Email).Id)
+        );
+        // Lookup system user id based on AD id
+        Set(
+            ThisUserId,
+            First(
+                Filter(
+                    Users,
+                    azureactivedirectoryobjectid = OID
+                )
+            )
+        );
+        // Lookup user settings
+        Set(
+            ThisUserSettings,
+            First(
+                Filter(
+                    'User Settings',
+                    systemuserid = ThisUserId.systemuserid
+                )
+            )
+        );
+        // Lookup Bookable Resource Record for Current User
+        Set(
+            ThisUserBookableResource,
+            First(
+                Filter(
+                    'Bookable Resources',
+                    UserId.systemuserid = ThisUserId.systemuserid
+                )
+            )
+        );
+        // Lookup Project Service Type Time Entries
+        Set(
+            ProjectServiceTime,
+            First(
+                Filter(
+                    'Time Sources',
+                    'Source Type' = 'Time Entry Source Type'.'Project Service'
+                )
+            )
+        );
+        // Establish the conversion from User Browser Time Zone to User Set Timezone
+        Set(
+            TimeZoneAdjustment,
+            TimeZoneOffset() - (ThisUserSettings.TimeZoneBias*-1);
+            //(ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias) - TimeZoneOffset()
+        );
+        // Establish the time in UTC
+        Set(
+            UTCNow,
+            DateAdd(
+                Now(),
+                TimeZoneOffset(),
+                Minutes
+            )
+        );
+        // Determine the day in UTC
+        Set(
+            UTCToday,
+            DateTimeValue(
+                Month(UTCNow) & "/" & Day(UTCNow) & "/" & Year(UTCNow),
+                "en-US"
+            )
+        );
+        
+        //Add adjustment from user settings in Dataverse
+        Set(
+            AdjustedNow,
+            DateAdd(
+                Now(),
+                TimeZoneAdjustment,
+                Minutes
+            )
+        );
+        Set(
+            AdjustedToday,
+            DateTimeValue(
+                Month(AdjustedNow) & "/" & Day(AdjustedNow) & "/" & Year(AdjustedNow),
+                "en-US"
+            )
+        );
+        // Setup working period, defaut to current week
+        // Period Start = (Start of the week, in local time) + UTC Offset (for server query) + (User Timezone)
+        Set(
+            PeriodStart,
+            DateAdd(
+                (Today() - Weekday(
+                    Today(),
+                    PeriodStartOfWeek
+                ) + 1),
+                TimeZoneAdjustment,
+                Minutes
+            )
+        );
+        Set(
+            PeriodEnd,
+            DateAdd(
+                PeriodStart,
+                7,
+                Days
+            )
+        );
+        ClearCollect(
+            TimeInCurrentPeriod,
+            AddColumns(
+                SortByColumns(
+                    Filter(
+                        'Time Entries',
+                        ('Time Source'.Name = ProjectServiceTime.Name) && (Start >= PeriodStart) && (End < PeriodEnd) && ('Bookable Resource'.Name = ThisUserBookableResource.Name)
+                    ),
+                    "msdyn_start",
+                    Ascending
+                ),
+                "AdjustedStart",
+                DateAdd(
+                    Start,
+                    -TimeZoneAdjustment,
+                    Minutes
+                ),
+                "AdjustedEnd",
+                DateAdd(
+                    End,
+                    -TimeZoneAdjustment,
+                    Minutes
+                ),
+                "ItemSelected",
+                false
+            )
+        );
+        ClearCollect(
+            TimeGrouped,
+            AddColumns(
+                GroupBy(
+                    AddColumns(
+                        TimeInCurrentPeriod,
+                        "DisplayGroupDate",
+                        DateTimeValue(
+                            Month(AdjustedStart) & "/" & Day(AdjustedStart) & "/" & Year(AdjustedStart),
+                            "en-US"
+                        )
+                    ),
+                    "DisplayGroupDate",
+                    "DataGroup"
+                ),
+                "RecCount",
+                CountRows(DataGroup),
+                "HoursTotal",
+                Sum(
+                    DataGroup,
+                    Duration
+                ),
+                "DisplayGroup",
+                "",
+                "GroupedBy",
+                0
+            )
+        );
+        Collect(
+            TimeGrouped,
+            AddColumns(
+                GroupBy(
+                    AddColumns(
+                        TimeInCurrentPeriod,
+                        "DisplayGroup",
+                        Project.Name
+                    ),
+                    "DisplayGroup",
+                    "DataGroup"
+                ),
+                "RecCount",
+                CountRows(DataGroup),
+                "HoursTotal",
+                Sum(
+                    DataGroup,
+                    Duration
+                ),
+                "DisplayGroupDate",
+                Now(),
+                "GroupedBy",
+                1
+            )
+        );
+        Collect(
+            TimeGrouped,
+            AddColumns(
+                GroupBy(
+                    AddColumns(
+                        TimeInCurrentPeriod,
+                        "DisplayGroup",
+                        Upper(Text('Entry Status'))
+                    ),
+                    "DisplayGroup",
+                    "DataGroup"
+                ),
+                "RecCount",
+                CountRows(DataGroup),
+                "HoursTotal",
+                Sum(
+                    DataGroup,
+                    Duration
+                ),
+                "DisplayGroupDate",
+                Now(),
+                "GroupedBy",
+                2
+            )
+        );
+        //SaveData(TimeInCurrentPeriod, "TimeInCurrentPeriod");*/
+

@@ -1,0 +1,3 @@
+{
+  "AppFromDataMetaDataIdsToEntityNameMappings": "{\"%DataSourceName.AFD%\":\"Time Entries\",\"%DataSourceValue.AFD%\":\"[@'Time Entries']\",\"%SortFieldName.AFD%\":\"\\\"msdyn_description\\\"\",\"%SearchFieldName.AFD%\":\"\\\"msdyn_description\\\",\\\"msdyn_externaldescription\\\",\\\"msdyn_relateditemid\\\"\",\"%StartsWithFieldName.AFD%\":\"msdyn_description\",\"%DeleteConfirmFieldName.AFD%\":\"msdyn_description\",\"%SortDescending.AFD%\":\"SortDescending1\",\"%BrowseScreen.AFD%\":\"TimelineScreen\",\"%DetailScreen.AFD%\":\"DetailScreen1\",\"%EditScreen.AFD%\":\"EditScreen1\",\"%BrowseContainer.ID%\":\"BrowseGallery1\",\"%DetailEditContainer.ID%\":\"EditForm1\"}"
+}

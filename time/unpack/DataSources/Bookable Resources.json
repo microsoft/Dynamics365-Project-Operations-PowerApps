@@ -1,0 +1,382 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "bookableresources",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "bookableresource",
+    "MaxGetRowsCount": 500,
+    "Name": "Bookable Resources",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Owner",
+      "{Attachments}": "Attachments",
+      "AccountId": "Account",
+      "bookableresource_Annotations": "Notes",
+      "bookableresource_AsyncOperations": "System Jobs",
+      "bookableresource_bookableresourcebooking_Resource": "Bookable Resource Bookings (bookableresource_bookableresourcebooking_Resource)",
+      "bookableresource_bookableresourcecategoryassn_Resource": "Bookable Resource Category Assns",
+      "bookableresource_bookableresourcecharacteristic_Resource": "Bookable Resource Characteristics",
+      "bookableresource_bookableresourcegroup_ChildResource": "Bookable Resource Groups (bookableresource_bookableresourcegroup_ChildResource)",
+      "bookableresource_bookableresourcegroup_ParentResource": "Bookable Resource Groups (bookableresource_bookableresourcegroup_ParentResource)",
+      "bookableresource_BulkDeleteFailures": "Bulk Delete Failures",
+      "bookableresource_DuplicateBaseRecord": "Duplicate Records (bookableresource_DuplicateBaseRecord)",
+      "bookableresource_DuplicateMatchingRecord": "Duplicate Records (bookableresource_DuplicateMatchingRecord)",
+      "bookableresource_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "bookableresource_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "bookableresource_ProcessSession": "Process Sessions",
+      "BookableResource_SyncErrors": "Sync Errors",
+      "bookableresourceid": "Bookable Resource",
+      "calendarid": "Calendar",
+      "ContactId": "Contact",
+      "createdbyname": "Created By",
+      "createdon": "Created On",
+      "createdonbehalfbyname": "Created By (Delegate)",
+      "exchangerate": "ExchangeRate",
+      "importsequencenumber": "Import Sequence Number",
+      "modifiedbyname": "Modified By",
+      "modifiedon": "Modified On",
+      "modifiedonbehalfbyname": "Modified By (Delegate)",
+      "msdyn_bookableresource_bookableresourcebooking_ResourceGroup": "Bookable Resource Bookings (msdyn_bookableresource_bookableresourcebooking_ResourceGroup)",
+      "msdyn_bookableresource_bookableresourcebookingheader_bookableresourceid": "Bookable Resource Booking Headers",
+      "msdyn_bookableresource_msdyn_actual_bookableresource": "Actuals",
+      "msdyn_bookableresource_msdyn_bookableresourceassociation_Resource1": "Bookable Resource Associations (msdyn_bookableresource_msdyn_bookableresourceassociation_Resource1)",
+      "msdyn_bookableresource_msdyn_bookableresourceassociation_Resource2": "Bookable Resource Associations (msdyn_bookableresource_msdyn_bookableresourceassociation_Resource2)",
+      "msdyn_bookableresource_msdyn_delegation_delegationfrom": "Delegations (Deprecated in v4.0) (msdyn_bookableresource_msdyn_delegation_delegationfrom)",
+      "msdyn_bookableresource_msdyn_delegation_delegationto": "Delegations (Deprecated in v4.0) (msdyn_bookableresource_msdyn_delegation_delegationto)",
+      "msdyn_bookableresource_msdyn_estimateline_bookableresource": "Estimate Lines",
+      "msdyn_bookableresource_msdyn_expense_bookableresource": "Expenses",
+      "msdyn_bookableresource_msdyn_fact_bookableresource": "Facts",
+      "msdyn_bookableresource_msdyn_invoicelinetransaction_bookableresource": "Invoice Line Details",
+      "msdyn_bookableresource_msdyn_journal_BookableResource": "Journals",
+      "msdyn_bookableresource_msdyn_journalline_bookableresource": "Journal Lines",
+      "msdyn_bookableresource_msdyn_materialusagelog_BookableResource": "Material Usage Logs",
+      "msdyn_bookableresource_msdyn_orderlinetransaction_bookableresource": "Project Contract Line Details",
+      "msdyn_bookableresource_msdyn_projectapproval_bookableresource": "Project Approval (msdyn_bookableresource_msdyn_projectapproval_bookableresource)",
+      "msdyn_bookableresource_msdyn_projectapproval_SubmittedBy": "Project Approval (msdyn_bookableresource_msdyn_projectapproval_SubmittedBy)",
+      "msdyn_bookableresource_msdyn_projectteam_bookableresourceid": "Project Team Members",
+      "msdyn_bookableresource_msdyn_projectvendorinvoiceline_BookableResource": "Project Vendor Invoice Lines",
+      "msdyn_bookableresource_msdyn_quotelinetransaction_bookableresource": "Quote Line Detail",
+      "msdyn_bookableresource_msdyn_requirementresourcepreference_BookableResource": "Requirement Resource Preferences",
+      "msdyn_bookableresource_msdyn_resourceassignment_bookableresourceid": "Resource Assignments",
+      "msdyn_bookableresource_msdyn_resourcecategorymarkuppricelevel_bookableresource": "Role Price Markup",
+      "msdyn_bookableresource_msdyn_resourcecategorypricelevel_bookableresource": "Role Prices",
+      "msdyn_bookableresource_msdyn_resourceterritory_Resource": "Resource Territories",
+      "msdyn_bookableresource_msdyn_timeentry_bookableresource": "Time Entries",
+      "msdyn_bookableresource_msdyn_userworkhistory_Bookableresource": "User Work History",
+      "msdyn_bookableresource_msdyn_workhourtemplate_bookableresourceid": "Work template",
+      "msdyn_bookableresource_subcontractlineresource": "Subcontract Line Resources",
+      "msdyn_derivecapacity": "Derive Capacity From Group Members",
+      "msdyn_displayonscheduleassistant": "Enable for Availability Search",
+      "msdyn_displayonscheduleboard": "Display On Schedule Board",
+      "msdyn_enableappointments": "Include Appointments",
+      "msdyn_enableoutlookschedules": "Include Outlook Free/Busy in Search Resource Availability API",
+      "msdyn_endlocation": "End Location",
+      "msdyn_generictype": "Generic Type (Deprecated)",
+      "msdyn_isgenericresourceprojectscoped": "Is Default",
+      "msdyn_OrganizationalUnit": "Organizational Unit",
+      "msdyn_pooltype": "Pool Type",
+      "msdyn_primaryemail": "Primary Email",
+      "msdyn_resourcerequirement_bookableresource": "Resource Requirements",
+      "msdyn_startlocation": "Start Location",
+      "msdyn_targetutilization": "Target Utilization",
+      "msdyn_Vendor": "Vendor",
+      "msdyn_workertype": "Type of Worker",
+      "name": "Name",
+      "overriddencreatedon": "Record Created On",
+      "owningbusinessunit": "Owning Business Unit",
+      "owningteam": "Owning Team",
+      "owninguser": "Owning User",
+      "processid": "Process Id",
+      "resourcetype": "Resource Type",
+      "stageid": "(Deprecated) Stage Id",
+      "statecode": "Status",
+      "statuscode": "Status Reason",
+      "timezone": "Time Zone",
+      "timezoneruleversionnumber": "Time Zone Rule Version Number",
+      "transactioncurrencyid": "Currency",
+      "traversedpath": "(Deprecated) Traversed Path",
+      "UserId": "User",
+      "utcconversiontimezonecode": "UTC Conversion Time Zone Code",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "Bookable Resources",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "Bookable Resources (Views)",
+    "Name": "_bookableresource_views",
+    "RelatedEntityName": "Bookable Resources",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "0524d92f-02e0-e511-80f3-00155de28206": "Resources",
+      "06d0d6be-d882-e611-8111-00155db9630e": "My Possible Delegates",
+      "21741018-7de1-e511-80f3-00155de28206": "Resources without role",
+      "32219bb2-72d1-4879-a864-b05f7ba21d3d": "Bookable Resource Associated View",
+      "65c9079f-fcdf-e511-80f3-00155de28206": "User Resources",
+      "662706ca-6ec0-4c0e-a281-521161be48fa": "Active Bookable Resources",
+      "9e78e746-02e0-e511-80f3-00155de28206": "Contact Resources",
+      "a8a3797b-e027-4b10-9647-e58070accfc4": "Bookable Resource Lookup View",
+      "b9793b37-31cb-431f-9ad0-6a1fe73dee21": "Bookable Resource Advanced Find View",
+      "c99e52b3-9cde-447e-95bf-26284bfb2497": "Inactive Bookable Resources"
+    }
+  },
+  {
+    "DisplayName": "Resource Type (Bookable Resources)",
+    "Name": "bookableresource_resourcetype",
+    "OptionSetInfoNameMapping": {
+      "1": "Generic",
+      "2": "Contact",
+      "3": "User",
+      "4": "Equipment",
+      "5": "Account",
+      "6": "Crew",
+      "7": "Facility",
+      "8": "Pool"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "resourcetype",
+        "OptionSetReferenceEntityName": "Bookable Resources"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "resourcetype",
+    "RelatedEntityName": "Bookable Resources",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status (Bookable Resources)",
+    "Name": "bookableresource_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Active",
+      "1": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "Bookable Resources"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "Bookable Resources",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status Reason (Bookable Resources)",
+    "Name": "bookableresource_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Active",
+      "2": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "Bookable Resources"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "Bookable Resources",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Derive Capacity From Group Members (Bookable Resources)",
+    "Name": "msdyn_bookableresource_msdyn_derivecapacity",
+    "OptionSetInfoNameMapping": {
+      "0": "No",
+      "1": "Yes"
+    },
+    "OptionSetIsBooleanValued": true,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_derivecapacity",
+        "OptionSetReferenceEntityName": "Bookable Resources"
+      }
+    },
+    "OptionSetTypeKey": "BooleanType",
+    "RelatedColumnInvariantName": "msdyn_derivecapacity",
+    "RelatedEntityName": "Bookable Resources",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Enable for Availability Search (Bookable Resources)",
+    "Name": "msdyn_bookableresource_msdyn_displayonscheduleassistant",
+    "OptionSetInfoNameMapping": {
+      "0": "No",
+      "1": "Yes"
+    },
+    "OptionSetIsBooleanValued": true,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_displayonscheduleassistant",
+        "OptionSetReferenceEntityName": "Bookable Resources"
+      }
+    },
+    "OptionSetTypeKey": "BooleanType",
+    "RelatedColumnInvariantName": "msdyn_displayonscheduleassistant",
+    "RelatedEntityName": "Bookable Resources",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Display On Schedule Board (Bookable Resources)",
+    "Name": "msdyn_bookableresource_msdyn_displayonscheduleboard",
+    "OptionSetInfoNameMapping": {
+      "0": "No",
+      "1": "Yes"
+    },
+    "OptionSetIsBooleanValued": true,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_displayonscheduleboard",
+        "OptionSetReferenceEntityName": "Bookable Resources"
+      }
+    },
+    "OptionSetTypeKey": "BooleanType",
+    "RelatedColumnInvariantName": "msdyn_displayonscheduleboard",
+    "RelatedEntityName": "Bookable Resources",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Is Default (Bookable Resources)",
+    "Name": "msdyn_bookableresource_msdyn_isgenericresourceprojectscoped",
+    "OptionSetInfoNameMapping": {
+      "0": "No",
+      "1": "Yes"
+    },
+    "OptionSetIsBooleanValued": true,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_isgenericresourceprojectscoped",
+        "OptionSetReferenceEntityName": "Bookable Resources"
+      }
+    },
+    "OptionSetTypeKey": "BooleanType",
+    "RelatedColumnInvariantName": "msdyn_isgenericresourceprojectscoped",
+    "RelatedEntityName": "Bookable Resources",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Type of Worker (Bookable Resources)",
+    "Name": "msdyn_bookableresource_msdyn_workertype",
+    "OptionSetInfoNameMapping": {
+      "192350000": "Employee",
+      "192350001": "Contract Worker"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_workertype",
+        "OptionSetReferenceEntityName": "Bookable Resources"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msdyn_workertype",
+    "RelatedEntityName": "Bookable Resources",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Enable appointments option set",
+    "Name": "msdyn_enableappointmentsoption",
+    "OptionSetInfoNameMapping": {
+      "192350000": "No",
+      "192350001": "Yes"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_enableappointments",
+        "OptionSetReferenceEntityName": "Bookable Resources"
+      },
+      "OptionSetReferenceItem1": {
+        "OptionSetReferenceColumnName": "msdyn_enableoutlookschedules",
+        "OptionSetReferenceEntityName": "Bookable Resources"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msdyn_enableappointments",
+    "RelatedEntityName": "Bookable Resources",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Generic Type (Deprecated)",
+    "Name": "msdyn_generictype",
+    "OptionSetInfoNameMapping": {
+      "690970000": "Service Center"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_generictype",
+        "OptionSetReferenceEntityName": "Bookable Resources"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msdyn_generictype",
+    "RelatedEntityName": "Bookable Resources",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Pool Type",
+    "Name": "msdyn_pooltype",
+    "OptionSetInfoNameMapping": {
+      "192350000": "Account",
+      "192350001": "Contact",
+      "192350002": "User",
+      "192350003": "Equipment",
+      "192350004": "Facility"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_pooltype",
+        "OptionSetReferenceEntityName": "Bookable Resources"
+      }
+    },
+    "OptionSetTypeKey": "MultiSelectPicklistType",
+    "RelatedColumnInvariantName": "msdyn_pooltype",
+    "RelatedEntityName": "Bookable Resources",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Work Start Location Type",
+    "Name": "msdyn_workstartlocationtype",
+    "OptionSetInfoNameMapping": {
+      "690970000": "Resource Address",
+      "690970001": "Organizational Unit Address",
+      "690970002": "Location Agnostic"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_startlocation",
+        "OptionSetReferenceEntityName": "Bookable Resources"
+      },
+      "OptionSetReferenceItem1": {
+        "OptionSetReferenceColumnName": "msdyn_endlocation",
+        "OptionSetReferenceEntityName": "Bookable Resources"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msdyn_startlocation",
+    "RelatedEntityName": "Bookable Resources",
+    "Type": "OptionSetInfo"
+  }
+]

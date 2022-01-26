@@ -1,0 +1,124 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "msdyn_transactioncategories",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "msdyn_transactioncategory",
+    "Name": "Transaction Categories",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "{Attachments}": "Attachments",
+      "createdby": "Created By",
+      "createdon": "Created On",
+      "createdonbehalfby": "Created By (Delegate)",
+      "importsequencenumber": "Import Sequence Number",
+      "modifiedby": "Modified By",
+      "modifiedon": "Modified On",
+      "modifiedonbehalfby": "Modified By (Delegate)",
+      "msdyn_billingtype": "Billing Type",
+      "msdyn_DefaultUnit": "Default Unit",
+      "msdyn_msdyn_transactioncategory_bookableresourcecategory_TransactionCategory": "Bookable Resource Categories",
+      "msdyn_msdyn_transactioncategory_msdyn_actual_TransactionCategory": "Actuals",
+      "msdyn_msdyn_transactioncategory_msdyn_estimateline_TransactionCategory": "Estimate Lines",
+      "msdyn_msdyn_transactioncategory_msdyn_expense_TransactionCategory": "Expenses",
+      "msdyn_msdyn_transactioncategory_msdyn_expensecatego": "Expense Categories",
+      "msdyn_msdyn_transactioncategory_msdyn_fact_TransactionCategory": "Facts",
+      "msdyn_msdyn_transactioncategory_msdyn_invoicelinetransaction_TransactionCategory": "Invoice Line Details",
+      "msdyn_msdyn_transactioncategory_msdyn_journalline_TransactionCategory": "Journal Lines",
+      "msdyn_msdyn_transactioncategory_msdyn_materialusagelog_TransactionCategory": "Material Usage Logs",
+      "msdyn_msdyn_transactioncategory_msdyn_orderlinetransaction_TransactionCategory": "Project Contract Line Details",
+      "msdyn_msdyn_transactioncategory_msdyn_orderlinetransactioncategory_TransactionCategory": "Project Contract Line Transaction Categories",
+      "msdyn_msdyn_transactioncategory_msdyn_projectapproval_TransactionCategory": "Project Approval",
+      "msdyn_msdyn_transactioncategory_msdyn_projecttask_transactioncategory": "Project Tasks",
+      "msdyn_msdyn_transactioncategory_msdyn_quotelineanalyticsbreakdown_TransactionCategory": "Quote Line Analytics Breakdown",
+      "msdyn_msdyn_transactioncategory_msdyn_quotelinetransaction_TransactionCategory": "Quote Line Detail",
+      "msdyn_msdyn_transactioncategory_msdyn_quotelinetransactioncategory_TransactionCategory": "Quote Line Transaction Categories",
+      "msdyn_msdyn_transactioncategory_msdyn_resourcecategorymarkuppricelevel_transactioncategory": "Role Price Markup",
+      "msdyn_msdyn_transactioncategory_msdyn_resourcecategorypricelevel_transactioncategory": "Role Prices",
+      "msdyn_msdyn_transactioncategory_msdyn_subcontractline_TransactionCategory": "Subcontract Lines",
+      "msdyn_msdyn_transactioncategory_msdyn_timeentry_transactioncategory": "Time Entries",
+      "msdyn_msdyn_transactioncategory_msdyn_transactioncategoryclassification_transactioncategory": "Transaction Category Classifications",
+      "msdyn_msdyn_transactioncategory_msdyn_transactioncategoryhierarchyelement_ChildCategory": "Transaction Category Hierarchy Elements (msdyn_msdyn_transactioncategory_msdyn_transactioncategoryhierarchyelement_ChildCategory)",
+      "msdyn_msdyn_transactioncategory_msdyn_transactioncategoryhierarchyelement_ParentCategory": "Transaction Category Hierarchy Elements (msdyn_msdyn_transactioncategory_msdyn_transactioncategoryhierarchyelement_ParentCategory)",
+      "msdyn_msdyn_transactioncategory_msdyn_transactioncategorypricelevel_TransactionCategory": "Transaction Category Prices",
+      "msdyn_msdyn_transactioncategory_product_TransactionCategory": "Products",
+      "msdyn_name": "Name",
+      "msdyn_transactioncategory_Annotations": "Notes",
+      "msdyn_transactioncategory_AsyncOperations": "System Jobs",
+      "msdyn_transactioncategory_BulkDeleteFailures": "Bulk Delete Failures",
+      "msdyn_transactioncategory_DuplicateBaseRecord": "Duplicate Records (msdyn_transactioncategory_DuplicateBaseRecord)",
+      "msdyn_transactioncategory_DuplicateMatchingRecord": "Duplicate Records (msdyn_transactioncategory_DuplicateMatchingRecord)",
+      "msdyn_transactioncategory_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "msdyn_transactioncategory_msdyn_projectvendorinvoiceline_TransactionCategory": "Project Vendor Invoice Lines",
+      "msdyn_transactioncategory_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "msdyn_transactioncategory_ProcessSession": "Process Sessions",
+      "msdyn_transactioncategory_SyncErrors": "Sync Errors",
+      "msdyn_transactioncategoryid": "Transaction Category",
+      "msdyn_UnitGroup": "Unit Schedule",
+      "organizationid": "Organization Id",
+      "overriddencreatedon": "Record Created On",
+      "statecode": "Status",
+      "statuscode": "Status Reason",
+      "timezoneruleversionnumber": "Time Zone Rule Version Number",
+      "utcconversiontimezonecode": "UTC Conversion Time Zone Code",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "Transaction Categories",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "Transaction Categories (Views)",
+    "Name": "_msdyn_transactioncategory_views",
+    "RelatedEntityName": "Transaction Categories",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "418a989a-ef7e-425b-b683-f3247402dbdb": "Inactive Transaction Categories",
+      "41b0707d-80a7-44c7-a2cf-d8e224042135": "Active Transaction Categories",
+      "52883d4a-eb79-467a-81a3-a166a977b49c": "Transaction Category Advanced Find View",
+      "db23fa97-cc94-49f9-974d-30fadea4e210": "Transaction Category Associated View",
+      "e0565a0b-9d47-4028-85c2-b8ebe64ca982": "Transaction Category Lookup View"
+    }
+  },
+  {
+    "DisplayName": "Status (Transaction Categories)",
+    "Name": "msdyn_transactioncategory_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Active",
+      "1": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "Transaction Categories"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "Transaction Categories",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status Reason (Transaction Categories)",
+    "Name": "msdyn_transactioncategory_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Active",
+      "2": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "Transaction Categories"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "Transaction Categories",
+    "Type": "OptionSetInfo"
+  }
+]

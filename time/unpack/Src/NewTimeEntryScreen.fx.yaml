@@ -1,0 +1,1307 @@
+"NewTimeEntryScreen As screen.'phoneLayout_HeaderAndForm_ver3.0'":
+    LoadingSpinner: =LoadingSpinner.Data
+    OnVisible: |+
+        =UpdateContext({state_ProjectTimeEntry: true});
+        UpdateContext({state_WeeklyTimeEntry : false});
+        UpdateContext({state_nte_FormSave: false});
+        UpdateContext({nte_FormDuration: 60});
+        // Update the state of the weekly buttons to reflect the one selected from the timeline screen
+        UpdateContext({state_Day1: false});
+        UpdateContext({state_Day2: false});
+        UpdateContext({state_Day3: false});
+        UpdateContext({state_Day4: false});
+        UpdateContext({state_Day5: false});
+        UpdateContext({state_Day6: false});
+        UpdateContext({state_Day7: false});
+        Switch(
+               Weekday(defaultDate),
+               1, UpdateContext({state_Day1: true}),
+               2, UpdateContext({state_Day2: true}),
+               3, UpdateContext({state_Day3: true}),
+               4, UpdateContext({state_Day4: true}),
+               5, UpdateContext({state_Day5: true}),
+               6, UpdateContext({state_Day6: true}),
+               7, UpdateContext({state_Day7: true})
+        );
+        
+        
+        
+
+    nte_NewForm As form:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        BorderStyle: =BorderStyle.None
+        DataSource: ='Time Entries'
+        DefaultMode: =FormMode.New
+        Height: =Parent.Height - nte_NewForm.Y
+        NumberOfColumns: =1
+        OnFailure: |
+            =UpdateContext({state_nte_FormSave: false});
+        OnReset: |-
+            =// Clear the variables for storing the Role, which we adjust based on Project and Task
+            UpdateContext({nte_UpdatedRole: Blank()});
+            // Set the default duration
+            UpdateContext({nte_FormDuration: 60});
+        OnSuccess: =
+        Width: =Parent.Width
+        Y: =nte_MainBar.Height
+        ZIndex: =5
+
+        nte_TimeSourceCard As typedDataCard.comboBoxEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_timeentrysettingId"
+            Default: =ProjectServiceTime
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Time Source"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =ProjectServiceTime
+            Visible: =false
+            Width: =640
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+        nte_DateCard As typedDataCard.dateTimeEditCard:
+            BorderColor: =RGBA(50, 86, 160, 1)
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_date"
+            Default: =If(state_nte_FormSave, nte_FormDate, defaultDate)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Date"
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =If(state_WeeklyTimeEntry, 300, 130)
+            Required: =true
+            Update: =DateAdd((nte_DateValue.SelectedDate + Time(Value(nte_StartHourValue.Selected.Value),Value(nte_MinuteValue.Selected.Value),0)), TimeZoneAdjustment, Minutes)
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =1
+            ZIndex: =1
+
+            nte_DateLabel As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Lighter
+                Height: =48
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            nte_DateValue As datepicker:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                DefaultDate: =Parent.Default
+                DisplayMode: =Parent.DisplayMode
+                EndYear: =Year(Today())+100
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =70
+                IconBackground: =RGBA(237, 237, 237, 1)
+                IconFill: =RGBA(64, 64, 64, 1)
+                InputTextPlaceholder: =If(IsBlank(Self.SelectedDate), Text(Today(), Self.Format, Self.Language))
+                IsEditable: =true
+                OnChange: |
+                    =nte_StartCard;
+                    UpdateContext({state_Day1: false});
+                    UpdateContext({state_Day2: false});
+                    UpdateContext({state_Day3: false});
+                    UpdateContext({state_Day4: false});
+                    UpdateContext({state_Day5: false});
+                    UpdateContext({state_Day6: false});
+                    UpdateContext({state_Day7: false});
+                    
+                    Switch(
+                        Weekday(nte_DateValue),
+                        1,
+                        UpdateContext({state_Day1: true}),
+                        2,
+                        UpdateContext({state_Day2: true}),
+                        3,
+                        UpdateContext({state_Day3: true}),
+                        4,
+                        UpdateContext({state_Day4: true}),
+                        5,
+                        UpdateContext({state_Day5: true}),
+                        6,
+                        UpdateContext({state_Day6: true}),
+                        7,
+                        UpdateContext({state_Day7: true})
+                    );
+                    
+                    // Setup working period from the picked date
+                    Set(
+                        PeriodStart,
+                        DateAdd(
+                       		nte_DateValue.SelectedDate-Weekday(nte_DateValue.SelectedDate,PeriodStartOfWeek)+1, TimeZoneAdjustment,
+                            Minutes)
+                    );
+                    Set(
+                        PeriodEnd,
+                        DateAdd(PeriodStart, 7, Days)
+                    );
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                Size: =24
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =(Parent.Width - 60) / 2
+                X: =30
+                Y: =nte_DateLabel.Y + nte_DateLabel.Height + 5
+                ZIndex: =2
+
+            nte_StartHourValue As dropdown:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                ChevronBackground: =RGBA(237, 237, 237, 1)
+                ChevronFill: =RGBA(64, 64, 64, 1)
+                Default: =Text(Hour(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =nte_DateValue.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Visible: =Feature_EnableHourAndTime
+                Width: =nte_DateValue.Width / 2 - 10
+                X: =nte_DateValue.X + nte_DateValue.Width + 10
+                Y: =nte_DateValue.Y
+                ZIndex: =3
+
+            nte_DateTimeSeperatorLabel As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Bold
+                Height: =nte_StartHourValue.Height
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =21
+                Text: |-
+                    =":"
+                Visible: =Feature_EnableHourAndTime
+                Width: =10
+                Wrap: =false
+                X: =nte_StartHourValue.X + nte_StartHourValue.Width
+                Y: =nte_StartHourValue.Y
+                ZIndex: =4
+
+            nte_MinuteValue As dropdown:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                ChevronBackground: =RGBA(237, 237, 237, 1)
+                ChevronFill: =RGBA(64, 64, 64, 1)
+                Default: =Text(Minute(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =nte_StartHourValue.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Visible: =Feature_EnableHourAndTime
+                Width: =nte_StartHourValue.Width
+                X: =nte_StartHourValue.X + nte_StartHourValue.Width + nte_DateTimeSeperatorLabel.Width
+                Y: =nte_StartHourValue.Y
+                ZIndex: =5
+
+            nte_DateErrorMsgLabel As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =nte_StartHourValue.Y + nte_StartHourValue.Height
+                ZIndex: =6
+
+            nte_DateRequiredLabel As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Lighter
+                Height: =nte_DateLabel.Height
+                Size: =16
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =nte_DateLabel.Y
+                ZIndex: =7
+
+            nte_MoreLabel As label:
+                Color: =RGBA(56, 96, 178, 1)
+                OnSelect: |-
+                    =UpdateContext({state_WeeklyTimeEntry: true})
+                PaddingBottom: =0
+                Size: =21
+                Text: ="add days"
+                Width: =560
+                X: =30
+                Y: =124
+                ZIndex: =8
+
+            nte_WeekContainer As groupContainer:
+                Fill: =Parent.Fill
+                Height: =170
+                PaddingBottom: =10
+                PaddingLeft: =10
+                PaddingRight: =10
+                PaddingTop: =10
+                Visible: =state_WeeklyTimeEntry
+                Width: =Parent.Width
+                Y: |
+                    =nte_DateValue.Y+nte_DateValue.Height+5
+                ZIndex: =9
+
+                nte_GraphBackground As button:
+                    DisplayMode: |
+                        =DisplayMode.View
+                    Fill: =RGBA(240, 240, 240, 1)
+                    Height: =Parent.Height-Parent.PaddingTop-Parent.PaddingBottom
+                    PaddingBottom: =Parent.PaddingBottom
+                    PaddingLeft: |
+                        =Parent.PaddingLeft
+                    PaddingRight: =Parent.PaddingRight
+                    PaddingTop: =Parent.PaddingTop
+                    RadiusBottomLeft: =Self.RadiusTopLeft
+                    RadiusBottomRight: =Self.RadiusTopLeft
+                    RadiusTopRight: =Self.RadiusTopLeft
+                    Size: =24
+                    Text: =""
+                    Visible: =Parent.Visible
+                    Width: =Parent.Width-Parent.PaddingLeft-Parent.PaddingRight-10
+                    X: =Parent.PaddingTop
+                    Y: =Parent.PaddingRight
+                    ZIndex: =1
+
+                nte_Day7 As button:
+                    BorderStyle: =BorderStyle.None
+                    Color: =RGBA(0, 0, 0, 1)
+                    DisplayMode: |
+                        =DisplayMode.Edit
+                    Fill: |-
+                        =If(state_Day7, RGBA(186, 202, 226, 1),
+                        Parent.Fill)
+                    FontWeight: =FontWeight.Normal
+                    Height: =nte_GraphBackground.Height-Self.Y
+                    OnSelect: |-
+                        =UpdateContext({state_Day7: !state_Day7})
+                    Size: =18
+                    Text: |-
+                        =// Calcualte the total number of hours in the period and adjust unit to pural
+                        Text(
+                            DateAdd(
+                                DateAdd(PeriodStart, (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes),
+                                6,
+                                Days
+                            ),
+                            "ddd dd/mm"
+                        )
+                    Visible: =Parent.Visible
+                    Width: =((nte_GraphBackground.Width - nte_GraphBackground.PaddingLeft - nte_GraphBackground.PaddingRight) / 8) 
+                    X: =(nte_GraphBackground.X + nte_GraphBackground.PaddingLeft) + (Self.Width/16) + (6 * (Self.Width+(Self.Width/7)))
+                    Y: =(nte_GraphBackground.Y + nte_GraphBackground.PaddingTop)
+                    ZIndex: =2
+
+                nte_Day6 As button:
+                    BorderStyle: =BorderStyle.None
+                    Color: =RGBA(0, 0, 0, 1)
+                    DisplayMode: |
+                        =DisplayMode.Edit
+                    Fill: |-
+                        =If(state_Day6, RGBA(186, 202, 226, 1),
+                        Parent.Fill)
+                    FontWeight: =FontWeight.Normal
+                    Height: =nte_GraphBackground.Height-Self.Y
+                    OnSelect: |-
+                        =UpdateContext({state_Day6: !state_Day6})
+                    Size: =18
+                    Text: |-
+                        =// Calcualte the total number of hours in the period and adjust unit to pural
+                        Text(
+                            DateAdd(
+                                DateAdd(PeriodStart, (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes),
+                                5,
+                                Days
+                            ),
+                            "ddd dd/mm"
+                        )
+                    Visible: =Parent.Visible
+                    Width: =((nte_GraphBackground.Width - nte_GraphBackground.PaddingLeft - nte_GraphBackground.PaddingRight) / 8) 
+                    X: =(nte_GraphBackground.X + nte_GraphBackground.PaddingLeft) + (Self.Width/16) + (5 * (Self.Width+(Self.Width/7)))
+                    Y: =(nte_GraphBackground.Y + nte_GraphBackground.PaddingTop)
+                    ZIndex: =3
+
+                nte_Day5 As button:
+                    BorderStyle: =BorderStyle.None
+                    Color: =RGBA(0, 0, 0, 1)
+                    Fill: |-
+                        =If(state_Day5, RGBA(186, 202, 226, 1),
+                        Parent.Fill)
+                    FontWeight: =FontWeight.Normal
+                    Height: =nte_GraphBackground.Height-Self.Y
+                    OnSelect: |-
+                        =UpdateContext({state_Day5: !state_Day5})
+                    Size: =18
+                    Text: |-
+                        =// Calcualte the total number of hours in the period and adjust unit to pural
+                        Text(
+                            DateAdd(
+                                DateAdd(PeriodStart, (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes),
+                                4,
+                                Days
+                            ),
+                            "ddd dd/mm"
+                        )
+                    Visible: =Parent.Visible
+                    Width: =((nte_GraphBackground.Width - nte_GraphBackground.PaddingLeft - nte_GraphBackground.PaddingRight) / 8) 
+                    X: =(nte_GraphBackground.X + nte_GraphBackground.PaddingLeft) + (Self.Width/16) + (4 * (Self.Width+(Self.Width/7)))
+                    Y: =(nte_GraphBackground.Y + nte_GraphBackground.PaddingTop)
+                    ZIndex: =4
+
+                nte_Day4 As button:
+                    BorderStyle: =BorderStyle.None
+                    Color: =RGBA(0, 0, 0, 1)
+                    DisplayMode: |
+                        =DisplayMode.Edit
+                    Fill: |-
+                        =If(state_Day4, RGBA(186, 202, 226, 1),
+                        Parent.Fill)
+                    FontWeight: =FontWeight.Normal
+                    Height: =nte_GraphBackground.Height-Self.Y
+                    OnSelect: |-
+                        =UpdateContext({state_Day4: !state_Day4})
+                    Size: =18
+                    Text: |-
+                        =// Calcualte the total number of hours in the period and adjust unit to pural
+                        Text(
+                            DateAdd(
+                                DateAdd(PeriodStart, (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes),
+                                3,
+                                Days
+                            ),
+                            "ddd dd/mm"
+                        )
+                    Visible: =Parent.Visible
+                    Width: =(nte_GraphBackground.Width - nte_GraphBackground.PaddingLeft - nte_GraphBackground.PaddingRight) / 8
+                    X: =(nte_GraphBackground.X + nte_GraphBackground.PaddingLeft) + (Self.Width/16) + (3 * (Self.Width+(Self.Width/7)))
+                    Y: =(nte_GraphBackground.Y + nte_GraphBackground.PaddingTop)
+                    ZIndex: =5
+
+                nte_Day3 As button:
+                    BorderStyle: =BorderStyle.None
+                    Color: =RGBA(0, 0, 0, 1)
+                    DisplayMode: |
+                        =DisplayMode.Edit
+                    Fill: |-
+                        =If(state_Day3, RGBA(186, 202, 226, 1),
+                        Parent.Fill)
+                    FontWeight: =FontWeight.Normal
+                    Height: =nte_GraphBackground.Height-Self.Y
+                    OnSelect: |-
+                        =UpdateContext({state_Day3: !state_Day3})
+                    Size: =18
+                    Text: |-
+                        =// Calcualte the total number of hours in the period and adjust unit to pural
+                        Text(
+                            DateAdd(
+                                DateAdd(
+                                    PeriodStart,
+                                    (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                                    Minutes
+                                ),
+                                2,
+                                Days
+                            ),
+                            "ddd dd/mm"
+                        )
+                    Visible: =Parent.Visible
+                    Width: =(nte_GraphBackground.Width - nte_GraphBackground.PaddingLeft - nte_GraphBackground.PaddingRight) / 8
+                    X: =(nte_GraphBackground.X + nte_GraphBackground.PaddingLeft) + (Self.Width/16) + (2 * (Self.Width+(Self.Width/7)))
+                    Y: =(nte_GraphBackground.Y + nte_GraphBackground.PaddingTop)
+                    ZIndex: =6
+
+                nte_Day2 As button:
+                    BorderStyle: =BorderStyle.None
+                    Color: =RGBA(0, 0, 0, 1)
+                    DisplayMode: |
+                        =DisplayMode.Edit
+                    Fill: |-
+                        =If(state_Day2, RGBA(186, 202, 226, 1),
+                        Parent.Fill)
+                    FontWeight: =FontWeight.Normal
+                    Height: =nte_GraphBackground.Height-Self.Y
+                    OnSelect: |-
+                        =UpdateContext({state_Day2: !state_Day2})
+                    Size: =18
+                    Text: |-
+                        =// Calcualte the total number of hours in the period and adjust unit to pural
+                        Text(
+                            DateAdd(
+                                DateAdd(PeriodStart, (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes),
+                                1,
+                                Days
+                            ),
+                            "ddd dd/mm"
+                        )
+                    Visible: =Parent.Visible
+                    Width: =(nte_GraphBackground.Width - nte_GraphBackground.PaddingLeft - nte_GraphBackground.PaddingRight) / 8
+                    X: =(nte_GraphBackground.X + nte_GraphBackground.PaddingLeft) + (Self.Width/16) + (1 * (Self.Width+(Self.Width/7)))
+                    Y: =(nte_GraphBackground.Y + nte_GraphBackground.PaddingTop)
+                    ZIndex: =7
+
+                nte_Day1 As button:
+                    BorderStyle: =BorderStyle.None
+                    Color: =RGBA(0, 0, 0, 1)
+                    DisplayMode: |
+                        =DisplayMode.Edit
+                    Fill: |-
+                        =If(state_Day1, RGBA(186, 202, 226, 1),
+                        Parent.Fill)
+                    FontWeight: =FontWeight.Normal
+                    Height: =nte_GraphBackground.Height-Self.Y
+                    OnSelect: |-
+                        =UpdateContext({state_Day1: !state_Day1})
+                    Size: =18
+                    Text: |
+                        =// Calcualte the total number of hours in the period and adjust unit to pural
+                        Text(DateAdd(PeriodStart, (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes), "ddd dd/mm")
+                    Visible: =Parent.Visible
+                    Width: =(nte_GraphBackground.Width - nte_GraphBackground.PaddingLeft - nte_GraphBackground.PaddingRight) / 8
+                    X: =(nte_GraphBackground.X + nte_GraphBackground.PaddingLeft) + (Self.Width/16) + (0 * (Self.Width+(Self.Width/16)))
+                    Y: =(nte_GraphBackground.Y + nte_GraphBackground.PaddingTop)
+                    ZIndex: =8
+
+        nte_StartCard As typedDataCard.dateTimeEditCard:
+            BorderStyle: =BorderStyle.None
+            DataField: ="msdyn_start"
+            Default: =If(state_nte_FormSave, nte_FormDate, ThisItem.Start)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Start"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =true
+            Update: =DateAdd((nte_DateValue.SelectedDate + Time(Value(nte_StartHourValue.Selected.Value),Value(nte_MinuteValue.Selected.Value),0)), TimeZoneAdjustment, Minutes)
+            Visible: =false
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =2
+            ZIndex: =1
+
+        nte_ProjectCard As typedDataCard.comboBoxEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_project"
+            Default: =If(state_nte_FormSave,nte_FormProject, ThisItem.Project)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Project"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =nte_ProjectCombo.Selected
+            Visible: =state_ProjectTimeEntry
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =5
+            ZIndex: =1
+
+            nte_ProjectLabel As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Lighter
+                Height: =48
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            nte_ProjectCombo As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                ChevronBackground: =RGBA(237, 237, 237, 1)
+                ChevronFill: =RGBA(64, 64, 64, 1)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["msdyn_subject"]
+                DisplayMode: =Parent.DisplayMode
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =70
+                InputTextPlaceholder: ="---"
+                IsSearchable: =false
+                Items: =Filter(Projects, 'Projects (Views)'.'My Active Projects Membership Lookup')
+                NoSelectionText: ="---"
+                OnChange: |-
+                    =Reset(nte_ProjectTaskCombo);
+                    //If(
+                       // IsBlankOrError(Self.Selected),
+                       // Reset(nte_RoleCombo),
+                        UpdateContext(
+                            {
+                                nte_UpdatedRole:            
+                                    LookUp(
+                                        'Project Team Members', 
+                                        (msdyn_project.Project = Self.Selected.Project) && (msdyn_bookableresourceid.'Bookable Resource' = ThisUserBookableResource.'Bookable Resource')
+                                    ).Role
+                            })
+                            
+                        //);
+                        //Reset(nte_RoleCombo);
+                        
+                    //)
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["msdyn_subject"]
+                SearchItems: =[]
+                SelectMultiple: =false
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =nte_ProjectLabel.Y + nte_ProjectLabel.Height + 5
+                ZIndex: =2
+
+            nte_ProjectErrorMsgLabel As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =nte_ProjectCombo.Y + nte_ProjectCombo.Height
+                ZIndex: =3
+
+            nte_ProjectRequiredLabel As label:
+                Align: =Align.Center
+                Height: =nte_ProjectLabel.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =nte_ProjectLabel.Y
+                ZIndex: =4
+
+        nte_ProjectTaskCard As typedDataCard.comboBoxEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_projectTask"
+            Default: =If(state_nte_FormSave, nte_FormProjectTask, ThisItem.'Project Task')
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Project Task"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =nte_ProjectTaskCombo.Selected
+            Visible: =state_ProjectTimeEntry
+            Width: =640
+            X: =0
+            Y: =6
+            ZIndex: =1
+
+            nte_ProjectTaskLabel As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Lighter
+                Height: =48
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            nte_ProjectTaskCombo As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                ChevronBackground: =RGBA(237, 237, 237, 1)
+                ChevronFill: =RGBA(64, 64, 64, 1)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["msdyn_subject"]
+                DisplayMode: =Parent.DisplayMode
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =70
+                InputTextPlaceholder: ="---"
+                Items: =Filter('Project Tasks', Project.Project = nte_ProjectCombo.Selected.Project)
+                NoSelectionText: ="---"
+                OnChange: |-
+                    =UpdateContext({nte_UpdatedRole: Self.Selected.Role})
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["msdyn_subject"]
+                SearchItems: =Search(Filter('Project Tasks', Project.Project = nte_ProjectCombo.Selected.Project),nte_ProjectTaskCombo.SearchText,"msdyn_subject")
+                SelectMultiple: =false
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =nte_ProjectTaskLabel.Y + nte_ProjectTaskLabel.Height + 5
+                ZIndex: =2
+
+            nte_ProjectTaskErrorMsgLabel As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =nte_ProjectTaskCombo.Y + nte_ProjectTaskCombo.Height
+                ZIndex: =3
+
+            nte_ProjectTaskRequiredLabel As label:
+                Align: =Align.Center
+                Height: =nte_ProjectTaskLabel.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =nte_ProjectTaskLabel.Y
+                ZIndex: =4
+
+        nte_RoleCard As typedDataCard.comboBoxEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_resourceCategory"
+            Default: =If(state_nte_FormSave,nte_FormRole, nte_UpdatedRole)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Role"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =nte_RoleCombo.Selected
+            Visible: =state_ProjectTimeEntry
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =7
+            ZIndex: =1
+
+            nte_RoleLabel As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Lighter
+                Height: =48
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            nte_RoleCombo As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                ChevronBackground: =RGBA(237, 237, 237, 1)
+                ChevronFill: =RGBA(64, 64, 64, 1)
+                Default: =Parent.Default
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["name"]
+                DisplayMode: =Parent.DisplayMode
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =70
+                InputTextPlaceholder: ="---"
+                IsSearchable: =false
+                Items: ='Bookable Resource Categories'
+                NoSelectionText: ="---"
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["name"]
+                SearchItems: =[]
+                SelectMultiple: =false
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =nte_RoleLabel.Y + nte_RoleLabel.Height + 5
+                ZIndex: =2
+
+            nte_RoleErrorMsgLabel As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =nte_RoleCombo.Y + nte_RoleCombo.Height
+                ZIndex: =3
+
+            nte_RoleRequiredLabel As label:
+                Align: =Align.Center
+                Height: =nte_RoleLabel.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =nte_RoleLabel.Y
+                ZIndex: =4
+
+        nte_BookableResourceCard As typedDataCard.comboBoxEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_bookableresource"
+            Default: =ThisUserBookableResource
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Bookable Resource"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =ThisUserBookableResource
+            Visible: =false
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =10
+            ZIndex: =1
+
+        nte_Duration_DataCard As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.None
+            DataField: ="msdyn_duration"
+            Default: =nte_FormDuration
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Duration"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =true
+            Update: |
+                =(Value(nte_DurationHourValue.Selected.Value) * 60) + (nte_DurationMinuteValue.Selected.Value)
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =3
+            ZIndex: =6
+
+            nte_DurationLabel As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Lighter
+                Height: =48
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            nte_DurationErrorMsgLabel As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =nte_DurationHourValue.Y + nte_DurationHourValue.Height
+                ZIndex: =3
+
+            nte_DurationRequiredLabel As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Lighter
+                Height: =nte_DurationLabel.Height
+                Size: =16
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =nte_DurationLabel.Y
+                ZIndex: =4
+
+            nte_DurationHourValue As dropdown:
+                BorderStyle: =BorderStyle.None
+                ChevronBackground: =RGBA(237, 237, 237, 1)
+                ChevronFill: =RGBA(0, 0, 0, 1)
+                Default: =Text(Parent.Default/60,"00")
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =70
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"]
+                Size: =21
+                Width: =nte_DateValue.Width / 2 - 10
+                X: =30
+                Y: =51
+                ZIndex: =5
+
+            nte_DurationMinuteValue As dropdown:
+                BorderStyle: =BorderStyle.None
+                ChevronBackground: =RGBA(237, 237, 237, 1)
+                ChevronFill: =RGBA(0, 0, 0, 1)
+                Default: =Text(Mod(Parent.Default, 60), "00")
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =70
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+                Size: =21
+                Width: =nte_DateValue.Width / 2 - 10
+                X: =nte_DurationHourValue.X + nte_DurationHourValue.Width + nte_DateTimeSeperatorLabel.Width
+                Y: =nte_DurationHourValue.Y
+                ZIndex: =6
+
+            nte_DurationSeperatorLabel As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Bold
+                Height: =nte_StartHourValue.Height
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =21
+                Text: |-
+                    =":"
+                Width: =10
+                Wrap: =false
+                X: =nte_DurationHourValue.X + nte_DurationHourValue.Width
+                Y: =nte_DurationHourValue.Y
+                ZIndex: =7
+
+        nte_TypeCard As typedDataCard.comboBoxOptionSetSingleEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_type"
+            Default: |
+                ='Time Entry Type'.Work
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Type"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =true
+            Update: =nte_TypePicker.Selected.Value
+            Visible: =true
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =4
+            ZIndex: =6
+
+            nte_TypeLabel As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Lighter
+                Height: =48
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            nte_TypePicker As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                ChevronBackground: =RGBA(237, 237, 237, 1)
+                ChevronFill: =RGBA(64, 64, 64, 1)
+                DefaultSelectedItems: =[Parent.Default]
+                DisplayFields: =["Value"]
+                DisplayMode: =Parent.DisplayMode
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =70
+                IsSearchable: =false
+                Items: =Choices('Time Entry Type')
+                OnChange: |-
+                    =If(
+                        Self.Selected.Value = 'Time Entry Type'.Work || Self.Selected.Value = 'Time Entry Type'.Overtime,
+                        Reset(nte_ProjectTaskCombo);
+                        Reset(nte_ProjectCombo);
+                        UpdateContext({state_ProjectTimeEntry: true}),
+                        UpdateContext({state_ProjectTimeEntry: false})
+                    )
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchItems: =[]
+                SelectMultiple: =false
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =nte_TypeLabel.Y + nte_TypeLabel.Height + 5
+                ZIndex: =2
+
+            nte_TypeErrorMsgLabel As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =nte_TypePicker.Y + nte_TypePicker.Height
+                ZIndex: =3
+
+            nte_TypeRequiredLabel As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Lighter
+                Height: =nte_TypeLabel.Height
+                Size: =16
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =nte_TypeLabel.Y
+                ZIndex: =4
+
+        nte_DescriptionCard As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_description"
+            Default: =If(state_nte_FormSave, nte_FormDescription, ThisItem.Description)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Description"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =180
+            MaxLength: =DataSourceInfo([@'Time Entries'], DataSourceInfo.MaxLength, "msdyn_description")
+            Required: =false
+            Update: =nte_DescriptionText.Text
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =8
+            ZIndex: =6
+
+            nte_DescriptionLabel As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Lighter
+                Height: =48
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            nte_DescriptionText As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =150
+                MaxLength: =Parent.MaxLength
+                Mode: =TextMode.MultiLine
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =nte_DescriptionLabel.Y + nte_DescriptionLabel.Height + 5
+                ZIndex: =2
+
+            nte_DescriptionErrorMsgLabel As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =nte_DescriptionText.Y + nte_DescriptionText.Height
+                ZIndex: =3
+
+            nte_DescriptionRequiredLabel As label:
+                Align: =Align.Center
+                Height: =nte_DescriptionLabel.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =nte_DescriptionLabel.Y
+                ZIndex: =4
+
+        nte_ExternalCommentsCard As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_externaldescription"
+            Default: =If(state_nte_FormSave, nte_FormExternalComments,  ThisItem.'External Comments')
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="External Comments"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =211
+            MaxLength: =DataSourceInfo([@'Time Entries'], DataSourceInfo.MaxLength, "msdyn_externaldescription")
+            Required: =false
+            Update: =nte_ExternalCommentsText.Text
+            Width: =640
+            WidthFit: =true
+            X: =0
+            Y: =9
+            ZIndex: =6
+
+            nte_ExternalCommentsLabel As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Lighter
+                Height: =139
+                Size: =16
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            nte_ExternalCommentsText As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =167
+                MaxLength: =Parent.MaxLength
+                Mode: =TextMode.MultiLine
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =21
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =nte_ExternalCommentsLabel.Y + nte_ExternalCommentsLabel.Height + 5
+                ZIndex: =2
+
+            nte_ExternalCommentsErrorMsgLabel As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =24
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =nte_ExternalCommentsText.Y + nte_ExternalCommentsText.Height
+                ZIndex: =3
+
+            nte_ExternalCommentsRequiredLabel As label:
+                Align: =Align.Center
+                Height: =nte_ExternalCommentsLabel.Height
+                Size: =21
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =nte_ExternalCommentsLabel.Y
+                ZIndex: =4
+
+        nte_EntryStatusCard As typedDataCard.comboBoxOptionSetSingleEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="msdyn_entrystatus"
+            Default: ='Time Entry Status'.Draft
+            DisplayMode: =DisplayMode.View
+            DisplayName: ="Entry Status"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: ='Time Entry Status'.Draft
+            Visible: =false
+            Width: =640
+            X: =0
+            Y: =11
+            ZIndex: =6
+
+    nte_MainBar As groupContainer:
+        BorderStyle: =BorderStyle.None
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =86
+        Width: |
+            =Parent.Width
+        ZIndex: =6
+
+        nte_SaveIcon As icon.Check:
+            AccessibleLabel: =Self.Tooltip
+            Color: =RGBA(0, 0, 0, 1)
+            DisplayMode: |-
+                =If(
+                    DataSourceInfo(
+                        [@'Time Entries'],
+                        DataSourceInfo.EditPermission
+                    ) && nte_NewForm.Unsaved ,
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled
+                )
+            Height: =86
+            Icon: =Icon.Save
+            OnSelect: |
+                =//Update UI to mark we are saving
+                UpdateContext({state_nte_FormSave: true});
+                // Store the values selected on the form to restore them for each selected day
+                UpdateContext({nte_FormDate: nte_DateValue.SelectedDate});
+                UpdateContext({nte_FormDuration: (Value(nte_DurationHourValue.Selected.Value)*60)+(nte_DurationMinuteValue.Selected.Value)});
+                UpdateContext({nte_FormType: nte_TypePicker.Selected.Value});
+                UpdateContext({nte_FormProject: nte_ProjectCombo.Selected});
+                UpdateContext({nte_FormProjectTask: nte_ProjectTaskCombo.Selected});
+                UpdateContext({nte_FormRole: nte_RoleCombo.Selected});
+                UpdateContext({nte_FormDescription: nte_DescriptionText.Text});
+                UpdateContext({nte_FormExternalComments: nte_ExternalCommentsText.Text});
+                
+                // Since the state of the form is reset on submit we store the state of the days selected
+                UpdateContext({temp_state_Day1: state_Day1});
+                UpdateContext({temp_state_Day2: state_Day2});
+                UpdateContext({temp_state_Day3: state_Day3});
+                UpdateContext({temp_state_Day4: state_Day4});
+                UpdateContext({temp_state_Day5: state_Day5});
+                UpdateContext({temp_state_Day6: state_Day6});
+                UpdateContext({temp_state_Day7: state_Day7});
+                
+                // Check which days were selected for processing and add them
+                If(
+                    temp_state_Day1,
+                    UpdateContext({nte_FormDate: PeriodStart});
+                    NewForm(nte_NewForm);
+                    SubmitForm(nte_NewForm)
+                );
+                If(
+                    temp_state_Day2,
+                    UpdateContext({nte_FormDate: DateAdd(
+                        PeriodStart,
+                        1,
+                        Days
+                    )});
+                    NewForm(nte_NewForm);
+                    SubmitForm(nte_NewForm)
+                );
+                If(
+                    temp_state_Day3,
+                    UpdateContext({nte_FormDate: DateAdd(
+                        PeriodStart,
+                        2,
+                        Days
+                    )});
+                    NewForm(nte_NewForm);
+                    SubmitForm(nte_NewForm)
+                );
+                If(
+                    temp_state_Day4,
+                    UpdateContext({nte_FormDate: DateAdd(
+                        PeriodStart,
+                        3,
+                        Days
+                    )});
+                    NewForm(nte_NewForm);
+                    SubmitForm(nte_NewForm)
+                );
+                If(
+                    temp_state_Day5,
+                    UpdateContext({nte_FormDate: DateAdd(
+                        PeriodStart,
+                        4,
+                        Days
+                    )});
+                    NewForm(nte_NewForm);
+                    SubmitForm(nte_NewForm)
+                );
+                If(
+                    temp_state_Day6,
+                    UpdateContext({nte_FormDate: DateAdd(
+                        PeriodStart,
+                        5,
+                        Days
+                    )});
+                    NewForm(nte_NewForm);
+                    SubmitForm(nte_NewForm)
+                );
+                If(
+                    temp_state_Day7,
+                    UpdateContext({nte_FormDate: DateAdd(
+                        PeriodStart,
+                        6,
+                        Days
+                    )});
+                    NewForm(nte_NewForm);
+                    SubmitForm(nte_NewForm)
+                );
+                // Remove the busy cover and move back to the timeline screen
+                UpdateContext({state_nte_FormSave: false});
+                ResetForm(nte_NewForm);
+                Navigate(TimelineScreen);
+            PaddingBottom: =22
+            PaddingLeft: =22
+            PaddingRight: =22
+            PaddingTop: =22
+            TabIndex: =0
+            Tooltip: ="Submit item"
+            Width: =88
+            X: =Parent.Width - Self.Width
+            ZIndex: =1
+
+        nte_CancelIcon As icon.Cancel:
+            AccessibleLabel: =Self.Tooltip
+            Color: =RGBA(0, 0, 0, 1)
+            Height: =86
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =ResetForm(nte_NewForm);
+                Navigate(TimelineScreen,ScreenTransition.None)
+            PaddingBottom: =22
+            PaddingLeft: =22
+            PaddingRight: =22
+            PaddingTop: =22
+            TabIndex: =0
+            Tooltip: ="Cancel item"
+            Width: =88
+            ZIndex: =2
+
+        nte_NewTimeEntryLabel As label:
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(0, 0, 0, 1)
+            FontWeight: =FontWeight.Bold
+            Height: =86
+            Size: =27
+            Text: ="Create Time Entry"
+            Width: =Parent.Width - nte_CancelIcon.Width - nte_SaveIcon.Width
+            Wrap: =false
+            X: =nte_CancelIcon.X + nte_CancelIcon.Width
+            ZIndex: =3
+
+    nte_DisableRegion As rectangle:
+        BorderColor: =RGBA(255, 255, 255, 0.79)
+        Fill: =RGBA(120, 120, 120, 0.50)
+        Height: =Parent.Height
+        Visible: =state_nte_FormSave
+        Width: =Parent.Width
+        ZIndex: =7
+

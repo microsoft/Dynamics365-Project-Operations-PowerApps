@@ -1,0 +1,111 @@
+{
+  "QualifiedValues": [
+    {
+      "Kind": "default.cds_msdyn_timeentry_forms",
+      "Namespace": "Time Entries (Forms)",
+      "Values": {
+        "Create Time Entry": "cbec1a7a-0301-4dbc-b715-0ea8e37b46bd",
+        "Entry Edit Form": "e1d889ba-3af0-40fb-89f3-310923b795de",
+        "Information": "4251998f-bd9b-4ef9-be98-ef65a0a3e23d",
+        "New Form": "f1ea1335-1885-4dc1-8ce6-ee5353d5f258",
+        "Row Edit Form": "8ab34334-fc27-4ae1-9145-e853ef15dbae",
+        "TESA Time Entry Main Form": "734bd10d-8661-4d8d-8627-591272fcc2b9",
+        "TESA Time Entry Quick Create Form": "31767fa4-93ae-43cc-824b-1c5167b8b913",
+        "Time Entry Row Edit": "186f79aa-c844-4fe4-8d15-b999677c7828",
+        "timeentrycomment": "0a527980-672f-429f-904c-7ec1a6b1ecf3"
+      }
+    },
+    {
+      "Kind": "default.cds_msdyn_project_forms",
+      "Namespace": "Projects (Forms)",
+      "Values": {
+        "Create Project": "97d7a1ad-e93c-44a6-acb8-10c4d6d154d1",
+        "Import From Project ": "a38df5d5-7ec8-eb11-bacc-000d3a3239c9",
+        "Information": "105ef076-a72a-4382-bde5-35e3c3d9db40"
+      }
+    },
+    {
+      "Kind": "default.cds_msdyn_projecttask_forms",
+      "Namespace": "Project Tasks (Forms)",
+      "Values": {
+        "Information": "c3feb05f-33ee-4183-8fe4-4b68a97b9ec1",
+        "New Form": "b048a6d2-7a9c-42c1-91c8-e9a0f8dc0f18"
+      }
+    },
+    {
+      "Kind": "default.cds_usersettings_forms",
+      "Namespace": "User Settings (Forms)",
+      "Values": {}
+    },
+    {
+      "Kind": "default.cds_systemuser_forms",
+      "Namespace": "Users (Forms)",
+      "Values": {
+        "Application User": "d26924ef-4d80-46f7-ab1d-e6ae80a54ce8",
+        "Information": "094fb08a-77bb-49e0-b7ea-8dbddfd01294",
+        "User": "c2cd9e55-d4b4-4b55-9951-16ead79643e5",
+        "User form – Business": "c2413504-7eb2-4c59-a087-95d819866114",
+        "User Hierarchy Tile Form": "c68d6c09-d7a7-4959-8d0f-44b8cff9b452"
+      }
+    },
+    {
+      "Kind": "default.cds_bookableresource_forms",
+      "Namespace": "Bookable Resources (Forms)",
+      "Values": {
+        "Information": "3e8942a7-ff8e-4634-84ec-8ce174ab807c"
+      }
+    },
+    {
+      "Kind": "default.cds_msdyn_timeentrysetting_forms",
+      "Namespace": "Time Sources (Forms)",
+      "Values": {
+        "Information": "a3e23374-2210-4c0e-8603-ba3967ff184d"
+      }
+    },
+    {
+      "Kind": "default.cds_bookableresourcecategory_forms",
+      "Namespace": "Bookable Resource Categories (Forms)",
+      "Values": {
+        "Information": "5f07ead5-c98f-4a37-aca4-89a7aab2f681"
+      }
+    },
+    {
+      "Kind": "default.cds_team_forms",
+      "Namespace": "Teams (Forms)",
+      "Values": {
+        "Information": "f5cfab6a-d4c2-4519-b68f-6e7485432e29",
+        "Team": "7ba7fac1-1418-4335-935f-f7f8dfd73fcc",
+        "Team form – Business": "4aabf594-b30a-490d-bf97-89c67c6777fe"
+      }
+    },
+    {
+      "Kind": "default.cds_msdyn_projectteam_forms",
+      "Namespace": "Project Team Members (Forms)",
+      "Values": {
+        "Information": "9b59716c-7693-490d-9ff4-d925fc28b21f",
+        "New Form": "8da485f4-8197-43b6-a752-36a28ed243d4"
+      }
+    },
+    {
+      "Kind": "default.cds_bookableresourcecategoryassn_forms",
+      "Namespace": "Bookable Resource Category Assns (Forms)",
+      "Values": {
+        "Information": "2d489157-4f53-4991-9577-f99c5914e9b1"
+      }
+    },
+    {
+      "Kind": "default.cds_msdyn_transactioncategory_forms",
+      "Namespace": "Transaction Categories (Forms)",
+      "Values": {
+        "Information": "46afc020-58b5-4c57-a07b-bca4dfd1fb5e"
+      }
+    },
+    {
+      "Kind": "default.cds_msdyn_bookableresourceassociation_forms",
+      "Namespace": "Bookable Resource Associations (Forms)",
+      "Values": {
+        "Information": "d764f199-5ce9-41ba-8724-fdad703b3a86"
+      }
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "msdyn_timeentries",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "msdyn_timeentry",
+    "MaxGetRowsCount": 500,
+    "Name": "Time Entries",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Owner",
+      "{Attachments}": "Attachments",
+      "createdby": "Created By",
+      "createdon": "Created On",
+      "createdonbehalfby": "Created By (Delegate)",
+      "importsequencenumber": "Import Sequence Number",
+      "modifiedby": "Modified By",
+      "modifiedon": "Modified On",
+      "modifiedonbehalfby": "Modified By (Delegate)",
+      "msdyn_bookableresource": "Bookable Resource",
+      "msdyn_date": "Date",
+      "msdyn_description": "Description",
+      "msdyn_duration": "Duration",
+      "msdyn_end": "End",
+      "msdyn_entrystatus": "Entry Status",
+      "msdyn_externaldescription": "External Comments",
+      "msdyn_manager": "Manager",
+      "msdyn_msdyn_journal_msdyn_timeentry": "Journals",
+      "msdyn_msdyn_timeentry_msdyn_projectapproval_TimeEntry": "Project Approval",
+      "msdyn_msdyn_timeentry_msdyn_timeoffcalendar_timeEntry": "Time Off Calendars",
+      "msdyn_project": "Project",
+      "msdyn_projectTask": "Project Task",
+      "msdyn_relateditemid": "Related item identifier",
+      "msdyn_relateditemtype": "Related item type",
+      "msdyn_resourceCategory": "Role",
+      "msdyn_ResourceOrganizationalUnitId": "Resourcing Unit",
+      "msdyn_start": "Start",
+      "msdyn_Subcontract": "Subcontract",
+      "msdyn_SubcontractLine": "Subcontract Line",
+      "msdyn_targetentrystatus": "Target Entry Status",
+      "msdyn_timeentry_Annotations": "Notes",
+      "msdyn_timeentry_AsyncOperations": "System Jobs",
+      "msdyn_timeentry_BulkDeleteFailures": "Bulk Delete Failures",
+      "msdyn_timeentry_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "msdyn_timeentry_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "msdyn_timeentry_ProcessSession": "Process Sessions",
+      "msdyn_timeentry_SyncErrors": "Sync Errors",
+      "msdyn_timeentryid": "Time Entry",
+      "msdyn_timeentrysettingId": "Time Source",
+      "msdyn_transactioncategory": "Transaction Category",
+      "msdyn_type": "Type",
+      "overriddencreatedon": "Record Created On",
+      "owningbusinessunit": "Owning Business Unit",
+      "owningteam": "Owning Team",
+      "owninguser": "Owning User",
+      "processid": "Process Id",
+      "stageid": "(Deprecated) Stage Id",
+      "statecode": "Status",
+      "statuscode": "Status Reason",
+      "timezoneruleversionnumber": "Time Zone Rule Version Number",
+      "traversedpath": "(Deprecated) Traversed Path",
+      "utcconversiontimezonecode": "UTC Conversion Time Zone Code",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "Time Entries",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "Time Entries (Views)",
+    "Name": "_msdyn_timeentry_views",
+    "RelatedEntityName": "Time Entries",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "016af7c1-b002-e911-8159-000d3afdb4a5": "My Rejected Time Entries",
+      "36f5709e-8c9e-4ac3-ae46-cf57ae67c413": "My Time Entries to Copy",
+      "3cd13c08-0ec6-415e-b375-59d4487e4bc6": "Time Entry Advanced Find View",
+      "68cee989-f786-e411-80ce-00155dbe3a05": "My Time Entries by Date",
+      "769ef5dc-8e34-e911-8186-000d3a015220": "Approved Time",
+      "a0c6a7a3-b5e1-4139-96c5-29b6d11f3ed5": "Time Entry Lookup View",
+      "a348267f-f37b-4ae2-83d6-3a0752f6bde6": "Active Time Entries",
+      "ae4d71d0-62ce-e811-8158-000d3af9b9ce": "My Weekly Time Entries",
+      "bae2e334-b3fc-e711-812e-000d3afd9e41": "My Time Entries For This Week",
+      "bdbc9ea0-84dc-4a8f-91c7-5dbf5a11595e": "Time Entries for Approval",
+      "d4155bdd-6e73-e911-8196-000d3a06102e": "Copy Time Entry Columns",
+      "eff8a5d1-926d-4275-a9b9-01119e95deef": "Time Entry Associated View"
+    }
+  },
+  {
+    "DisplayName": "Related item type (Time Entries)",
+    "Name": "msdyn_timeentry_msdyn_relateditemtype",
+    "OptionSetInfoNameMapping": {
+      "192350000": "None",
+      "192350001": "Resource Booking",
+      "192350002": "Resource Assignment",
+      "192350100": "Exchange Appointments"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_relateditemtype",
+        "OptionSetReferenceEntityName": "Time Entries"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msdyn_relateditemtype",
+    "RelatedEntityName": "Time Entries",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status (Time Entries)",
+    "Name": "msdyn_timeentry_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Active",
+      "1": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "Time Entries"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "Time Entries",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status Reason (Time Entries)",
+    "Name": "msdyn_timeentry_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Active",
+      "2": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "Time Entries"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "Time Entries",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Time Entry Status",
+    "Name": "msdyn_timeentrystatus",
+    "OptionSetInfoNameMapping": {
+      "192350000": "Draft",
+      "192350001": "Returned",
+      "192350002": "Approved",
+      "192350003": "Submitted",
+      "192350004": "Recall Requested",
+      "192354320": "Cancelled"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_entrystatus",
+        "OptionSetReferenceEntityName": "Time Entries"
+      },
+      "OptionSetReferenceItem1": {
+        "OptionSetReferenceColumnName": "msdyn_targetentrystatus",
+        "OptionSetReferenceEntityName": "Time Entries"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msdyn_entrystatus",
+    "RelatedEntityName": "Time Entries",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Time Entry Type",
+    "Name": "msdyn_timeentrytype",
+    "OptionSetInfoNameMapping": {
+      "192350000": "Work",
+      "192350001": "Absence",
+      "192350002": "Vacation",
+      "192354320": "Overtime"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_type",
+        "OptionSetReferenceEntityName": "Time Entries"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msdyn_type",
+    "RelatedEntityName": "Time Entries",
+    "Type": "OptionSetInfo"
+  }
+]

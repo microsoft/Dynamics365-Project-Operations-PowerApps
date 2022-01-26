@@ -1,0 +1,164 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "bookableresourcecategories",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "bookableresourcecategory",
+    "MaxGetRowsCount": 500,
+    "Name": "Bookable Resource Categories",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Owner",
+      "bookableresourcecategory_AsyncOperations": "System Jobs",
+      "bookableresourcecategory_bookableresourcecategoryassn_ResourceCategory": "Bookable Resource Category Assns",
+      "bookableresourcecategory_BulkDeleteFailures": "Bulk Delete Failures",
+      "bookableresourcecategory_DuplicateBaseRecord": "Duplicate Records (bookableresourcecategory_DuplicateBaseRecord)",
+      "bookableresourcecategory_DuplicateMatchingRecord": "Duplicate Records (bookableresourcecategory_DuplicateMatchingRecord)",
+      "bookableresourcecategory_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "bookableresourcecategory_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "bookableresourcecategory_ProcessSession": "Process Sessions",
+      "BookableResourceCategory_SyncErrors": "Sync Errors",
+      "bookableresourcecategoryid": "Resource Category",
+      "createdbyname": "Created By",
+      "createdon": "Created On",
+      "createdonbehalfbyname": "Created By (Delegate)",
+      "description": "Description",
+      "exchangerate": "ExchangeRate",
+      "importsequencenumber": "Import Sequence Number",
+      "modifiedbyname": "Modified By",
+      "modifiedon": "Modified On",
+      "modifiedonbehalfbyname": "Modified By (Delegate)",
+      "msdyn_billingtype": "Billing Type",
+      "msdyn_bookableresourcecategory_bookableresourcebooking_resourcecategoryid": "Bookable Resource Bookings",
+      "msdyn_bookableresourcecategory_bookableresourcebookingheader_resourcecategoryid": "Bookable Resource Booking Headers",
+      "msdyn_bookableresourcecategory_msdyn_actual_ResourceCategory": "Actuals",
+      "msdyn_bookableresourcecategory_msdyn_estimateline_ResourceCategory": "Estimate Lines",
+      "msdyn_bookableresourcecategory_msdyn_fact_ResourceCategory": "Facts",
+      "msdyn_bookableresourcecategory_msdyn_invoicelinetransaction_ResourceCategory": "Invoice Line Details",
+      "msdyn_bookableresourcecategory_msdyn_journal_ResourceCategory": "Journals",
+      "msdyn_bookableresourcecategory_msdyn_journalline_ResourceCategory": "Journal Lines",
+      "msdyn_bookableresourcecategory_msdyn_orderlineresourcecategory_ResourceCategory": "Project Contract Line Resource Categories",
+      "msdyn_bookableresourcecategory_msdyn_orderlinetransaction_ResourceCategory": "Project Contract Line Details",
+      "msdyn_bookableresourcecategory_msdyn_projectapproval_ResourceCategory": "Project Approval",
+      "msdyn_bookableresourcecategory_msdyn_projectparameter_projectmanagerrole": "Project Parameters (msdyn_bookableresourcecategory_msdyn_projectparameter_projectmanagerrole)",
+      "msdyn_bookableresourcecategory_msdyn_projectparameter_teammemberrole": "Project Parameters (msdyn_bookableresourcecategory_msdyn_projectparameter_teammemberrole)",
+      "msdyn_bookableresourcecategory_msdyn_projecttask_resourcecategory": "Project Tasks (msdyn_bookableresourcecategory_msdyn_projecttask_resourcecategory)",
+      "msdyn_bookableresourcecategory_msdyn_projecttask_ResourceCategoryPricingDimension": "Project Tasks (msdyn_bookableresourcecategory_msdyn_projecttask_ResourceCategoryPricingDimension)",
+      "msdyn_bookableresourcecategory_msdyn_projectteam_resourcecategory": "Project Team Members",
+      "msdyn_bookableresourcecategory_msdyn_projectvendorinvoiceline_ResourceCategory": "Project Vendor Invoice Lines",
+      "msdyn_bookableresourcecategory_msdyn_quotelineanalyticsbreakdown_ResourceCategory": "Quote Line Analytics Breakdown",
+      "msdyn_bookableresourcecategory_msdyn_quotelineresourcecategory_ResourceCategory": "Quote Line Resource Categories",
+      "msdyn_bookableresourcecategory_msdyn_quotelinetransaction_ResourceCategory": "Quote Line Detail",
+      "msdyn_bookableresourcecategory_msdyn_resourcecategorymarkuppricelevel_resourcecategory": "Role Price Markup",
+      "msdyn_bookableresourcecategory_msdyn_resourcecategorypricelevel_ResourceCategory": "Role Prices",
+      "msdyn_bookableresourcecategory_msdyn_resourcerequest_roleid": "Resource Requests",
+      "msdyn_bookableresourcecategory_msdyn_rolecompetencyrequirement_resourcecategory": "Role competency requirement",
+      "msdyn_bookableresourcecategory_msdyn_roleutilization_role": "Role Utilization",
+      "msdyn_bookableresourcecategory_msdyn_subcontractline_ResourceCategory": "Subcontract Lines",
+      "msdyn_bookableresourcecategory_msdyn_timeentry_resourceCategory": "Time Entries",
+      "msdyn_bookableresourcecategory_requirementresourcecategory_ResourceCategory": "Requirement Resource Category",
+      "msdyn_bookableresourcecategory_resourcerequirement": "Resource Requirements",
+      "msdyn_targetutilization": "Target Utilization",
+      "msdyn_TransactionCategory": "Transaction Category",
+      "name": "Name",
+      "overriddencreatedon": "Record Created On",
+      "owningbusinessunit": "Owning Business Unit",
+      "owningteam": "Owning Team",
+      "owninguser": "Owning User",
+      "statecode": "Status",
+      "statuscode": "Status Reason",
+      "timezoneruleversionnumber": "Time Zone Rule Version Number",
+      "transactioncurrencyid": "Currency",
+      "utcconversiontimezonecode": "UTC Conversion Time Zone Code",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "Bookable Resource Categories",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "Bookable Resource Categories (Views)",
+    "Name": "_bookableresourcecategory_views",
+    "RelatedEntityName": "Bookable Resource Categories",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "18d4224a-05fb-4675-aa2f-26b5698263a5": "Resource Category Lookup View",
+      "2b789c98-d47b-421e-89ea-cf4c364da117": "Inactive Resource Categories",
+      "6f805d16-cacd-e511-80f2-00155de28206": "All Resource Roles",
+      "82720e03-f1f6-4fe7-9a53-98db6c67c4a4": "Active Resource Categories",
+      "8c1f2af6-9d6d-411a-9147-9da4e95ee6fe": "Resource Category Advanced Find View",
+      "a1c226a4-8a3a-4a45-bf21-e478f153a4d9": "Resource Category Associated View"
+    }
+  },
+  {
+    "DisplayName": "Status (Bookable Resource Categories)",
+    "Name": "bookableresourcecategory_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Active",
+      "1": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "Bookable Resource Categories"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "Bookable Resource Categories",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status Reason (Bookable Resource Categories)",
+    "Name": "bookableresourcecategory_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Active",
+      "2": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "Bookable Resource Categories"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "Bookable Resource Categories",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Billing Type",
+    "Name": "msdyn_billingtype",
+    "OptionSetInfoNameMapping": {
+      "192350000": "Non Chargeable",
+      "192350001": "Chargeable",
+      "192350002": "Complimentary",
+      "192350003": "Not Available"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_billingtype",
+        "OptionSetReferenceEntityName": "Bookable Resource Categories"
+      },
+      "OptionSetReferenceItem1": {
+        "OptionSetReferenceColumnName": "msdyn_billingtype",
+        "OptionSetReferenceEntityName": "Project Team Members"
+      },
+      "OptionSetReferenceItem2": {
+        "OptionSetReferenceColumnName": "msdyn_billingtype",
+        "OptionSetReferenceEntityName": "Transaction Categories"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msdyn_billingtype",
+    "RelatedEntityName": "Bookable Resource Categories",
+    "Type": "OptionSetInfo"
+  }
+]

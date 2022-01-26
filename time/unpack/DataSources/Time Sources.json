@@ -1,0 +1,139 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "msdyn_timeentrysettings",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "msdyn_timeentrysetting",
+    "MaxGetRowsCount": 500,
+    "Name": "Time Sources",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Owner",
+      "createdby": "Created By",
+      "createdon": "Created On",
+      "createdonbehalfby": "Created By (Delegate)",
+      "importsequencenumber": "Import Sequence Number",
+      "modifiedby": "Modified By",
+      "modifiedon": "Modified On",
+      "modifiedonbehalfby": "Modified By (Delegate)",
+      "msdyn_isdefault": "Is Default",
+      "msdyn_msdyn_timeentrysetting_msdyn_timeentry": "Time Entries",
+      "msdyn_name": "Name",
+      "msdyn_sourcetype": "Source Type",
+      "msdyn_timeentrysetting_AsyncOperations": "System Jobs",
+      "msdyn_timeentrysetting_BulkDeleteFailures": "Bulk Delete Failures",
+      "msdyn_timeentrysetting_DuplicateBaseRecord": "Duplicate Records (msdyn_timeentrysetting_DuplicateBaseRecord)",
+      "msdyn_timeentrysetting_DuplicateMatchingRecord": "Duplicate Records (msdyn_timeentrysetting_DuplicateMatchingRecord)",
+      "msdyn_timeentrysetting_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "msdyn_timeentrysetting_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "msdyn_timeentrysetting_ProcessSession": "Process Sessions",
+      "msdyn_timeentrysetting_SyncErrors": "Sync Errors",
+      "msdyn_timeentrysettingid": "Time Source",
+      "overriddencreatedon": "Record Created On",
+      "owningbusinessunit": "Owning Business Unit",
+      "owningteam": "Owning Team",
+      "owninguser": "Owning User",
+      "statecode": "Status",
+      "statuscode": "Status Reason",
+      "timezoneruleversionnumber": "Time Zone Rule Version Number",
+      "utcconversiontimezonecode": "UTC Conversion Time Zone Code",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "Time Sources",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "Time Sources (Views)",
+    "Name": "_msdyn_timeentrysetting_views",
+    "RelatedEntityName": "Time Sources",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "053657d4-05f9-48e5-bb41-a9f8631dd221": "Inactive Time Sources",
+      "1965f40c-d9b3-4486-951e-968f82df515c": "Time Source Lookup View",
+      "2dc2bd35-1372-4261-9283-3ea04c0e20cf": "Time Source Advanced Find View",
+      "2f4e6f47-316f-426b-a5a6-d9501286a507": "Active Time Sources",
+      "95568642-829f-44cd-974b-a06190d41ce0": "Time Source Associated View"
+    }
+  },
+  {
+    "DisplayName": "Is Default (Time Sources)",
+    "Name": "msdyn_timeentrysetting_msdyn_isdefault",
+    "OptionSetInfoNameMapping": {
+      "0": "No",
+      "1": "Yes"
+    },
+    "OptionSetIsBooleanValued": true,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_isdefault",
+        "OptionSetReferenceEntityName": "Time Sources"
+      }
+    },
+    "OptionSetTypeKey": "BooleanType",
+    "RelatedColumnInvariantName": "msdyn_isdefault",
+    "RelatedEntityName": "Time Sources",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status (Time Sources)",
+    "Name": "msdyn_timeentrysetting_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Active",
+      "1": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "Time Sources"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "Time Sources",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status Reason (Time Sources)",
+    "Name": "msdyn_timeentrysetting_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Active",
+      "2": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "Time Sources"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "Time Sources",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Time Entry Source Type",
+    "Name": "msdyn_timeentrysourcetype",
+    "OptionSetInfoNameMapping": {
+      "192351000": "Project Service"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_sourcetype",
+        "OptionSetReferenceEntityName": "Time Sources"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msdyn_sourcetype",
+    "RelatedEntityName": "Time Sources",
+    "Type": "OptionSetInfo"
+  }
+]

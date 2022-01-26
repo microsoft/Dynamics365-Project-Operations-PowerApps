@@ -1,14 +1,20 @@
-# Project
+# Dynamics 365 Project Operations PowerApps
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+The Dynamics 365 Project Operations PowerApps project will be where we will work with the community to publish open source apps for Project Operations.
 
-As the maintainer of this project, please make a few updates:
+For details on each PowerApps please review the `README.md` in the relevant folder.
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+## Contents of this GitHub Repository
+
+| File or Folder | Details  | Package  | Screenshot | Description |
+|----------------|----------|----------|------------|-------------|
+| [TIME](time)   | [README](time\README.md)  | [Download](time\package\TimeEntry_20220126221310.zip) | ![Time line view](.\images\time-timeline.png) | A mobile canvas PowerApp which allows users to create, edit, submit and recall their time entries |
+| `README.md`  | | | | This README file. | 
+| `LICENSE.md` | | | | Details about the MIT License for anyone looking to reuse code in this repository in their own applications |
+
+## Licensing
+The listed PowerApps, code samples and Power BI templates are distributed free of charge under the [MIT license](LICENSE). However, you may need a Dynamics 365 Project Operations license, PowerApps license or PowerBI license in order to access these within your environment.
+
 
 ## Contributing
 
@@ -31,3 +37,5 @@ trademarks or logos is subject to and must follow
 [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
 Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
 Any use of third-party trademarks or logos are subject to those third-party's policies.
+
+

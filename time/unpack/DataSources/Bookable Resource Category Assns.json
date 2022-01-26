@@ -1,0 +1,127 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "bookableresourcecategoryassns",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "bookableresourcecategoryassn",
+    "MaxGetRowsCount": 500,
+    "Name": "Bookable Resource Category Assns",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Owner",
+      "{Attachments}": "Attachments",
+      "bookableresourcecategoryassn_Annotations": "Notes",
+      "bookableresourcecategoryassn_AsyncOperations": "System Jobs",
+      "bookableresourcecategoryassn_BulkDeleteFailures": "Bulk Delete Failures",
+      "bookableresourcecategoryassn_DuplicateBaseRecord": "Duplicate Records (bookableresourcecategoryassn_DuplicateBaseRecord)",
+      "bookableresourcecategoryassn_DuplicateMatchingRecord": "Duplicate Records (bookableresourcecategoryassn_DuplicateMatchingRecord)",
+      "bookableresourcecategoryassn_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "bookableresourcecategoryassn_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "bookableresourcecategoryassn_ProcessSession": "Process Sessions",
+      "BookableResourceCategoryAssn_SyncErrors": "Sync Errors",
+      "bookableresourcecategoryassnid": "Resource Category Assn",
+      "createdbyname": "Created By",
+      "createdon": "Created On",
+      "createdonbehalfbyname": "Created By (Delegate)",
+      "exchangerate": "ExchangeRate",
+      "importsequencenumber": "Import Sequence Number",
+      "modifiedbyname": "Modified By",
+      "modifiedon": "Modified On",
+      "modifiedonbehalfbyname": "Modified By (Delegate)",
+      "msdyn_isdefault": "Is Default",
+      "name": "Name",
+      "overriddencreatedon": "Record Created On",
+      "owningbusinessunit": "Owning Business Unit",
+      "owningteam": "Owning Team",
+      "owninguser": "Owning User",
+      "Resource": "Resource",
+      "ResourceCategory": "Resource Category",
+      "statecode": "Status",
+      "statuscode": "Status Reason",
+      "timezoneruleversionnumber": "Time Zone Rule Version Number",
+      "transactioncurrencyid": "Currency",
+      "utcconversiontimezonecode": "UTC Conversion Time Zone Code",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "Bookable Resource Category Assns",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "Bookable Resource Category Assns (Views)",
+    "Name": "_bookableresourcecategoryassn_views",
+    "RelatedEntityName": "Bookable Resource Category Assns",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "207a3738-fb9d-e511-80e7-00155db9c10d": "Resource Associated Categories",
+      "23c06e71-0606-4ca5-8047-38ffc0006240": "Resource Category Assn Associated View",
+      "27157b97-aee4-e511-80fb-00155de28207": "Project Service Resource Associated With Role",
+      "533d1548-1e86-49cb-8c06-bff8ca02591d": "Active Resource Category Assns",
+      "5d4f9815-8c50-44dd-b177-086d108105eb": "Resource Category Assn Lookup View",
+      "665b77e4-4e9d-e511-80e7-00155db9c10d": "Categories associated with a resource",
+      "7691d55c-6810-4268-80a2-77a9f44a241e": "Inactive Resource Category Assns",
+      "806109b8-b33c-4ee8-8a68-388f6bf42c79": "Resource Category Assn Advanced Find View"
+    }
+  },
+  {
+    "DisplayName": "Status (Bookable Resource Category Assns)",
+    "Name": "bookableresourcecategoryassn_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Active",
+      "1": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "Bookable Resource Category Assns"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "Bookable Resource Category Assns",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status Reason (Bookable Resource Category Assns)",
+    "Name": "bookableresourcecategoryassn_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Active",
+      "2": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "Bookable Resource Category Assns"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "Bookable Resource Category Assns",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Is Default (Bookable Resource Category Assns)",
+    "Name": "msdyn_bookableresourcecategoryassn_msdyn_isdefault",
+    "OptionSetInfoNameMapping": {
+      "0": "No",
+      "1": "Yes"
+    },
+    "OptionSetIsBooleanValued": true,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_isdefault",
+        "OptionSetReferenceEntityName": "Bookable Resource Category Assns"
+      }
+    },
+    "OptionSetTypeKey": "BooleanType",
+    "RelatedColumnInvariantName": "msdyn_isdefault",
+    "RelatedEntityName": "Bookable Resource Category Assns",
+    "Type": "OptionSetInfo"
+  }
+]

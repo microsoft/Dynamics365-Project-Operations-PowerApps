@@ -1,0 +1,238 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "msdyn_projectteams",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "msdyn_projectteam",
+    "MaxGetRowsCount": 500,
+    "Name": "Project Team Members",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Owner",
+      "{Attachments}": "Attachments",
+      "createdby": "Created By",
+      "createdon": "Created On",
+      "createdonbehalfby": "Created By (Delegate)",
+      "importsequencenumber": "Import Sequence Number",
+      "modifiedby": "Modified By",
+      "modifiedon": "Modified On",
+      "modifiedonbehalfby": "Modified By (Delegate)",
+      "msdyn_allocationmethod": "Allocation method",
+      "msdyn_billingtype": "Billing Type",
+      "msdyn_bookableresourceid": "Bookable Resource",
+      "msdyn_calendarid": "Calendar Id",
+      "msdyn_CopiedFromProjectTeamMember": "Copied From Project Team Member",
+      "msdyn_creategenericteammemberwithrequirement": "Create Generic Team Member With Requirement",
+      "msdyn_deletestatus": "Delete Status",
+      "msdyn_effort": "Total Effort (Hours)",
+      "msdyn_effortcompleted": "Effort Completed (Hours)",
+      "msdyn_effortremaining": "Effort Remaining (Hours)",
+      "msdyn_finish": "Finish",
+      "msdyn_hardbookedhours": "Hard Booked Hours",
+      "msdyn_hours": "Hours",
+      "msdyn_markedfordeletiontimer": "Marked For Deletion Timer",
+      "msdyn_markedfordeletiontimestamp": "Marked For Deletion Timestamp",
+      "msdyn_msdyn_projectteam_bookableresourcebooking_projectteamid": "Bookable Resource Bookings",
+      "msdyn_msdyn_projectteam_bookableresourcebookingheader_projectteamid": "Bookable Resource Booking Headers",
+      "msdyn_msdyn_projectteam_msdyn_resourceassignment_projectteamid": "Resource Assignments",
+      "msdyn_msdyn_projectteam_msdyn_subcontractline": "Subcontract Lines",
+      "msdyn_msprojectclientid": "MS Project Client Id",
+      "msdyn_name": "Position Name",
+      "msdyn_organizationalunit": "Resourcing Unit",
+      "msdyn_percentage": "Percentage",
+      "msdyn_project": "project",
+      "msdyn_projectapprover": "Project Approver",
+      "msdyn_projectteam_ActivityPointers": "Activities",
+      "msdyn_projectteam_Annotations": "Notes",
+      "msdyn_projectteam_Appointments": "Appointments",
+      "msdyn_projectteam_AsyncOperations": "System Jobs",
+      "msdyn_projectteam_BulkDeleteFailures": "Bulk Delete Failures",
+      "msdyn_projectteam_connections1": "Connections (msdyn_projectteam_connections1)",
+      "msdyn_projectteam_connections2": "Connections (msdyn_projectteam_connections2)",
+      "msdyn_projectteam_DuplicateBaseRecord": "Duplicate Records (msdyn_projectteam_DuplicateBaseRecord)",
+      "msdyn_projectteam_DuplicateMatchingRecord": "Duplicate Records (msdyn_projectteam_DuplicateMatchingRecord)",
+      "msdyn_projectteam_Emails": "Email Messages",
+      "msdyn_projectteam_Faxes": "Faxes",
+      "msdyn_projectteam_Letters": "Letters",
+      "msdyn_projectteam_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "msdyn_projectteam_msdyn_approvals": "Project Service Approvals",
+      "msdyn_projectteam_msdyn_bookingalerts": "Booking Alerts",
+      "msdyn_projectteam_msdyn_projectteam_CopiedFromProjectTeamMember": "Project Team Members",
+      "msdyn_projectteam_msfp_alerts": "Customer Voice alert",
+      "msdyn_projectteam_msfp_surveyinvites": "Customer Voice survey invites",
+      "msdyn_projectteam_msfp_surveyresponses": "Customer Voice survey responses",
+      "msdyn_projectteam_PhoneCalls": "Phone Calls",
+      "msdyn_projectteam_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "msdyn_projectteam_ProcessSession": "Process Sessions",
+      "msdyn_projectteam_RecurringAppointmentMasters": "Recurring Appointments",
+      "msdyn_projectteam_ServiceAppointments": "Service Activities",
+      "msdyn_projectteam_SocialActivities": "Social Activities",
+      "msdyn_projectteam_SyncErrors": "Sync Errors",
+      "msdyn_projectteam_Tasks": "Tasks",
+      "msdyn_projectteamid": "Project Team",
+      "msdyn_requiredhours": "Required Hours",
+      "msdyn_resourcecategory": "Role",
+      "msdyn_resourcerequirementid": "Resource Requirement",
+      "msdyn_roledescription": "Position Description",
+      "msdyn_softbookedhours": "Soft Booked Hours",
+      "msdyn_start": "Start",
+      "msdyn_SubcontractLine": "Subcontract Line",
+      "msdyn_worktemplate": "Work Template",
+      "overriddencreatedon": "Record Created On",
+      "owningbusinessunit": "Owning Business Unit",
+      "owningteam": "Owning Team",
+      "owninguser": "Owning User",
+      "statecode": "Status",
+      "statuscode": "Status Reason",
+      "timezoneruleversionnumber": "Time Zone Rule Version Number",
+      "utcconversiontimezonecode": "UTC Conversion Time Zone Code",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "Project Team Members",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "Project Team Members (Views)",
+    "Name": "_msdyn_projectteam_views",
+    "RelatedEntityName": "Project Team Members",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "223c8445-4a6f-e811-80fd-00155db9f516": "Named Team Members",
+      "31b73c4d-486f-e811-80fd-00155db9f516": "Generic Team Members",
+      "4c8b52a0-a059-4657-8708-e5941e6b0f96": "Project Team Members Associated View",
+      "5289b1fe-767a-e411-80cf-000001010103": "Resource Request",
+      "6267830d-f2bb-41f9-8129-b076a76ccad2": "Project Team Members Advanced Find View",
+      "8b8a0de2-7755-e911-8195-000d3a6cdebc": "Team Members",
+      "adbbb5b2-70e5-4565-8af1-d676fc8910a7": "Inactive Project Team Members",
+      "d196bf1d-2620-44be-b69a-5340796019e3": "Project Team Members Lookup View",
+      "d2101476-6904-401e-b18b-bf011c32cf54": "Active Project Team Members",
+      "ff646962-5d5a-e411-814a-6c3be5a8017c": "All Team Members"
+    }
+  },
+  {
+    "DisplayName": "Allocation method (Project Team Members)",
+    "Name": "msdyn_projectteam_msdyn_allocationmethod",
+    "OptionSetInfoNameMapping": {
+      "192350000": "None",
+      "192350001": "Full Capacity",
+      "192350003": "By Hours - Distribute evenly",
+      "192350004": "Percentage Capacity",
+      "192350005": "By Hours - Front load"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_allocationmethod",
+        "OptionSetReferenceEntityName": "Project Team Members"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msdyn_allocationmethod",
+    "RelatedEntityName": "Project Team Members",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Create Generic Team Member With Requirement (Project Team Members)",
+    "Name": "msdyn_projectteam_msdyn_creategenericteammemberwithrequirement",
+    "OptionSetInfoNameMapping": {
+      "0": "No",
+      "1": "Yes"
+    },
+    "OptionSetIsBooleanValued": true,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_creategenericteammemberwithrequirement",
+        "OptionSetReferenceEntityName": "Project Team Members"
+      }
+    },
+    "OptionSetTypeKey": "BooleanType",
+    "RelatedColumnInvariantName": "msdyn_creategenericteammemberwithrequirement",
+    "RelatedEntityName": "Project Team Members",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Delete Status (Project Team Members)",
+    "Name": "msdyn_projectteam_msdyn_deletestatus",
+    "OptionSetInfoNameMapping": {
+      "192350000": "Not Pending",
+      "192350001": "Pending",
+      "192350002": "Error"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_deletestatus",
+        "OptionSetReferenceEntityName": "Project Team Members"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "msdyn_deletestatus",
+    "RelatedEntityName": "Project Team Members",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Project Approver (Project Team Members)",
+    "Name": "msdyn_projectteam_msdyn_projectapprover",
+    "OptionSetInfoNameMapping": {
+      "0": "No",
+      "1": "Yes"
+    },
+    "OptionSetIsBooleanValued": true,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "msdyn_projectapprover",
+        "OptionSetReferenceEntityName": "Project Team Members"
+      }
+    },
+    "OptionSetTypeKey": "BooleanType",
+    "RelatedColumnInvariantName": "msdyn_projectapprover",
+    "RelatedEntityName": "Project Team Members",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status (Project Team Members)",
+    "Name": "msdyn_projectteam_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Active",
+      "1": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "Project Team Members"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "Project Team Members",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status Reason (Project Team Members)",
+    "Name": "msdyn_projectteam_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Active",
+      "2": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "Project Team Members"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "Project Team Members",
+    "Type": "OptionSetInfo"
+  }
+]
