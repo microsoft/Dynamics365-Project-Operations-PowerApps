@@ -7,7 +7,7 @@
 > See [deployment types](https://docs.microsoft.com/en-us/dynamics365/project-operations/environment/determine-deployment-type#deployment-types) for more information.
 
 
-The Time Entry sample canvas app provides access for project team members to create and manage their time entries. For more examples and contribution notes please read the [repository README](..\README.md).
+The Time Entry sample canvas app provides access for project team members to create and manage their time entries. For more examples and contribution notes please read the [repository README](https://github.com/microsoft/Dynamics365-Project-Operations-PowerApps).
 
 ![Period view](https://github.com/microsoft/Dynamics365-Project-Operations-PowerApps/blob/main/images/time-period.png?raw=true) ![Time line view](https://github.com/microsoft/Dynamics365-Project-Operations-PowerApps/blob/main/images/time-timeline.png?raw=true)
 
