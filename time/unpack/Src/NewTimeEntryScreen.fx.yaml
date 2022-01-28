@@ -5,6 +5,7 @@
         UpdateContext({state_WeeklyTimeEntry : false});
         UpdateContext({state_nte_FormSave: false});
         UpdateContext({nte_FormDuration: 60});
+        UpdateContext({nte_FormType: 'Time Entry Type'.Work});
         // Update the state of the weekly buttons to reflect the one selected from the timeline screen
         UpdateContext({state_Day1: false});
         UpdateContext({state_Day2: false});
@@ -38,7 +39,7 @@
             =UpdateContext({state_nte_FormSave: false});
         OnReset: |-
             =// Clear the variables for storing the Role, which we adjust based on Project and Task
-            UpdateContext({nte_UpdatedRole: Blank()});
+            UpdateContext({nte_FormRole: Blank()});
             // Set the default duration
             UpdateContext({nte_FormDuration: 60});
         OnSuccess: =
@@ -888,7 +889,7 @@
             BorderStyle: =BorderStyle.Solid
             DataField: ="msdyn_type"
             Default: |
-                ='Time Entry Type'.Work
+                =nte_FormType
             DisplayMode: =Parent.DisplayMode
             DisplayName: ="Type"
             Fill: =RGBA(0, 0, 0, 0)

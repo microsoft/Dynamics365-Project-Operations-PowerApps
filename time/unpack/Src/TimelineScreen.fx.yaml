@@ -111,19 +111,38 @@
             Size: =18
             Text: |-
                 =// Highlight if there are time entries that are not submitted
-                If((CountIf(TimeInCurrentPeriod, msdyn_entrystatus = 'Time Entry Status'.Draft) + CountIf(TimeInCurrentPeriod, msdyn_entrystatus = 'Time Entry Status'.Returned)) > 0, "* ", "") &
+                If(
+                    (CountIf(
+                        TimeInCurrentPeriod,
+                        msdyn_entrystatus = 'Time Entry Status'.Draft
+                    ) + CountIf(
+                        TimeInCurrentPeriod,
+                        msdyn_entrystatus = 'Time Entry Status'.Returned
+                    )) > 0,
+                    "* ",
+                    ""
+                ) &
                 // Calcualte the total number of hours in the period and adjust unit to pural
-                Text(
-                    Sum(TimeInCurrentPeriod,Duration)/60,
-                     "0.00")
-                     &
-                     If(
-                         Or(
-                             Sum(TimeInCurrentPeriod,Duration) / 60 > 1,
-                             Sum(TimeInCurrentPeriod,Duration) = 0),
-                        " hrs",
-                        " hr"
-                        )
+                 Text(
+                    Sum(
+                        TimeInCurrentPeriod,
+                        Duration
+                    ) / 60,
+                    "0.00"
+                ) & If(
+                    Or(
+                        Sum(
+                            TimeInCurrentPeriod,
+                            Duration
+                        ) / 60 > 1,
+                        Sum(
+                            TimeInCurrentPeriod,
+                            Duration
+                        ) = 0
+                    ),
+                    " hrs",
+                    " hr"
+                )
             Width: =170
             X: =Parent.Width-Self.Width-15
             ZIndex: =10
@@ -625,6 +644,7 @@
             Fill: =RGBA(237, 237, 237, 1)
             Height: =2
             OnSelect: =Select(Parent)
+            Visible: =false
             Width: =Parent.Width-Self.X*2
             X: =18
             Y: =tl_DetailGallery.Height+tl_DetailGallery.Y
@@ -717,11 +737,10 @@
                     =If(
                         tl_GroupByPicker.Selected.Value = 1,
                         Text(
-                            ThisItem.Start,
-                            Lower(ThisUserSettings.DateFormatString) & " " & Lower(ThisUserSettings.TimeFormatString)
-                        ) & " - " & Text(
-                            ThisItem.End,
-                            Lower(ThisUserSettings.TimeFormatString)
+                            DateAdd(ThisItem.AdjustedStart, -TimeZoneAdjustment, Minutes),
+                            Lower(ThisUserSettings.DateFormatString) & " hh:mm:ss") & " - " & Text(
+                            DateAdd(ThisItem.AdjustedEnd, -TimeZoneAdjustment, Minutes),
+                            "hh:mm:ss"
                         ),
                         If(
                             Text(ThisItem.Type) = "Vacation",
@@ -1108,7 +1127,7 @@
                     DateAdd(
                         DateAdd(
                             PeriodStart,
-                            (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                            TimeZoneAdjustment,
                             Minutes
                         ),
                         6,
@@ -1121,7 +1140,11 @@
                 =// Calcualte the total number of hours in the period and adjust unit to pural
                 Text(
                     DateAdd(
-                        DateAdd(PeriodStart, (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes),
+                        DateAdd(
+                            PeriodStart,
+                            TimeZoneAdjustment,
+                            Minutes
+                        ),
                         6,
                         Days
                     ),
@@ -1131,11 +1154,19 @@
                         Filter(
                             TimeInCurrentPeriod,
                             (Start >= DateAdd(
-                                PeriodStart,
+                                DateAdd(
+                                    PeriodStart,
+                                    TimeZoneAdjustment,
+                                    Minutes
+                                ),
                                 6,
                                 Days
                             )) && (End <= DateAdd(
-                                PeriodStart,
+                                DateAdd(
+                                    PeriodStart,
+                                    TimeZoneAdjustment,
+                                    Minutes
+                                ),
                                 7,
                                 Days
                             ))
@@ -1143,7 +1174,7 @@
                         Duration
                     ) / 60,
                     "0.00"
-                ) 
+                )
             Visible: =Parent.Visible
             Width: =((GraphBackground.Width - GraphBackground.PaddingLeft - GraphBackground.PaddingRight) / 8) 
             X: =(GraphBackground.X + GraphBackground.PaddingLeft) + (Self.Width/16) + (6 * (Self.Width+(Self.Width/7)))
@@ -1164,7 +1195,7 @@
                     DateAdd(
                         DateAdd(
                             PeriodStart,
-                            (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                            TimeZoneAdjustment,
                             Minutes
                         ),
                         5,
@@ -1179,7 +1210,7 @@
                     DateAdd(
                         DateAdd(
                             PeriodStart,
-                            (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                            TimeZoneAdjustment,
                             Minutes
                         ),
                         5,
@@ -1191,11 +1222,19 @@
                         Filter(
                             TimeInCurrentPeriod,
                             (Start >= DateAdd(
-                                PeriodStart,
+                                DateAdd(
+                                    PeriodStart,
+                                    TimeZoneAdjustment,
+                                    Minutes
+                                ),
                                 5,
                                 Days
                             )) && (End <= DateAdd(
-                                PeriodStart,
+                                DateAdd(
+                                    PeriodStart,
+                                    TimeZoneAdjustment,
+                                    Minutes
+                                ),
                                 6,
                                 Days
                             ))
@@ -1222,7 +1261,7 @@
                     DateAdd(
                         DateAdd(
                             PeriodStart,
-                            (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                            TimeZoneAdjustment,
                             Minutes
                         ),
                         4,
@@ -1238,7 +1277,11 @@
                 =// Calcualte the total number of hours in the period and adjust unit to pural
                 Text(
                     DateAdd(
-                        DateAdd(PeriodStart, (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes),
+                        DateAdd(
+                            PeriodStart,
+                            TimeZoneAdjustment,
+                            Minutes
+                        ),
                         4,
                         Days
                     ),
@@ -1248,11 +1291,19 @@
                         Filter(
                             TimeInCurrentPeriod,
                             (Start >= DateAdd(
-                                PeriodStart,
+                                DateAdd(
+                                    PeriodStart,
+                                    TimeZoneAdjustment,
+                                    Minutes
+                                ),
                                 4,
                                 Days
                             )) && (End <= DateAdd(
-                                PeriodStart,
+                                DateAdd(
+                                    PeriodStart,
+                                    TimeZoneAdjustment,
+                                    Minutes
+                                ),
                                 5,
                                 Days
                             ))
@@ -1260,7 +1311,7 @@
                         Duration
                     ) / 60,
                     "0.00"
-                ) 
+                )
             Visible: =Parent.Visible
             Width: =((GraphBackground.Width - GraphBackground.PaddingLeft - GraphBackground.PaddingRight) / 8) 
             X: =(GraphBackground.X + GraphBackground.PaddingLeft) + (Self.Width/16) + (4 * (Self.Width+(Self.Width/7)))
@@ -1281,7 +1332,7 @@
                     DateAdd(
                         DateAdd(
                             PeriodStart,
-                            (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                            TimeZoneAdjustment,
                             Minutes
                         ),
                         3,
@@ -1297,7 +1348,11 @@
                 =// Calcualte the total number of hours in the period and adjust unit to pural
                 Text(
                     DateAdd(
-                        DateAdd(PeriodStart, (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes),
+                        DateAdd(
+                            PeriodStart,
+                            TimeZoneAdjustment,
+                            Minutes
+                        ),
                         3,
                         Days
                     ),
@@ -1307,11 +1362,19 @@
                         Filter(
                             TimeInCurrentPeriod,
                             (Start >= DateAdd(
-                                PeriodStart,
+                                DateAdd(
+                                    PeriodStart,
+                                    TimeZoneAdjustment,
+                                    Minutes
+                                ),
                                 3,
                                 Days
                             )) && (End <= DateAdd(
-                                PeriodStart,
+                                DateAdd(
+                                    PeriodStart,
+                                    TimeZoneAdjustment,
+                                    Minutes
+                                ),
                                 4,
                                 Days
                             ))
@@ -1319,7 +1382,7 @@
                         Duration
                     ) / 60,
                     "0.00"
-                ) 
+                )
             Visible: =Parent.Visible
             Width: =(GraphBackground.Width - GraphBackground.PaddingLeft - GraphBackground.PaddingRight) / 8
             X: =(GraphBackground.X + GraphBackground.PaddingLeft) + (Self.Width/16) + (3 * (Self.Width+(Self.Width/7)))
@@ -1340,7 +1403,7 @@
                     DateAdd(
                         DateAdd(
                             PeriodStart,
-                            (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                            TimeZoneAdjustment,
                             Minutes
                         ),
                         2,
@@ -1358,7 +1421,7 @@
                     DateAdd(
                         DateAdd(
                             PeriodStart,
-                            (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                            TimeZoneAdjustment,
                             Minutes
                         ),
                         2,
@@ -1370,11 +1433,19 @@
                         Filter(
                             TimeInCurrentPeriod,
                             (Start >= DateAdd(
-                                PeriodStart,
+                                DateAdd(
+                                    PeriodStart,
+                                    TimeZoneAdjustment,
+                                    Minutes
+                                ),
                                 2,
                                 Days
                             )) && (End <= DateAdd(
-                                PeriodStart,
+                                DateAdd(
+                                    PeriodStart,
+                                    TimeZoneAdjustment,
+                                    Minutes
+                                ),
                                 3,
                                 Days
                             ))
@@ -1403,7 +1474,7 @@
                     DateAdd(
                         DateAdd(
                             PeriodStart,
-                            (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                            TimeZoneAdjustment,
                             Minutes
                         ),
                         1,
@@ -1419,7 +1490,11 @@
                 =// Calcualte the total number of hours in the period and adjust unit to pural
                 Text(
                     DateAdd(
-                        DateAdd(PeriodStart, (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes),
+                        DateAdd(
+                            PeriodStart,
+                            TimeZoneAdjustment,
+                            Minutes
+                        ),
                         1,
                         Days
                     ),
@@ -1429,11 +1504,19 @@
                         Filter(
                             TimeInCurrentPeriod,
                             (Start >= DateAdd(
-                                PeriodStart,
+                                DateAdd(
+                                    PeriodStart,
+                                    TimeZoneAdjustment,
+                                    Minutes
+                                ),
                                 1,
                                 Days
                             )) && (End <= DateAdd(
-                                PeriodStart,
+                                DateAdd(
+                                    PeriodStart,
+                                    TimeZoneAdjustment,
+                                    Minutes
+                                ),
                                 2,
                                 Days
                             ))
@@ -1461,7 +1544,7 @@
                     defaultDate,
                     DateAdd(
                         PeriodStart,
-                        (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias),
+                        TimeZoneAdjustment,
                         Minutes
                     )
                 );
@@ -1472,21 +1555,31 @@
             Size: =18
             Text: |-
                 =// Calcualte the total number of hours in the period and adjust unit to pural
-                Text(DateAdd(PeriodStart, (ThisUserSettings.TimeZoneBias + ThisUserSettings.TimeZoneDaylightBias), Minutes), "ddd ")&
                 Text(
+                    DateAdd(
+                        PeriodStart,
+                        TimeZoneAdjustment,
+                        Minutes
+                    ),
+                    "ddd "
+                ) & Text(
                     Sum(
                         Filter(
                             TimeInCurrentPeriod,
-                            (Start >= PeriodStart) && (End <= DateAdd(
+                            (Start >= DateAdd(
                                 PeriodStart,
-                                1,
-                                Days
+                                TimeZoneAdjustment,
+                                Minutes
+                            )) && (End <= DateAdd(
+                                PeriodStart,
+                                TimeZoneAdjustment,
+                                Minutes
                             ))
                         ),
                         Duration
                     ) / 60,
                     "0.00"
-                ) 
+                )
             Visible: =Parent.Visible
             Width: =(GraphBackground.Width - GraphBackground.PaddingLeft - GraphBackground.PaddingRight) / 8
             X: =(GraphBackground.X + GraphBackground.PaddingLeft) + (Self.Width/16) + (0 * (Self.Width+(Self.Width/16)))

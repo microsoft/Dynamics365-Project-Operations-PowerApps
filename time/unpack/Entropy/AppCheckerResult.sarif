@@ -1728,36 +1728,6 @@
           },
           "ruleId": "app-UnusedVariables",
           "ruleIndex": 5
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "NewTimeEntryScreen.nte_FormType"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "NewTimeEntryScreen.nte_FormType",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "nte_FormType",
-                "module": "NewTimeEntryScreen",
-                "type": "NewTimeEntryScreen"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
         }
       ],
       "tool": {
