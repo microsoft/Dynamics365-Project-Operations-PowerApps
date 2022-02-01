@@ -9,7 +9,7 @@ This solution adds the deprecated components to an installation of Project Opera
 1. In an environment installed with Dynamics 365 Project Operations install this [solution](https://github.com/microsoft/Dynamics365-Project-Operations-PowerApps/raw/main/3x-4x-deprecated-solution/msdyn_ProjectServiceDeprecatedComponents_managed.cab).
 2. Install your customizations from PSA into Project Operations
 3. Proceeed to updated your customizations to the new schema, you are able to determine dependencies by attempting to uninstall the deprecated solution. If there are dependencies then the platform will error out on uninstall and you are able to address those.
-4. Remove the deprecated components soltuion.
+4. Remove the deprecated components solution.
 
 # License
 The CAB file and resulting code is supplied to customers licensed for Dynamcis 365 Project Operations only. This is not covered by the MIT license.
