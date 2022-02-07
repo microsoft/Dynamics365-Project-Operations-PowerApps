@@ -12,5 +12,5 @@ This solution adds the deprecated components to an installation of Project Opera
 4. Remove the deprecated components solution.
 
 # License
-The CAB file and resulting code is supplied to customers licensed for Dynamcis 365 Project Operations only. This is not covered by the MIT license.
+The CAB file and resulting code is supplied to customers licensed for Dynamics 365 Project Operations only. This is not covered by the MIT license.
 
