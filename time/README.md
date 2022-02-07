@@ -34,7 +34,7 @@ The Time Entry sample canvas app provides access for project team members to cre
 ## Table of Contents
 1. [Installation](#installation)
 2. [Prerequisites](#prerequisites)
-3. [Instuctions for package install](#instructionsforcompletepackate)
+3. [Instructions for package install](#instructionsforcompletepackate)
 4. [Usage](#usage)
 5. [Known Issues](#knownissues)
 6. [Development Notes](#developmentnotes)
@@ -45,7 +45,7 @@ The Time Entry sample canvas app provides access for project team members to cre
 
 ## Prerequisites
 - An environment with **Project Operations Integrated** or **Lite deployment**, see [deployment types](https://docs.microsoft.com/en-us/dynamics365/project-operations/environment/determine-deployment-type#deployment-types) for more information.
-- A user with administrative priviledges and a Project Operations license assigned
+- A user with administrative privileges and a Project Operations license assigned
 - (Recommended) A user account for use to connect PowerAutomate Dataverse Connector to Project Operations (service account), this is to ensure that the app will continue to work should the installing administrator account be retired.
 
 ## Instructions for package install
@@ -59,7 +59,7 @@ The Time Entry sample canvas app provides access for project team members to cre
 ### Navigating the period
 The app is designed to be simple and intuitive to use, start by selecting the period you wish to work in using either the date picker or arrows in the header.
 
-### Searching witin the period
+### Searching within the period
 Searching is currently only supported for the selected period. Typing text in will search the project or task. Clear the search box to return all records.
 
 ### Press the + button to add a time entry
@@ -72,7 +72,7 @@ Selecting the time entry will allow you to view the details of the entry. If the
 The app allows the submission of multiple time entries
 
 ## Known Issues
-- Apporovals not yet supported (may be presented in a different app)
+- Approvals not yet supported (may be presented in a different app)
 - Online connectivity required
 - Record limit of 500
 - Localization - labels are in English only
@@ -84,11 +84,11 @@ The app allows the submission of multiple time entries
 A time entry if a block of time defined with a start, end and duration. When creating a time entry the system will enforce that these values are in alignment. Time entries include a type field 'Time Entry Source' which is used to segregate time entries into different applications. This sample only supports Project Operations time entries.
 
 ## Time zone implication for Time Entries
-Date and time fields are stored within Dataverse in UTC, Dataverse also stores the user's set time zone. When reading data, creating data and working with data that involves the time zone, you will need to take into account the user's settings in Dataverse for their time zone. This app calcualtes the relative difference between the user's browser time zone and their set time zone in the personalization settings in Dataverse.
+Date and time fields are stored within Dataverse in UTC, Dataverse also stores the user's set time zone. When reading data, creating data and working with data that involves the time zone, you will need to take into account the user's settings in Dataverse for their time zone. This app calculates the relative difference between the user's browser time zone and their set time zone in the personalization settings in Dataverse.
 
 ## Defaulting the Role
 The role of the entry determines the pricing used when calculating the sales price of the work performed.
 By default when selecting the Project the app we assign the bookable resources' (current user's) default role within the project. If a task is selected and the task has an assigned role, then the role is updated to reflect the task's role.
 
 # Support
-This app is provided as is and intended to be an example on how you can leverage the PowerPlatform with your purchased Project Operations licenses. Microsoft does not support this app directly, this app is supported through volenteers who 
+This app is provided as is and intended to be an example on how you can leverage the Power Platform with your purchased Project Operations licenses. Microsoft does not support this app directly, this app is supported through volunteers who
