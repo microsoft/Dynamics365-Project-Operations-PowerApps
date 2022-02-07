@@ -1,3 +1,12 @@
+---
+page_type: sample
+languages:
+- powerfx
+products:
+- dynamics-project-operations
+description: "Dynamics 365 Project Operations Time Entry (Canvas Mobile) Sample"
+---
+
 # Dynamics 365 Project Operations Time Entry (Canvas Mobile) Sample
 
 > Applies to:
