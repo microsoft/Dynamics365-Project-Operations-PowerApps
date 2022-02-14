@@ -12,7 +12,7 @@ This a repository to showcase our ScheduleAPI usages samples.
 2. Git clone https://github.com/microsoft/Dynamics365-Project-Operations-PowerApps.git
 3. Open schedule-api/C#/SDK-Sample/ScheduleAPISamples.sln
 4. Press F5
-5. You will be prommpted to enter the organization URL, your username and password.
+5. You will be prompted to enter the organization URL, your username and password.
 6. ![image](https://user-images.githubusercontent.com/44511390/153267219-f0aff79f-a728-4309-8ca0-fa32ef70fc01.png)
 7. Press enter once done
 
