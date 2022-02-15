@@ -169,9 +169,7 @@ namespace ScheduelAPISamples
             return project;
         }
 
-
-
-        public Entity GetTask(string name, EntityReference projectReference, EntityReference parentReference = null)
+        public Entity GetTask(string name, EntityReference projectReference, EntityReference parentReference = null, EntityReference bucket = null)
         {
             var task = new Entity("msdyn_projecttask", Guid.NewGuid());
             task["msdyn_project"] = projectReference;
@@ -180,7 +178,7 @@ namespace ScheduelAPISamples
             task["msdyn_scheduledstart"] = DateTime.Today;
             task["msdyn_scheduledend"] = DateTime.Today.AddDays(5);
             task["msdyn_start"] = DateTime.Now.AddDays(1);
-            task["msdyn_projectbucket"] = GetBucket(projectReference).ToEntityReference();
+            task["msdyn_projectbucket"] = bucket ?? GetBucket(projectReference).ToEntityReference();
             task["msdyn_LinkStatus"] = new OptionSetValue(192350000);
 
             //Custom field handling
@@ -210,8 +208,6 @@ namespace ScheduelAPISamples
             assignment["msdyn_taskid"] = task.ToEntityReference();
             assignment["msdyn_projectid"] = project.ToEntityReference();
             assignment["msdyn_name"] = name;
-            //assignment["msdyn_start"] = DateTime.Now;
-            //assignment["msdyn_finish"] = DateTime.Now;
             return assignment;
         }
 
@@ -224,6 +220,43 @@ namespace ScheduelAPISamples
             taskDependency["msdyn_linktype"] = new OptionSetValue(192350000);
 
             return taskDependency;
+        }
+
+        public Entity GetChecklist(EntityReference taskReference, string name = null, double displayOrder = 1.1, bool completed = false)
+        {
+            var checklist = new Entity("msdyn_projectchecklist", Guid.NewGuid());
+            checklist["msdyn_projecttaskid"] = taskReference;
+            checklist["msdyn_name"] = name ?? "API Checklist 1";
+            checklist["msdyn_projectchecklistorder"] = displayOrder;
+            checklist["msdyn_projectchecklistcompleted"] = completed;
+
+            return checklist;
+        }
+
+        public Entity GetTeamMember(EntityReference projectReference)
+        {
+            var teamMember = new Entity("msdyn_projectteam", Guid.NewGuid());
+            teamMember["msdyn_name"] = $"TM {DateTime.Now.ToShortTimeString()}";
+            teamMember["msdyn_project"] = projectReference;
+
+            return teamMember;
+
+        }
+
+        public Entity GetBucket(EntityReference projectReference, string name)
+        {
+            var bucket = new Entity("msdyn_projectbucket", Guid.NewGuid());
+            bucket["msdyn_project"] = projectReference;
+            bucket["msdyn_name"] = name;
+
+            return bucket;
+        }
+
+        public string ReadStringFromConsole(string prompt)
+        {
+            Console.WriteLine(prompt);
+
+            return Console.ReadLine();
         }
     }
 }

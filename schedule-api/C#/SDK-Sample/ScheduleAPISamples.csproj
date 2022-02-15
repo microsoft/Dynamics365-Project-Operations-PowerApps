@@ -116,10 +116,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChangeTaskHierarchy.cs" />
+    <Compile Include="CreateScenario.cs" />
+    <Compile Include="CUDScenario.cs" />
+    <Compile Include="InsertTaskScenario.cs" />
     <Compile Include="OperationSetResponse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScheduleAPIHelpers.cs" />
+    <Compile Include="UpdateScenario.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
