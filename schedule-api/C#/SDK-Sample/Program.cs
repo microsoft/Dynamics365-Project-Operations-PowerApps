@@ -2,6 +2,7 @@
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
+using System.Threading;
 
 namespace ScheduelAPISamples
 {
@@ -14,7 +15,7 @@ namespace ScheduelAPISamples
             string url = Console.ReadLine();
             // e.g. you@yourorg.onmicrosoft.com
             Console.Write("Enter your username: e.g.  myalias@mytenant.com : ");
-            string userName = Console.ReadLine(); ;
+            string userName = Console.ReadLine();
             // e.g. y0urp455w0rd 
             Console.Write("Enter your password: ");
             string password = Console.ReadLine();
@@ -37,67 +38,56 @@ namespace ScheduelAPISamples
 
                 ScheduleAPIHelpers scheduleAPI = new ScheduleAPIHelpers(svc);
 
-                Entity project = scheduleAPI.CreateProject();
-                project.Id = scheduleAPI.CallCreateProjectAction(project);
-                Console.WriteLine($"Project Created '{project["msdyn_subject"]}'");
-                var projectReference = project.ToEntityReference();
-
-                var teamMember = new Entity("msdyn_projectteam", Guid.NewGuid());
-                teamMember["msdyn_name"] = $"TM {DateTime.Now.ToShortTimeString()}";
-                teamMember["msdyn_project"] = projectReference;
-                var createTeamMemberResponse = scheduleAPI.CallCreateTeamMemberAction(teamMember);
-                Console.WriteLine($"Team Member Created '{teamMember["msdyn_name"]}'");
-
-
-                var description = $"My demo {DateTime.Now.ToShortTimeString()}";
-                var operationSetId = scheduleAPI.CallCreateOperationSetAction(project.Id, description);
-                Console.WriteLine($"Operation Set Created '{description}'");
-
-                var task1 = scheduleAPI.GetTask("1WW", projectReference);
-                var task2 = scheduleAPI.GetTask("2XX", projectReference, task1.ToEntityReference());
-                var task3 = scheduleAPI.GetTask("3YY", projectReference);
-                var task4 = scheduleAPI.GetTask("4ZZ", projectReference);
-
-                var assignment1 = scheduleAPI.GetResourceAssignment("R1", teamMember, task2, project);
-                var assignment2 = scheduleAPI.GetResourceAssignment("R2", teamMember, task3, project);
-
-                var task1Response = scheduleAPI.CallPssCreateAction(task1, operationSetId);
-                Console.WriteLine($"Task Created '{task1["msdyn_subject"]}'");
-                var task2Response = scheduleAPI.CallPssCreateAction(task2, operationSetId);
-                Console.WriteLine($"Task Created '{task2["msdyn_subject"]}'");
-                var task3Response = scheduleAPI.CallPssCreateAction(task3, operationSetId);
-                Console.WriteLine($"Task Created '{task3["msdyn_subject"]}'");
-                var task4Response = scheduleAPI.CallPssCreateAction(task4, operationSetId);
-                Console.WriteLine($"Task Created '{task4["msdyn_subject"]}'");
-
-                var assignment1Response = scheduleAPI.CallPssCreateAction(assignment1, operationSetId);
-                Console.WriteLine($"Assignment Created '{assignment1["msdyn_name"]}'");
-                var assignment2Response = scheduleAPI.CallPssCreateAction(assignment2, operationSetId);
-                Console.WriteLine($"Assignment Created '{assignment2["msdyn_name"]}'");
-
-                task2["msdyn_subject"] = "Updated Task";
-                var task2UpdateResponse = scheduleAPI.CallPssUpdateAction(task2, operationSetId);
-
-                project["msdyn_subject"] = $"Proj update {DateTime.Now.ToShortTimeString()}";
-                var projectUpdateResponse = scheduleAPI.CallPssUpdateAction(project, operationSetId);
-                Console.WriteLine($"Task Updated '{task2["msdyn_subject"]}'");
-
-                var task4DeleteResponse = scheduleAPI.CallPssDeleteAction(task4.Id.ToString(), task4.LogicalName, operationSetId);
-                Console.WriteLine($"Task deleted '{task4["msdyn_subject"]}'");
-
-                var assignment2DeleteResponse = scheduleAPI.CallPssDeleteAction(assignment2.Id.ToString(), assignment2.LogicalName, operationSetId);
-                Console.WriteLine($"Assignment deleted '{assignment2["msdyn_name"]}'");
-
-                var dependency1 = scheduleAPI.GetTaskDependency(project, task2, task3);
-                var dependency1Response = scheduleAPI.CallPssCreateAction(dependency1, operationSetId);
-
-                scheduleAPI.CallExecuteOperationSetAction(operationSetId);
-
-                Console.WriteLine($"Operation Set Executed");
-
-                Console.WriteLine("Done....");
-                Console.Read();
+                var runAgain = true;
+                do
+                {
+                    Console.WriteLine("Press a number to select a scenario. \n Scenarios: \n 1. Create \n 2. Update \n 3. CUD \n 4. Insert Task \n 5. Change task hierarchy \n Press any other key to exit");
+                    var selectedOption = Console.ReadKey();
+                    Console.WriteLine(" Thinking ...");
+                    switch (selectedOption.Key)
+                    {
+                        case ConsoleKey.D1:
+                            CreateScenario.Run(scheduleAPI);
+                            break;
+                        case ConsoleKey.D2:
+                            UpdateScenario.Run(scheduleAPI);
+                            break;
+                        case ConsoleKey.D3:
+                            CUDScenario.Run(scheduleAPI);
+                            break;
+                        case ConsoleKey.D4:
+                            InsertTaskScenario.Run(scheduleAPI);
+                            break;
+                        case ConsoleKey.D5:
+                            ChangeTaskHierarchy.Run(scheduleAPI);
+                            break;
+                        default: 
+                            Console.WriteLine("Exiting ..."); 
+                            runAgain = false; 
+                            break;
+                    }
+                } while (runAgain == true);
+                
+                Console.WriteLine("Done ....");
+                Console.ReadKey();
             }
         }
+
+        //Show how you will poll the operationSet till msdyn_status changes to Completed or Failed
+        //You will need to implement the countRecordsFunction
+        private static void WaitForOperations(int expectedNumber, Func<int> countRecordsFunction)
+        {
+            var sleepTime = 5000 + (100 * expectedNumber);
+            int numberOfRecords = -1;
+            int maxRetry = 10;
+            int retryCount = 0;
+            while (expectedNumber != numberOfRecords && retryCount++ != maxRetry)
+            {
+                Thread.Sleep(sleepTime);
+                numberOfRecords = countRecordsFunction();
+            }
+
+        }
+
     }
 }
