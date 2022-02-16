@@ -15,6 +15,7 @@ This a repository to showcase our ScheduleAPI usages samples.
 5. You will be prompted to enter the organization URL, your username and password.
 6. ![image](https://user-images.githubusercontent.com/44511390/153267219-f0aff79f-a728-4309-8ca0-fa32ef70fc01.png)
 7. Press enter once done
+8. Please select one of the 5 scenarios depending on our samples requested
 
 
 
