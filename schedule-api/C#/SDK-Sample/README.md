@@ -1,4 +1,13 @@
-# ScheduleAPISamples
+---
+page_type: sample
+languages:
+- csharp
+products:
+- dynamics-project-operations
+description: "Dynamics 365 Project Operations Schedule API C# Sample"
+---
+
+# Dynamics 365 Project Operations Schedule API C# Sample
 This a repository to showcase our ScheduleAPI usages samples.   
 
 # Documetation
