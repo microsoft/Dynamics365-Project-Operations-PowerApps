@@ -24,7 +24,14 @@ This a repository to showcase how to use the ScheduleAPIs from flow.
 5. After import, navigate to Flows > Cloud flows. You should see a 'PROJOPS DEMO FLOW'
 ![image](https://user-images.githubusercontent.com/15526549/198174265-a9ac486d-b079-47e7-9181-3554429d472c.png)
 
-
+This sample shows how to use ScheduleAPI to create Project, ProjectTeamMember, Project Tasks and Assignments.
+This flow does the following:
+ - creates a Project using msdyn_CreateProjectV1 action
+ - creates a Project TeamMember using msdyn_CreateTeamMemberV1 action
+ - creates a ProjectBucket using the oData endpoint
+ - creates an OperationSet using the msdyn_CreateOperationSetV1 action
+ - uses msdyn_PssCreateV1 action to add requests to create 5 Tasks and 5 Assignments to the operationset
+ - calls msdyn_ExecuteOperationSetV1 action to execute the operationSet
 
 ## Contributing
 
