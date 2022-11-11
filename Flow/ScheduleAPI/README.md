@@ -12,7 +12,7 @@ This a repository to showcase how to use the ScheduleAPIs from flow.
 
 # Documetation
 
-1. Power Automate: https://learn.microsoft.com/en-us/dynamics365/project-operations/project-management/scheduling-apis-powerautomate
+1. Power Automate: https://learn.microsoft.com/en-us/power-automate/getting-started
 2. Schedule API with Power Automate: https://learn.microsoft.com/en-us/dynamics365/project-operations/project-management/scheduling-apis-powerautomate
 
 # Usage
