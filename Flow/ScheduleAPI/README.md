@@ -12,8 +12,8 @@ This a repository to showcase how to use the ScheduleAPIs from flow.
 
 # Documetation
 
-1. Schedule API with Power Automate: https://learn.microsoft.com/en-us/dynamics365/project-operations/project-management/scheduling-apis-powerautomate
-2. Microsoft Dataverse: https://docs.microsoft.com/en-us/powerapps/developer/data-platform/org-service/quick-start-org-service-console-app
+1. Power Automate: https://learn.microsoft.com/en-us/dynamics365/project-operations/project-management/scheduling-apis-powerautomate
+2. Schedule API with Power Automate: https://learn.microsoft.com/en-us/dynamics365/project-operations/project-management/scheduling-apis-powerautomate
 
 # Usage
 
